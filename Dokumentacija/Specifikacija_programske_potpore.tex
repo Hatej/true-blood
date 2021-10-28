@@ -1,3 +1,6 @@
+\documentclass[11pt]{book}
+\begin{document}
+
 \chapter{Specifikacija programske potpore}
 
 \section{Funkcionalni zahtjevi}
@@ -78,6 +81,240 @@
 \subsection{Obrasci uporabe}
 
 \subsubsection{Opis obrazaca uporabe}
+
+
+\noindent \underbar{\textbf{UC1 - Pregled količine krvi}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }korisnik
+						\item \textbf{Cilj:} Pregledati trenutnu količinu krvi u banci
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} -
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Količine krvi su prikazane otvaranjem aplikacije
+							\item  
+							
+						\end{packed_enum}
+
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC2 - Registracija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Cilj:} Stvoriti korisnički računa za pristup sustavu
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} -
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik unosi potrebne podatke
+							\item Korisnik na svoj mail dobiva aktivacijski link
+							
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Odabir već korištenog e-maila, unos podataka u nedozvoljenom formatu ili unos neispravnog e-maila
+							\item[] \begin{packed_enum}
+								
+								\item Korisnik dobiva obavijest o neuspjelom upisu i vraća ga na stranicu za registraciju
+								\item Korisnik mijenja potrebne podatke ili odustaje od registracije
+								
+							\end{packed_enum}
+							
+							
+						\end{packed_item}
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC3 - Prijava u sustav}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor, djelatnik
+						\item \textbf{Cilj:} Prijava u sustav i dobivanje dodatnih mogućnosti aplikacije
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Registracija
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Unos e-maila i lozinke
+							\item Potvrda ispravnosti unesenih podataka
+							\item Pristup dodatnim mogućnostima
+							
+						\end{packed_enum}
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Neispravan e-mail i/ili lozinka
+							\item[] \begin{packed_enum}
+								
+								\item  Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga na stranicu za prijavu
+
+								
+							\end{packed_enum}
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC4 - Pregled osobnih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Cilj:} Prikazati osobne podatke prijavljenog donora
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Donor je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Donor odabire opciju "Osobni podaci"
+							\item Aplikacija prikazuje osobne podatke donora
+							
+						\end{packed_enum}
+
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC5 - Promjena matičnih i/ili kontakt podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Cilj:} Promjeniti matične i/ili kotakt podatke
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Donor je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Donor odabire opciju "Promijeni osobne podatka"
+							\item Donor mijenja svoje podatke
+							\item Donor sprema promjene
+							\item Ažurira se baza podataka
+							
+						\end{packed_enum}
+
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik ne spremi promjenu
+							\item[] \begin{packed_enum}
+								
+								\item  Sustav obavještava korisnika da nije spremio podatke prilikom izlaska iz prozora
+
+								
+							\end{packed_enum}
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC6 - Pregled povijesti darivanja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Cilj:} Pregledati svoju povijest darivanja krvi
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Donor je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Donor odabire opciju "Povijest darivanja"
+							\item aplikacija prikazuje donorovu povijest darivanja
+							
+						\end{packed_enum}
+
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC7 - Dobivanje PDF potvrde o doniranju}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Cilj:} Dobiti PDF potvrdu o doniranju
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Donor je prijavljen i barem jedanput uspješno darovao krv
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Donor odabire opciju "Povijest darivanja"
+							\item Donor odabire opciju "Želim PDF potvrdu"
+							\item Sustav donoru šalje potvrdu na mail
+							
+						\end{packed_enum}
+
+					\end{packed_item}
+
+\noindent \underbar{\textbf{UC8 - Dobivanje poruke stanja zalihe krvi}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Cilj:} dobiti poruku stanja zaliha krvi
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Donor je prijavljen i nema trajnu zabranu darivanja krvi
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Donor se prijavio u sustav
+							\item Donor dobiva poruku o ovisnosti stanja zaliha krvi
+							
+						\end{packed_enum}
+
+					\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC9 - Evidentiranje "potrošnje" krvi}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Djelatnik
+						\item \textbf{Cilj:} slanje određenog broja jedinica krvi u vanjsku instituciju
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Djelatnik je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Djelatnik odabire krvnu grupu čiju zalihu želi evidentirati
+							\item Djelatnik upisuje količinu
+							\item Djelatnik šalje krv u vanjsku instituciju
+						\end{packed_enum}
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Količina krvi iznosi 0
+							\item[] \begin{packed_enum}
+								
+								\item  Sustav obavještava djelatnika da ne može poslati krv vanjskoj jedinici
+
+								
+							\end{packed_enum}
+					\end{packed_item}
+
+
+
+\noindent \underbar{\textbf{UC10 - Pregled popisa registriranih donora}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Djelatnik
+						\item \textbf{Cilj:} Prikazati popis svih registriranih donora
+						\item \textbf{Sudionici:} Baza podataka
+						\item \textbf{Preduvjet:} Djelatnik je prijavljen
+						\item \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Djelatnik odabire opciju "Popis donora"
+							\item Sustav djelatniku prikazuje popis registriranih donora
+						\end{packed_enum}
+
+					\end{packed_item}
+
 
 \noindent \underbar{\textbf{UC$11$ -\textit{Aktivacija računa}\eject	}}
 \begin{packed_item}
@@ -245,7 +482,7 @@
 
 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
 
-
+\end{document}
 
 
 
