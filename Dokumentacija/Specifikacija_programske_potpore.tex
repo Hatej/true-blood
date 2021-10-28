@@ -77,28 +77,135 @@
 
 \subsection{Obrasci uporabe}
 
-\textbf{\textit{dio 1. revizije}}
-
 \subsubsection{Opis obrazaca uporabe}
-\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
 
-
-\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\noindent \underbar{\textbf{UC$11$ -\textit{Aktivacija računa}\eject	}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }$<$sudionik$>$
-	\item  \textbf{Cilj:} $<$cilj$>$
-	\item  \textbf{Sudionici:} $<$sudionici$>$
-	\item  \textbf{Preduvjet:} $<$preduvjet$>$
+	\item \textbf{Glavni sudionik: }\textit{Korisnik, djelatnik banke}\eject
+	\item  \textbf{Cilj:} \textit{Aktivirati račun}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Registracija}\eject
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item $<$opis korak jedan$>$
-		\item $<$opis korak dva$>$
-		\item $<$opis korak tri$>$
-		\item $<$opis korak četiri$>$
-		\item $<$opis korak pet$>$
+		\item \textit{Korisnika nakon klika na link u mailu vodi u aplikaciju}\eject
+		\item \textit{Prikazuje se poruka o uspješnoj registraciji i traži se odabir lozinke}\eject 
+		\item \textit{Korisnik odabire lozinku}\eject 
+		\item \textit{Korisnik se automatski prijavljuje}\eject
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$12$ -\textit{Evidentiranje pokušaja doniranja}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Djelatnik banke}\eject
+	\item  \textbf{Cilj:} \textit{Evidentirati pokušaj doniranja}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Registracija}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Djelatnik odabere opciju za evidentiranje pokušaja doniranja određenog donora}\eject
+		\item \textit{Djelatnik evidentira s uspješan ili neuspješan pokušaj}\eject 
+		\item \textit{Djelatnik banke sprema promjene}\eject 
+		\item \textit{Baza podataka se ažurira, povećava se razina određene vrste krvi i zapisuje se pokušaj doniranja krvi}\eject
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+\noindent \underbar{\textbf{UC$13$ -\textit{Brisanje donora}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Administrator}\eject
+	\item  \textbf{Cilj:} \textit{Izbrisati kor. račun donora}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Administrator prijavljen}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Administrator odabire opciju Prikaz donora}\eject
+		\item \textit{Administratoru se pokažu registrirani donori}\eject 
+		\item \textit{Administrator briše donora}\eject 
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$14$ -\textit{Definiranje optimalnih granica}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Administrator}\eject
+	\item  \textbf{Cilj:} \textit{Definirati gornju i donju granicu optimalnih količina krvi za pojedinu grupu}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Administrator je prijavljen}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Administrator odabire opciju Definiraj granice}\eject
+		\item \textit{Prikazuju se trenutno određene granice za pojedinu vrstu krvi}\eject 
+		\item \textit{Administrator definira granice za pojedinu vrstu krvi}\eject 
+		\item \textit{Administrator sprema promjene}\eject
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$15$ -\textit{Pregled popisa djelatnika}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Administartor}\eject
+	\item  \textbf{Cilj:} \textit{Prikazati popis svih djelatnika banke}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Administrator je prijavljen}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Administrator odabire opciju Prikaz popisa djelatnika banke}\eject
+		\item \textit{Prikazuje se popis svih djelatnika banke po abecednom redu}\eject 
+		
+\end{packed_item}
+\noindent \underbar{\textbf{UC$16$ -\textit{Brisanje djelatnika banke}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Administrator}\eject
+	\item  \textbf{Cilj:} \textit{Izbrisati kor. račun djelatnika banke}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Administrator prijavljen}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Administrator odabire opciju Prikaz djelatnika banke}\eject
+		\item \textit{Administratoru se pokažu registrirani djelatnici banke}\eject 
+		\item \textit{Administrator briše djelatnika banke}\eject 
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$17$ -\textit{Kreiranje kor. računa djelatnika banke}\eject	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }\textit{Administrator}\eject
+	\item  \textbf{Cilj:} \textit{Kreirati računa djelatnika banke}\eject
+	\item  \textbf{Sudionici:}\textit{Baza podataka}\eject 
+	\item  \textbf{Preduvjet:}\textit{Administrator je prijavljen}\eject
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item \textit{Administrator odabire opciju "Kreiraj korisnički račun djelatnika banke"}\eject
+		\item \textit{Prikazuje se forma koju popunjava}\eject 
+		\item \textit{Odabire opciju "Kreiraj račun"}\eject 
+		\item \textit{Baza podataka se ažurira}\eject
+		\item \textit{Šalje se aktivacijski link na email djelatnika banke}\eject
 	\end{packed_enum}
 	
 	\item  \textbf{Opis mogućih odstupanja:}
@@ -117,6 +224,7 @@
 		
 	\end{packed_item}
 \end{packed_item}
+
 
 
 \subsubsection{Dijagrami obrazaca uporabe}
