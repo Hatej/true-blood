@@ -1,4 +1,7 @@
 \documentclass[11pt]{book}
+\usepackage{graphicx}
+\graphicspath{ {./slike/} }
+\renewcommand{\figurename}{Slika}
 \begin{document}
 
 \chapter{Specifikacija programske potpore}
@@ -470,9 +473,47 @@
 
 \subsection{Sekvencijski dijagrami}
 
-\textbf{\textit{dio 1. revizije}}\\
+\textbf{Obrazac uporabe UC8 - Dobivanje poruke stanja zalihe krvi}
 
-\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+Donor, koji nema trajnu zabranu darivanja krvi, kod svakog spajanja u sustav dobiva poruku u ovisnosti o trenutnom stanju zaliha krvi. Poslužitelj dohvaća podatke iz baze podataka i prema zadanim granicama vraća jednu od tri poruka. Poruke mogu biti: stanje zaliha ispod optimalne granice; stanje zaliha je optimalno; stanje zaliha je iznad gornje optimalne granice.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{UC8 - Dobivanje poruke stanja zalihe krvi}
+	\caption{Sekvencijski dijagram za UC8}
+\end{figure}
+\eject
+
+\textbf{Obrazac uporabe UC9 - Evidentiranje "potrošnje" krvi}
+
+Djelatnik banke može evidentirati "potrošnju" krvi odnosno slanje određenog broja jedinica krvi u vanjsku instituciju. U bazi podataka se smanjuje količina određene vrste krvi.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{UC9 - Evidentiranje_potrošnje_ krvi}
+	\caption{Sekvencijski dijagram za UC9}
+\end{figure}
+
+\textbf{Obrazac uporabe UC12 - Evidentiranje pokušaja doniranja}
+
+Djelatnik banke evidentira i uspješne i neuspješne pokušaje doniranja. Na temelju zdravstvenog stanja donor može pristupiti doniranju, ali može i biti privremeno ili trajno odbijen. Baza podataka se ažurira, zapisuje se pokušaj doniranja krvi i ako je uspješan poveća se razina određene vrste krvi.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{UC12 - Evidentiranje pokušaja doniranja}
+	\caption{Sekvencijski dijagram za UC12}
+\end{figure}
+\eject
+
+\textbf{Obrazac uporabe UC14 - Definiranje optimalnih granica}
+
+Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optimalne količine. Administratoru se prikazuju trenutne granice za pojedinu vrstu krvi. Zatim on ih on može mijenjati i promjene se spremaju i bazu podataka.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{UC14 - Definiranje optimalnih granica}
+	\caption{Sekvencijski dijagram za UC14}
+\end{figure}
 \eject
 
 \section{Ostali zahtjevi}
