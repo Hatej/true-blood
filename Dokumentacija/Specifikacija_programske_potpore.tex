@@ -71,7 +71,18 @@
 		\item pohranjuje trenutno stanje količine krvi,te donju i gornju granicu optimalne količine krvi
 		
 	\end{packed_enum}
+	
+	\item  \underbar{Sustav za automatske poslove(inicijator) može:}
+	
+	\begin{packed_enum}
+		
+		\item slati email notifikacije donoru nakon 3 mjeseca od uspješnog darivanja ako je muškarac ili nakon 4 mjeseca ako je žensko
+		\item slati email notifikacije donoru i djelatniku banke ako se pređu granice određene krve grupe
+		
+	\end{packed_enum}
 \end{packed_enum}
+
+
 
 \eject 
 
@@ -85,7 +96,7 @@
 \noindent \underbar{\textbf{UC1 - Pregled količine krvi}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }korisnik
+						\item \textbf{Glavni sudionik: }Korisnik, Donor, Djelatnik banke, Administrator
 						\item \textbf{Cilj:} Prikazati trenutnu količinu krvi u banci
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} -
@@ -93,7 +104,7 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Količine krvi su prikazane otvaranjem aplikacije
+							\item Količine krvi su prikazane otvaranjem aplikacije, te njihove gornje i donje granice
 							
 						\end{packed_enum}
 
@@ -102,17 +113,17 @@
 \noindent \underbar{\textbf{UC2 - Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik
-						\item \textbf{Cilj:} Stvoriti korisnički računa za pristup sustavu
+						\item \textbf{Glavni sudionik: }Korisnik, djelatnik banke
+						\item \textbf{Cilj:} Stvoriti korisnički račun donora za pristup sustavu
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} -
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire opciju za registraciju
-							\item Korisnik unosi potrebne podatke
-							\item Korisnik na svoj mail dobiva aktivacijski link
+							\item Korisnik/Djelatnik banke odabire opciju za registraciju novog donora
+							\item Korisnik/Djelatnik banke unosi potrebne podatke
+							\item Korisnik/Donor na svoj mail dobiva aktivacijski link
 							
 						\end{packed_enum}
 						
@@ -349,6 +360,7 @@
 		\item {Djelatnik evidentira s uspješan ili neuspješan pokušaj}
 		\item {Djelatnik banke sprema promjene}
 		\item {Baza podataka se ažurira, povećava se razina određene vrste krvi i zapisuje se pokušaj doniranja krvi}
+		\item {Sustav šalje email poruku s PDF potvrdom}
 		
 	\end{packed_enum}
 	
@@ -384,7 +396,7 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju Definiraj granice}
+		\item {Administrator odabire opciju "Definiraj granice"}
 		\item {Prikazuju se trenutno određene granice za pojedinu vrstu krvi} 
 		\item {Administrator definira granice za pojedinu vrstu krvi}
 		\item {Administrator sprema promjene}
@@ -403,7 +415,7 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju Prikaz popisa djelatnika banke}
+		\item {Administrator odabire opciju "Prikaz popisa djelatnika banke"}
 		\item {Prikazuje se popis svih djelatnika banke po abecednom redu}
 		\end{packed_enum}
 \end{packed_item}
@@ -412,7 +424,7 @@
 \noindent \underbar{\textbf{UC$16$ -{Brisanje djelatnika banke}	}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }\textit{Administrator}
+	\item \textbf{Glavni sudionik: }{Administrator}
 	\item  \textbf{Cilj:} {Izbrisati kor. račun djelatnika banke}
 	\item  \textbf{Sudionici:}{Baza podataka}
 	\item  \textbf{Preduvjet:}{Administrator prijavljen}
@@ -428,10 +440,10 @@
 	
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$17$ -\textit{Kreiranje kor. računa djelatnika banke}	}}
+\noindent \underbar{\textbf{UC$17$ -{Kreiranje kor. računa djelatnika banke}	}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }\textit{Administrator}
+	\item \textbf{Glavni sudionik: }{Administrator}
 	\item  \textbf{Cilj:} {Kreirati računa djelatnika banke}
 	\item  \textbf{Sudionici:}{Baza podataka}
 	\item  \textbf{Preduvjet:}{Administrator je prijavljen}
@@ -462,14 +474,75 @@
 		
 	\end{packed_item}
 \end{packed_item}
-
-
 \eject 
+\noindent \underbar{\textbf{UC$18$ -{Slanje notifikacije nakon 3/4 mjeseca}	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }{Sustav za automatske poslove}
+	\item  \textbf{Cilj:} {Poslati notifikaciju donoru}
+	\item  \textbf{Sudionici:}{Baza podataka}
+	\item  \textbf{Preduvjet:}{Prošlo 3 mjeseca od uspješnog darivanja}
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item {Sustav svakodnevno provjerava uspješna doniranja od prije 3 mjeseca za muškarce i od prije 4 mjeseca za žene}
+		\item {Svima koji zadovoljavaju uvjet šalju se email notifikacije da mogu doći ponovno donirati krv}
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$19$ -{Slanje notifikacije ako se prijeđu granice}	}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }{Sustav za automatske poslove}
+	\item  \textbf{Cilj:} {Poslati notifikaciju donoru i djelatniku banke}
+	\item  \textbf{Sudionici:}{Baza podataka}
+	\item  \textbf{Preduvjet:}{Prešle su se optimalne granice}
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item {Ako je došlo do prekoračenja gornje granice šalje se notifikacija na email djelatnika banke}
+		\item {Ako je došlo do pada ispod donje granice šalje se notifikacija na email donora ako je te krvne grupe i djelatniku banke}
+		
+		
+	\end{packed_enum}
+	
+\end{packed_item}
+
 \subsubsection{Dijagrami obrazaca uporabe}
+\begin{figure}[H]
+			\includegraphics[scale=0.6]{dijagrami/Funkcionalnosti_korisnika_donora.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram obrasca uporabe, funkcionalnost korisnika i donora}
+			\label{fig:Funkcionalnosti_korisnika_donora}
+\end{figure}
 
-\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-\eject		
+\begin{figure}[H]
+			\includegraphics[scale=0.6]{dijagrami/Funkcionalnosti_djelatnika_donora.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram obrasca uporabe, funkcionalnost djelatnika i donora}
+			\label{fig:Funkcionalnosti_djelatnika_donora}
+\end{figure}
 
+\begin{figure}[H]
+			\includegraphics[scale=0.6]{dijagrami/Funkcionalnosti_admina.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram obrasca uporabe, funkcionalnost administratora}
+			\label{fig:Funkcionalnosti_admina}
+\end{figure}
+
+\begin{figure}[H]
+			\includegraphics[scale=0.6]{dijagrami/Funkcionalnosti_auto.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Dijagram obrasca uporabe, funkcionalnost sustava za automatske poslove}
+			\label{fig:Funkcionalnosti_auto}
+\end{figure}
+
+\eject
+		
 \subsection{Sekvencijski dijagrami}
 
 \textbf{Obrazac uporabe UC8 - Dobivanje poruke stanja zalihe krvi}
@@ -478,9 +551,9 @@ Donor, koji nema trajnu zabranu darivanja krvi, kod svakog spajanja u sustav dob
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth, scale=0.4]{slike/UC8_Dobivanje poruke stanja zalihe krvi.png}
+	\includegraphics[width=\textwidth, scale=0.4]{dijagrami/UC8_Dobivanje poruke stanja zalihe krvi.png}
 	\caption{Sekvencijski dijagram za UC8}
-	\label{fig:HZTMprimjer}
+	\label{fig:UC8_Dobivanje poruke stanja zalihe krvi}
 \end{figure}
 \eject
 
@@ -490,7 +563,7 @@ Djelatnik banke može evidentirati "potrošnju" krvi odnosno slanje određenog b
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth, scale=0.4]{slike/UC9_Evidentiranje_potrošnje_ krvi.png}
+	\includegraphics[width=\textwidth, scale=0.4]{dijagrami/UC9_Evidentiranje_potrošnje_ krvi.png}
 	\caption{Sekvencijski dijagram za UC9}
 \end{figure}
 
@@ -501,7 +574,7 @@ Djelatnik banke evidentira i uspješne i neuspješne pokušaje doniranja. Na tem
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{slike/UC12_Evidentiranje pokušaja doniranja.png}
+	\includegraphics[width=\textwidth]{dijagrami/UC12_Evidentiranje pokušaja doniranja.png}
 	\caption{Sekvencijski dijagram za UC12}
 \end{figure}
 \eject
@@ -512,7 +585,7 @@ Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optim
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{slike/UC14_Definiranje optimalnih granica.png}
+	\includegraphics[width=\textwidth]{dijagrami/UC14_Definiranje optimalnih granica.png}
 	\caption{Sekvencijski dijagram za UC14}
 \end{figure}
 \eject
