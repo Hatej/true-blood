@@ -36,7 +36,8 @@ CREATE TABLE pokusaj_doniranja
   Korisničko_ime_djelatnika VARCHAR NOT NULL,
   Korisničko_ime VARCHAR NOT NULL,
   PRIMARY KEY (datum, Korisničko_ime),
-  FOREIGN KEY (Korisničko_ime) REFERENCES uloge_korisnika(Korisničko_ime)
+  FOREIGN KEY (Korisničko_ime) REFERENCES uloge_korisnika(Korisničko_ime),
+  FOREIGN KEY (Korisničko_ime_djelatnika) REFERENCES uloge_korisnika(Korisničko_ime)
 );
 
 CREATE TABLE potrošnja_krvi
