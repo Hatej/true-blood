@@ -19,7 +19,9 @@
 			
 			\textbf{\textit{dio 1. revizije}}\\
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+		\textit{Za potrebe naseg sustava koristit cemo relacijsku bazu podataka koja svojom strukturom olaksava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaca baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
+Baza podataka ove aplikacije sastoji se od sljedecih entiteta: ulogekorisnika, korisnici, pokušaj_donacije, potrošnja_krvi, krv
+}
 		
 			\subsection{Opis tablica}
 			
@@ -35,14 +37,84 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
+					\hline \multicolumn{3}{|c|}{\textbf{uloge korisnika - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}Korisničko ime & VARCHAR	&\\ \hline
+					lozinka	& VARCHAR &   	\\ \hline 
 					email & VARCHAR &   \\ \hline 
+					broj mobitela & INT	&  		\\ \hline
 					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					prezime & VARCHAR	&  		\\ \hline 
+                     godina rodenja & INT	&  		\\ \hline
+                     mjesto prebivanja & VARCHAR	&  		\\ \hline
+                     zdravstveni podaci & VARCHAR	&  		\\ \hline
+					\SetCell{LightBlue} uloga id	& INT &   	\\ \hline 
 				\end{longtblr}
 				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{uloge - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}Uloga id & INT	&\\ \hline
+					uloga name	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{pokušaj doniranja - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}Korisničko_ime & VARCHAR	&\\ \hline
+					\SetCell{LightGreen}datum & DATE	&\\ \hline
+
+					Mjesto	& VARCHAR &   	\\ \hline 
+					Uspješnost	& INT &   	\\ \hline 
+					
+					\SetCell{LightBlue} Korisničkoime djelatnika	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{krv - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ime krvne grupe & VARCHAR	&\\ \hline
+					gornja granica & INT	&\\ \hline
+
+					donja granica	& INT &   	\\ \hline 
+					trenutna zaliha	& INT &   	\\ \hline 
+					
+					
+				\end{longtblr}
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{potrošnja krvi - ime tablice}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ime krvne grupe & VARCHAR	&\\ \hline
+					\SetCell{LightGreen}timestamp & timestamp 	&\\ \hline
+
+					količina 	& INT &   	\\ \hline 
+					
+					\SetCell{LightBlue} ime djelatnika	& VARCHAR &   	\\ \hline 
+				\end{longtblr}
 				
 			
 			\subsection{Dijagram baze podataka}
