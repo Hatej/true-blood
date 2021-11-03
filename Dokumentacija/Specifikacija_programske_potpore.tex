@@ -1,8 +1,3 @@
-\documentclass[11pt]{book}
-\usepackage{graphicx}
-\graphicspath{ {./slike/} }
-\renewcommand{\figurename}{Slika}
-\begin{document}
 
 \chapter{Specifikacija programske potpore}
 
@@ -55,6 +50,7 @@
 		\item vidjeti popis registriranih donora
 		
 	\end{packed_enum}
+	\eject
 	
 	\item  \underbar{Administrator (inicijator) može:}
 	
@@ -135,7 +131,7 @@
 							
 						\end{packed_item}
 					\end{packed_item}
-
+\eject 
 \noindent \underbar{\textbf{UC3 - Prijava u sustav}}
 					\begin{packed_item}
 	
@@ -182,7 +178,7 @@
 						\end{packed_enum}
 
 					\end{packed_item}
-
+\eject 
 \noindent \underbar{\textbf{UC5 - Promjena matičnih i/ili kontakt podataka}}
 					\begin{packed_item}
 	
@@ -231,7 +227,7 @@
 						\end{packed_enum}
 
 					\end{packed_item}
-
+\eject 
 \noindent \underbar{\textbf{UC7 - Dobivanje PDF potvrde o doniranju}}
 					\begin{packed_item}
 	
@@ -299,7 +295,7 @@
 					\end{packed_item}
 					\end{packed_item}
 
-
+\eject 
 \noindent \underbar{\textbf{UC10 - Pregled popisa registriranih donora}}
 					\begin{packed_item}
 	
@@ -357,6 +353,7 @@
 	\end{packed_enum}
 	
 \end{packed_item}
+\eject 
 \noindent \underbar{\textbf{UC$13$ -{Brisanje donora}	}}
 \begin{packed_item}
 	
@@ -410,6 +407,8 @@
 		\item {Prikazuje se popis svih djelatnika banke po abecednom redu}
 		\end{packed_enum}
 \end{packed_item}
+
+\eject 
 \noindent \underbar{\textbf{UC$16$ -{Brisanje djelatnika banke}	}}
 \begin{packed_item}
 	
@@ -465,7 +464,7 @@
 \end{packed_item}
 
 
-
+\eject 
 \subsubsection{Dijagrami obrazaca uporabe}
 
 \textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
@@ -477,10 +476,11 @@
 
 Donor, koji nema trajnu zabranu darivanja krvi, kod svakog spajanja u sustav dobiva poruku u ovisnosti o trenutnom stanju zaliha krvi. Poslužitelj dohvaća podatke iz baze podataka i prema zadanim granicama vraća jednu od tri poruka. Poruke mogu biti: stanje zaliha ispod optimalne granice; stanje zaliha je optimalno; stanje zaliha je iznad gornje optimalne granice.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{UC8 - Dobivanje poruke stanja zalihe krvi}
+	\includegraphics[width=\textwidth, scale=0.4]{slike/UC8_Dobivanje poruke stanja zalihe krvi.png}
 	\caption{Sekvencijski dijagram za UC8}
+	\label{fig:HZTMprimjer}
 \end{figure}
 \eject
 
@@ -488,19 +488,20 @@ Donor, koji nema trajnu zabranu darivanja krvi, kod svakog spajanja u sustav dob
 
 Djelatnik banke može evidentirati "potrošnju" krvi odnosno slanje određenog broja jedinica krvi u vanjsku instituciju. U bazi podataka se smanjuje količina određene vrste krvi.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{UC9 - Evidentiranje_potrošnje_ krvi}
+	\includegraphics[width=\textwidth, scale=0.4]{slike/UC9_Evidentiranje_potrošnje_ krvi.png}
 	\caption{Sekvencijski dijagram za UC9}
 \end{figure}
 
+\eject 
 \textbf{Obrazac uporabe UC12 - Evidentiranje pokušaja doniranja}
 
 Djelatnik banke evidentira i uspješne i neuspješne pokušaje doniranja. Na temelju zdravstvenog stanja donor može pristupiti doniranju, ali može i biti privremeno ili trajno odbijen. Baza podataka se ažurira, zapisuje se pokušaj doniranja krvi i ako je uspješan poveća se razina određene vrste krvi.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{UC12 - Evidentiranje pokušaja doniranja}
+	\includegraphics[width=\textwidth]{slike/UC12_Evidentiranje pokušaja doniranja.png}
 	\caption{Sekvencijski dijagram za UC12}
 \end{figure}
 \eject
@@ -509,9 +510,9 @@ Djelatnik banke evidentira i uspješne i neuspješne pokušaje doniranja. Na tem
 
 Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optimalne količine. Administratoru se prikazuju trenutne granice za pojedinu vrstu krvi. Zatim on ih on može mijenjati i promjene se spremaju i bazu podataka.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{UC14 - Definiranje optimalnih granica}
+	\includegraphics[width=\textwidth]{slike/UC14_Definiranje optimalnih granica.png}
 	\caption{Sekvencijski dijagram za UC14}
 \end{figure}
 \eject
@@ -522,7 +523,7 @@ Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optim
 
 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
 
-\end{document}
+
 
 
 
