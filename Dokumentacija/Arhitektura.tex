@@ -45,16 +45,16 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Korisnik}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Korisničko ime & VARCHAR	&\\ \hline
-					lozinka	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					broj mobitela & INT	&  		\\ \hline
-					ime & VARCHAR	&  		\\ \hline 
-					prezime & VARCHAR	&  		\\ \hline 
-                     godina rodenja & INT	&  		\\ \hline
-                     mjesto prebivanja & VARCHAR	&  		\\ \hline
-                     zdravstveni podaci & VARCHAR	&  		\\ \hline
-					\SetCell{LightBlue} uloga id	& INT &   	\\ \hline 
+					\SetCell{LightGreen}Korisničko ime & VARCHAR & ime pomocu kojeg se korisnik logina (jednako donorid za donore) \\ \hline
+					lozinka	& VARCHAR &  lozinka za login 	\\ \hline 
+					email & VARCHAR & email na koji korisniku dolaze korisne informacije  \\ \hline 
+					broj mobitela & INT	&  broj na koji korisniku dolaze korisne infromacije		\\ \hline
+					ime & VARCHAR	&  ime korisnika		\\ \hline 
+					prezime & VARCHAR	& prezime korisnika	\\ \hline 
+                     godina rodenja & INT	&  godina rodenja	\\ \hline
+                     mjesto prebivanja & VARCHAR	&  mjesto stanovanja		\\ \hline
+                     zdravstveni podaci & VARCHAR	&  	kratki opis zdravstvenog stanja	\\ \hline
+					\SetCell{LightBlue} uloga id	& INT &  označuje da li je korisnik admin, djelatnik ili donor 	\\ \hline 
 				\end{longtblr}
 				
 				\begin{longtblr}[
@@ -66,8 +66,8 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Uloge}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Uloga id & INT	&\\ \hline
-					uloga name	& VARCHAR &   	\\ \hline 
+					\SetCell{LightGreen}Uloga id & INT	& označuje id uloge (admin, djelatnik ili donor)\\ \hline
+					uloga name	& VARCHAR & ime uloge(donor,admin...)  	\\ \hline 
 				\end{longtblr}
 				
 				\begin{longtblr}[
@@ -79,13 +79,13 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Donacija}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Korisničko_ime & VARCHAR	&\\ \hline
-					\SetCell{LightGreen}datum & DATE	&\\ \hline
+					\SetCell{LightGreen}Korisničko_ime & VARCHAR & korisničko ime (donorId) korisnika koji je donirao \\ \hline
+					\SetCell{LightGreen}datum & DATE & datum donacije \\ \hline
 
-					Mjesto	& VARCHAR &   	\\ \hline 
-					Uspješnost	& INT &   	\\ \hline 
+					Mjesto	& VARCHAR & mjesto donacije	\\ \hline 
+					Uspješnost	& INT & 0 za neuspješnu, 1 za uspješnu donaciju krvi  	\\ \hline 
 					
-					\SetCell{LightBlue} Korisničkoime djelatnika	& VARCHAR &   	\\ \hline 
+					\SetCell{LightBlue} Korisničkoime djelatnika	& VARCHAR &  korisničko ime djelatnika koji je primio donaciju 	\\ \hline 
 				\end{longtblr}
 				
 				\begin{longtblr}[
@@ -97,11 +97,11 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Krv}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ime krvne grupe & VARCHAR	&\\ \hline
-					gornja granica & INT	&\\ \hline
+					\SetCell{LightGreen}ime krvne grupe & VARCHAR & (A+,A-,AB+,B-...) \\ \hline
+					gornja granica & INT & gornja granica dopuštene količine krvi u jedinicama\\ \hline
 
-					donja granica	& INT &   	\\ \hline 
-					trenutna zaliha	& INT &   	\\ \hline 
+					donja granica	& INT & donja granica dopuštene količine krvi u jedinicama  	\\ \hline 
+					trenutna zaliha	& INT &  trenutna zaliha konkretne krve grupe u jedinicama 	\\ \hline 
 					
 					
 				\end{longtblr}
@@ -115,12 +115,12 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Potrošnja}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ime krvne grupe & VARCHAR	&\\ \hline
-					\SetCell{LightGreen}timestamp & timestamp 	&\\ \hline
+					\SetCell{LightGreen}ime krvne grupe & VARCHAR & ime krvne grupe \\ \hline
+					\SetCell{LightGreen}timestampPotrošnje & DATETIME & timestamp potrošnje \\ \hline
 
-					količina 	& INT &   	\\ \hline 
+					količina 	& INT &  broj jedinica koji su se potrošili 	\\ \hline 
 					
-					\SetCell{LightBlue} ime djelatnika	& VARCHAR &   	\\ \hline 
+					\SetCell{LightBlue} korisničko ime djelatnika	& VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
 				\end{longtblr}
 				
 			
