@@ -17,7 +17,7 @@ CREATE TABLE krv
 CREATE TABLE uloge_korisnika
 (
   Korisničko_ime VARCHAR NOT NULL,
-  lozinka VARCHAR NOT NULL,
+  lozinka VARCHAR,
   email VARCHAR NOT NULL,
   broj_mobitela INT NOT NULL,
   godina_rodenja INT NOT NULL,
