@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import logo from './logo.png';
+import "./Header.css";
 
 function Header(props) {
     
@@ -17,11 +18,11 @@ function Header(props) {
     return (
         <header className="Header">
 
-            <Link to="/home">home</Link>
+            <Link id='home' to="/home">Home</Link>
 
-            <Link to="/signin" hidden={isLoggedIn()}>Sign in</Link>
+            <Link id='signin' to="/signin" hidden={isLoggedIn()}>Signup</Link>
         
-            <Link to="/login" hidden={isLoggedIn()}>Login</Link>
+            <Link id='login' to="/login" hidden={isLoggedIn()}>Login</Link>
 
             <span hidden={!isLoggedIn()}> {props.log.email} </span>
             

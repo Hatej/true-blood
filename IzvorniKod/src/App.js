@@ -8,7 +8,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 function App() {
 
-  const [log, setIsLoggedIn] = React.useState({isLoggedIn: true, email:""})
+  const [log, setIsLoggedIn] = React.useState({isLoggedIn: false, email:""})
 
   function logSet(isLoggedIn, email) {
     setIsLoggedIn({isLoggedIn: isLoggedIn, email: email})
@@ -18,7 +18,6 @@ function App() {
     <BrowserRouter>
       <Header log={log} logSet={logSet}/>
         <div className="App">
-          
             <Switch>
               <Route exact path='/login'>
                 <LoginForm logSet={logSet}/>

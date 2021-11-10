@@ -9,11 +9,26 @@ function LoginForm(props) {
     function onSubmit(e) {
         e.preventDefault();
         setError("");
-        
+        const body = `email=${loginForm.email}&password=${loginForm.password}`;
+        const options = {
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: body
+        };
+        fetch('/login', options)
+            .then(response => {
+                if(response.status === 401){
+                    setError("Login failed");
+                } else {
+                    props.logSet(true, loginForm.email); //
+                }
+            })
         // tu bi sada trebao ic fetch dio // 
 
         //pravimo se da je svaki login ispravan:
-        props.logSet(true, loginForm.email); //
+
 
     }
 
@@ -29,11 +44,11 @@ function LoginForm(props) {
             <form onSubmit={onSubmit}>
                 <div className="FormRow">
                     <label>email</label>
-                    <input name='email' onChange={onChange} value={loginForm.email}/>
+                    <input name='email' onChange={onChange} value={loginForm.email} type='email' required/>
                 </div>
                 <div className="FormRow">
                     <label>Password</label>
-                    <input name='password' type="password" onChange={onChange} value={loginForm.password}/>
+                    <input name='password' type="password" onChange={onChange} value={loginForm.password} type='password' required/>
                 </div>
                 <div className='error'>{error}</div>
                 <button type="submit">Login</button>
