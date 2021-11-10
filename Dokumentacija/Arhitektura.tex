@@ -1,16 +1,44 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		\textbf{\textit{dio 1. revizije}}\\
-
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
-
-	
+		Arhitekturu našeg sustava možemo podijeliti na tri podsustava:	
+		\begin{itemize}
+		\item 	\textit{Web preglednik}
+		\item 	\textit{Baza podataka}
+		\item 	\textit{Web poslužitelj}		
+		\end{itemize}
 		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=2.0]{slike/arhitektura.png}
+			\caption{Arhitektura našeg sustava}
+			\label{fig:arhitektura}
+		\end{figure}
+\eject
+	
+	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol. Poslužitelj služi za prosljeđivanje zahtjeva koji se naknadno obrađuju.}
+	
+	\underbar{ \textit{Web preglednik} }{je program koji korisniku omogućuje pregled web-stranica i multi-medijalnih sadržaja vezanih uz njih. Korisnik putem web preglednika šalje zahtjeve na obradu poslužitelju.}
+	
+	\underbar{ \textit{Baza podataka}}{ je zbirka zapisa pohranjenih u računalu na sustavan način, tako da joj se računalni program može obratiti prilikom odgovaranja na problem. Web poslužitelj komunicira s bazom podataka te povlači potrebne zapise iz nje.}
+	{Klijent koristi web aplikaciju za slanje određenih zahtjeva. Zahtjev se obrađuje, te se kao odgovor na zahtjev prikazuje HTML dokument.}
+	\\
+	{Pri izradi web aplikacije koristili smo Java Spring Boot iz Spring framework-a zajedno sa Reactom na klijentskoj strani. Korišteno je razvojno okruženje Visual Studio Code.}
+	{Arhitektura sustava temeljiti će se na MVC (Model-View-Controller) konceptu. Prednosti korištenja MVC arhitekture je taj što je moguće nezavisno razvijanje i spanjanje u cjelinu što uvelike olakšava razvoj aplikacije.}
+	
+	 {Model-View-Controller se sastoji od:}
+	\begin{itemize}
+		\item 	\textbf{Model} {je centralni dio aplikacije, koja obuhvaća promjenljivu (dinamičku) strukturu podataka, direktno upravljanje podacima, logikom i pravilima aplikacije}
+		\item 	\textbf{View}{ je bilo koji izlazni prikaz podataka u korisničkom okruženju, pri čemu se isti podaci mogu prikazati na više načina}
+		\item 	\textbf{Controller} {ulazne podatke pretvara u komande koje upravljaju modelom ili prikazom podataka u korisničkom okruženju}
+	\end{itemize}
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=100mm, scale=0.1]{slike/MVC.jpeg}
+			\caption{Arhitektura našeg sustava}
+			\label{fig:arhitektura}
+		\end{figure}
+\eject
 
 		
 
