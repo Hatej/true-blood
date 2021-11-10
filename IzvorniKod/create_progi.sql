@@ -21,6 +21,7 @@ CREATE TABLE uloge_korisnika
   email VARCHAR NOT NULL,
   ime VARCHAR NOT NULL,
   prezime VARCHAR NOT NULL,
+  oib INT(11) NOT NULL,
   broj_mobitela INT NOT NULL,
   godina_rodenja INT NOT NULL,
   mjesto_prebivanja VARCHAR NOT NULL,
