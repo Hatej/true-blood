@@ -47,10 +47,10 @@ CREATE TABLE potrosnja_krvi
   timestamp DATE NOT NULL,
   kolicina_jedinica INT NOT NULL,
   ime_krvne_grupe VARCHAR NOT NULL,
-  Korisničko_ime_djelatnika VARCHAR NOT NULL,
+  Korisnicko_ime_djelatnika VARCHAR NOT NULL,
   PRIMARY KEY (timestamp, ime_krvne_grupe),
   FOREIGN KEY (ime_krvne_grupe) REFERENCES krv(ime_krvne_grupe),
-  FOREIGN KEY (Korisničko_ime_djelatnika) REFERENCES uloge_korisnika(Korisničko_ime)
+  FOREIGN KEY (Korisnicko_ime_djelatnika) REFERENCES uloge_korisnika(Korisnicko_ime)
 );
 
 CREATE TABLE aktivacijski_kodovi 
