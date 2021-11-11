@@ -1,18 +1,46 @@
 .Header {
-    padding-top: 20px;
-    padding-bottom: 15px;
-    display: flex;
     align-items: center;
-    justify-content: center;
     border-bottom: solid 1px #cccccc;
     background-color: white;
 }
 
+.Header ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
+    overflow: hidden;
+    border-bottom: solid 1px #cccccc;
+    border-top: solid 1px #cccccc;
+}
+
+.Header li {
+    float:left;
+    display: inline;
+    border-right: solid 1px #cccccc;
+}
+
+.Header li.right {
+    border-left: solid 1px #cccccc;
+    float:right;
+}
+
+.Header li:first-child {
+    border-right: solid 1px #cccccc;
+}
+
 .Header a {
+    display: block;
     color: black;
+    text-align: center;
     padding: 5px 10px;
-    margin: 0 10px;
+    font-size: larger;
     text-decoration: none;
+}
+
+.Header img {
+    width: 1em;
+    display: inline;
 }
 
 .Header a:hover {
@@ -34,3 +62,16 @@
 .Header button:disabled {
     color: #ddd;
 }
+
+@media screen and (max-width: 400px) {
+    .Header li {
+      float: none;
+      width: 100%;
+      border: hidden;
+    }
+    .Header li a {
+        border-bottom: solid 1px #cccccc;
+    }
+  }
+
+[hidden] { display: none !important; }

@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import logo from './logo.png';
 import "./Header.css";
 
 function Header(props) {
-    
-    let button;
+
+    const history = useHistory();
 
     function isLoggedIn() {
         return (props.log.isLoggedIn === true)
@@ -13,32 +13,35 @@ function Header(props) {
 
     function logout() {
         props.logSet(false, "")
+        history.push("/home");
     }
 
     return (
         <header className="Header">
-
-            <Link id='home' to="/home">Home</Link>
-
-            <Link id='signin' to="/signin" hidden={isLoggedIn()}>Signup</Link>
-        
-            <Link id='login' to="/login" hidden={isLoggedIn()}>Login</Link>
-
-            <span hidden={!isLoggedIn()}> {props.log.email} </span>
-            
-
-            <button hidden={!isLoggedIn()} disabled={!isLoggedIn()} onClick={logout}>Logout</button> 
-
             <div className="logoContainer container">
-                <Link to="/home"><img src={logo}/></Link>
                 
-                <span>True Blood</span>
             </div>
-            
+            <ul> 
+                <li>
+                    <Link to="/home"><img src={logo}/><span>True Blood</span></Link>
+                </li>
+                <li>
+                    <Link to="/home">Home</Link>
+                </li>
+                <li className="right">
+                    <Link to="/signin" hidden={isLoggedIn()}>Signup</Link>
+                </li>
+                <li className="right">
+                    <Link to="/login" hidden={isLoggedIn()}>Login</Link>
+                </li>
+                <li className="right">
+                    <span hidden={!isLoggedIn()}> {props.log.email} </span>
+                </li>   
+                <li className="right">        
+                    <button disabled={!isLoggedIn()} onClick={logout} hidden={!isLoggedIn()} className="right">Logout</button> 
+                </li>
+            </ul> 
         </header>
-
-            
-        
     )
 }
 

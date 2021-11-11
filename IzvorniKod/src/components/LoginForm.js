@@ -1,10 +1,12 @@
 import React from 'react';
-
+import {useHistory} from "react-router-dom";
+import "./SignInForm.css";
 
 function LoginForm(props) {
 
     const [loginForm, setLoginForm] = React.useState({ email: '', password: ''});
     const [error, setError] = React.useState('');
+    const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
@@ -17,6 +19,7 @@ function LoginForm(props) {
             },
             body: body
         };
+        /*
         fetch('/login', options)
             .then(response => {
                 if(response.status === 401){
@@ -24,11 +27,10 @@ function LoginForm(props) {
                 } else {
                     props.logSet(true, loginForm.email); //
                 }
-            })
-        // tu bi sada trebao ic fetch dio // 
-
-        //pravimo se da je svaki login ispravan:
-
+            }) 
+        */
+        props.logSet(true, loginForm.email);
+        history.push('/home');
 
     }
 
@@ -40,7 +42,7 @@ function LoginForm(props) {
     }   
 
     return (
-        <div className="Login">
+        <div className="SignupLoginForm">
             <form onSubmit={onSubmit}>
                 <div className="FormRow">
                     <label>email</label>
@@ -54,7 +56,6 @@ function LoginForm(props) {
                 <button type="submit">Login</button>
             </form>
         </div>
-
     )
 }
 

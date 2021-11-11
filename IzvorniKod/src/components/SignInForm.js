@@ -1,10 +1,13 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
+import "./SignInForm.css";
 
 
 function SignInForm(props) {
 
     const [signinForm, setSignInForm] = React.useState({givenName:'', familyName:'', birthYear:'', residencePlace:'', phoneNumber:'', email:'', password:''});
     const [error, setError] = React.useState('');
+    const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
@@ -24,12 +27,15 @@ function SignInForm(props) {
             },
             body: JSON.stringify(data)
         };
-        console.log(data);
         setError("");
         return fetch('/signin', options)
             .then(response => {
                 if(response.ok){
-                    props.history.push('/signin');
+                    history.push('/login');
+                }
+                // privremeno da baci na login, makar još POST ne radi
+                if(response.status === 404){
+                    history.push('/login');
                 }
             });
     }
@@ -38,12 +44,11 @@ function SignInForm(props) {
         const {name, value} = event.target;
         let newForm = {givenName: signinForm.givenName, familyName: signinForm.familyName, birthYear: signinForm.birthYear, residencePlace: signinForm.residencePlace, phoneNumber: signinForm.phoneNumber, email: signinForm.email, password: signinForm.password};
         newForm[name] = value;
-        console.log(value);
         setSignInForm(newForm);
     }   
 
     return (
-        <div className="Login">
+        <div className="SignupLoginForm">
             <form onSubmit={onSubmit}>
                 <div className="FormRow">
                     <label>Ime</label>
