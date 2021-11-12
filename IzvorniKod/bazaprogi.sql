@@ -17,7 +17,7 @@ CREATE TABLE "korisnikAplikacije" (
   "ime" VARCHAR NOT NULL,
   "prezime" VARCHAR NOT NULL,
   "mjestoRođenja" VARCHAR,
-  "oib" INT(11) NOT NULL,
+  "oib" NUMERIC(11) NOT NULL,
   "adresaStanovanja" INT,
   "mjestoZaposlenja" VARCHAR,
   "email" VARCHAR,
