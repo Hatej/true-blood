@@ -3,3 +3,12 @@
 2.sastanak 21.10.2021.
 	-dogovor oko podjele podzadataka
 	-7 podzadatak podijeljeni među 7 članova tima
+3.sastanak 28.10.2021.
+	-dogovor oko obrazaca uporabe
+4.sastanak 05.11.2021.
+	-klijentski dio aplikacije
+	-odabir poslužitelja
+5.sastanak 12.11.2021.
+	-poslužiteljski dio aplikacije
+	-opis baze
+
