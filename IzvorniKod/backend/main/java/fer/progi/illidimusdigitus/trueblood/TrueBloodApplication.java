@@ -1,4 +1,4 @@
-package fer.progi.illdimusdigitus.trueblood;
+package fer.progi.illidimusdigitus.trueblood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

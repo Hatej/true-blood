@@ -1,4 +1,4 @@
-package fer.progi.illdimusdigitus.trueblood;
+package fer.progi.illidimusdigitus.trueblood;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
