@@ -50,18 +50,22 @@
 		Za potrebe naseg sustava koristit cemo relacijsku bazu podataka koja svojom strukturom olaksava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaca baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
 Baza podataka ove aplikacije sastoji se od sljedecih entiteta: 
 \begin{itemize}
-		\item Korisnik
-		\item Uloge
-		\item Donacija
-		\item Krv
-		\item Potrošnja
+		\item korisnikAplikacije
+		\item uloge
+		\item pokusajDoniranja
+		\item krvnaVrsta
+		\item potrosnjaKrvi
+		\item aktivacijskiKodovi
+		\item adresa
+		
 	\end{itemize}
 
 		
 			\subsection{Opis tablica}
 			
 
-				Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ
+				\textbf{korisnikAplikacije \textit{•}}
+				 Ovaj entitet predstavlja sve korisnike apliakacije (admin,djelatnik,donor) i diferencira ih pomoću ulogaId što je referenca na tablicu uloga. KorisnikId i lozinka se koristi za login u aplikaciju, ako korisnik još nije aktivirao svoj račun, onda u atributu lozinka stoji null. Za admina i djelatnika postoje atributi : ime, prezime, oib dok su ostale vrijednosti null. Kod stvaranja atributa trajnoOdbijanjeDarivanja je false, a razlogOdbijanja je null ,ako se korisniku odbije darivanje zauvijek onda se ti atributi mjenjaju.
 				
 				
 				\begin{longtblr}[
@@ -69,22 +73,30 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[15,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{Korisnik}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Korisničko ime & VARCHAR & ime pomocu kojeg se korisnik logina (jednako donorid za donore) \\ \hline
-					lozinka	& VARCHAR &  lozinka za login 	\\ \hline 
-					email & VARCHAR & email na koji korisniku dolaze korisne informacije  \\ \hline 
-					broj mobitela & INT	&  broj na koji korisniku dolaze korisne infromacije		\\ \hline
+					\hline \multicolumn{3}{|c|}{\textbf{korisnikAplikacije}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}korisnikId & VARCHAR & id pomocu kojeg se korisnik prijavljuje u sustav (jednako donorid za donore) -> Generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
+					Ivica ivic 0303041001340 ima korisnikId = ii01340\\ \hline
+					lozinka	& VARCHAR &  lozinka za login (nullable)	\\ \hline 
 					ime & VARCHAR	&  ime korisnika		\\ \hline 
 					prezime & VARCHAR	& prezime korisnika	\\ \hline 
-                     godina rodenja & INT	&  godina rodenja	\\ \hline
-                     mjesto prebivanja & VARCHAR	&  mjesto stanovanja		\\ \hline
-                     zdravstveni podaci & VARCHAR	&  	kratki opis zdravstvenog stanja	\\ \hline
+					mjestoRodenja & VARCHAR & mjesto na kojem se korisnik rodio (nullable) \\ \hline
+					oib & NUMERIC(11) & oib korisnika \\ \hline
+					\SetCell{LightBlue} adresaStanovanja & INT & id adrese na kojoj korisnik stanuje ( instancirana u tablici adrese vezom 1 naprema *) (nullable) \\ \hline
+					mjestoZaposlenja & VARCHAR & firma u kojoj je korisnik zaposlen (nullable) \\ \hline
+					email & VARCHAR & email na koji korisniku dolaze korisne informacije (nullable) \\ \hline 
+					brojMobitelaPrivatni & INT	&  broj na koji korisniku dolaze korisne infromacije privatni	(nullable)	\\ \hline
+					brojMobitelaPoslovni & INT	&  broj na koji korisniku dolaze korisne infromacije poslovni ( ne obavezan za sve uloge) (nullable)		\\ \hline
+                     datumRodenja & DATE &  datum rodenja (nullable)	\\ \hline
+                     trajnoOdbijanjeDarivanja & Boolean	&  (nullable)		\\ \hline
+                     razlogOdbijanja & VARCHAR	&  	kratki opis razloga odbijanja	\\ \hline
 					\SetCell{LightBlue} uloga id	& INT &  označuje da li je korisnik admin, djelatnik ili donor 	\\ \hline 
 				\end{longtblr}
 				
+				\textbf{uloge \textit{•}}
+				entitet koji sadrži dva atributa, id za oznaku rednog broja uloge i ulogaName za ime 						uloge
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -94,38 +106,48 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Uloge}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Uloga id & INT	& označuje id uloge (admin, djelatnik ili donor)\\ \hline
-					uloga name	& VARCHAR & ime uloge(donor,admin...)  	\\ \hline 
+					\SetCell{LightGreen}ulogaId & INT	& označuje id uloge (admin, djelatnik ili donor)\\ \hline
+					ulogaName	& VARCHAR & ime uloge(donor,admin...)  	\\ \hline 
 				\end{longtblr}
+				\textbf{pokusajDoniranja\textit{•}}
+				-entitet koji služi za spremanje pokusaja doniranja, sprema podatke o datumu, mjestu, darivatelju, djelatniku, uspješnosti i razlogu odbijanja ako je uspješnost negativna
 				
 				\begin{longtblr}[
 					label=none,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[15,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{Donacija}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}Korisničko_ime & VARCHAR & korisničko ime (donorId) korisnika koji je donirao \\ \hline
-					\SetCell{LightGreen}datum & DATE & datum donacije \\ \hline
+					\hline \multicolumn{3}{|c|}{\textbf{pokusajDonacije}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}brDoniranja & VARCHAR & redni broj donacije\\ \hline
+					datum & DATE & datum donacije \\ \hline
+					mjestoDarivanja	& VARCHAR & opisno mjesto donacije	\\ \hline 
+					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR & korisnikId od djelatnika \\ \hline
+					\SetCell{LightBlue}korisnikId & VARCHAR & korisnikId od donora \\ \hline
 
-					Mjesto	& VARCHAR & mjesto donacije	\\ \hline 
-					Uspješnost	& INT & 0 za neuspješnu, 1 za uspješnu donaciju krvi  	\\ \hline 
+					uspjeh	& boolean & true za uspjeh, false za neuspjeh  	\\ \hline 
+					razlogOdbijanja & VARCHAR & opis zašto je korisnik odbijen \\ \hline
 					
-					\SetCell{LightBlue} Korisničkoime djelatnika	& VARCHAR &  korisničko ime djelatnika koji je primio donaciju 	\\ \hline 
+					
+					
 				\end{longtblr}
 				
+				\textbf{krvnaVrsta\textit{•}}
+				
+				- entitet čuva podatke o zalihi i predviđenim zalihama svih krvnih grupa
 				\begin{longtblr}[
 					label=none,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[15,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{Krv}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ime krvne grupe & VARCHAR & (A+,A-,AB+,B-...) \\ \hline
+					\hline \multicolumn{3}{|c|}{\textbf{krvnaVrsta}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}krvId & SERIAL & ID krvi serial \\ \hline
+					imeKrvneGrupe & VARCHAR & (A+,A-,AB+,B-...) \\ \hline
 					gornja granica & INT & gornja granica dopuštene količine krvi u jedinicama\\ \hline
 
 					donja granica	& INT & donja granica dopuštene količine krvi u jedinicama  	\\ \hline 
@@ -134,29 +156,72 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 					
 				\end{longtblr}
 				
+				
+				\textbf{potrosnjaKrvi\textit{•}}
+				
+				entitet koji prati isporuke krvi
 				\begin{longtblr}[
 					label=none,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[15,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{Potrošnja}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ime krvne grupe & VARCHAR & ime krvne grupe \\ \hline
-					\SetCell{LightGreen}timestampPotrošnje & DATETIME & timestamp potrošnje \\ \hline
-
-					količina 	& INT &  broj jedinica koji su se potrošili 	\\ \hline 
+					\hline \multicolumn{3}{|c|}{\textbf{potrosnjaKrvi}}	 \\ \hline[3pt]
+					\SetCell{LightGreen} idPotrosnje & SERIAL & Redni broj isporuke krvi \\ \hline
+					timestampPotrosnje & timestamp & timestamp potrošnje \\ \hline
+					\SetCell{LightBlue}krvId & INT & id krvne grupe \\ \hline
+					količinaJedinica 	& INT &  broj jedinica koji su se potrošili 	\\ \hline 
 					
-					\SetCell{LightBlue} korisničko ime djelatnika	& VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
+					\SetCell{LightBlue} korisnikIdDjelatnika & VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
+					lokacijaPotrosnje & VARCHAR & opisna lokacija kamo ide isporuka krvi \\ \hline
+					
 				\end{longtblr}
 				
+				\textbf{adresa\textit{•}}
+				
+				entitet koji sprema sve adrese korisnika sustava
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{adrese}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}idAdrese & SERIAL & id adrese \\ \hline
+					postanskiBroj & INT & poštanski broj adrese \\ \hline
+					mjesto 	& VARCHAR &  mjesto u adresi 	\\ \hline 
+					ulica & VARCHAR & ulica adrese \\ \hline
+					brojKuce & VARCHAR & redni broj kuće, može biti i 7a ili 7b pa je zato varchar \\ \hline
+					kat & INT & kat na kojem se stanuje, može biti null \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{aktivacijskiKodovi\textit{•}}
+				
+				entitet koji služi kao spremiše aktivacijskih kodova koji čekaju korisnika da ih potvrdi
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \multicolumn{3}{|c|}{\textbf{aktivacijskiKodovi}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}korisnikId & VARCHAR & id adrese \\ \hline
+					aktivacijskiKljuc & VARCHAR(10) &  ključ koji se generira s kojim korisnik treba potvrditi račun \\ \hline
+					
+				\end{longtblr}
 			
 			\subsection{Dijagram baze podataka}
 				\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/dijagram_baze.png}
-	\caption{E-R dijagram baze podataka UC8}
+	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/relShema.png}
+	\caption{relacijski model baze podataka UC8}
 	\label{fig:dijagram_baze}
 \end{figure}
 			\eject
