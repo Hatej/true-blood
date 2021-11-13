@@ -25,7 +25,7 @@ CREATE TABLE "korisnikAplikacije" (
   "brojMobitelaPoslovni" INT,
   "datumRodenja" DATE,
   "trajnoOdbijenoDarivanje" boolean,
-  "razlogObijanja" VARCHAR,
+  "razlogOdbijanja" VARCHAR,
   "ulogaId" INT
 );
 
