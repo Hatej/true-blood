@@ -4,8 +4,26 @@ import "./SignInForm.css";
 
 function LoginForm(props) {
 
+    let emailText, passwordText, loginText, showPasswordText;
+    if (props.language === "croatian") {
+        emailText = "e-pošta"
+        passwordText = "Lozinka"
+        loginText = "Prijavi se"
+        showPasswordText = "Prikaži lozinku"
+    
+    }
+
+    if (props.language === "english") {
+        emailText = "email"
+        passwordText = "Password"
+        loginText = "Log in"
+        showPasswordText = "Show password"
+    
+    }
+
     const [loginForm, setLoginForm] = React.useState({ email: '', password: ''});
     const [error, setError] = React.useState('');
+    const [passwordType, setPasswordType] = React.useState("password")
     const history = useHistory();
 
     function onSubmit(e) {
@@ -41,19 +59,32 @@ function LoginForm(props) {
         setLoginForm(newForm);
     }   
 
+    function onClick(event) {
+        if(passwordType === "text") {
+            setPasswordType("password")
+        } else {
+            setPasswordType("text")
+        }
+    }
+       
+
     return (
         <div className="SignupLoginForm">
             <form onSubmit={onSubmit}>
                 <div className="FormRow">
-                    <label>email</label>
+                    <label>{emailText}</label>
                     <input name='email' onChange={onChange} value={loginForm.email} type='email' required/>
                 </div>
                 <div className="FormRow">
-                    <label>Password</label>
-                    <input name='password' type="password" onChange={onChange} value={loginForm.password} type='password' required/>
+                    <label>{passwordText}</label>
+                    <input name='password' type={passwordType} onChange={onChange} value={loginForm.password} required/>
+                </div>
+                <div className="FormRow">
+                    <label>{showPasswordText}</label>
+                    <input name='showPassword' onClick={onClick} type="checkbox" checked={passwordType==="text"}/>
                 </div>
                 <div className='error'>{error}</div>
-                <button type="submit">Login</button>
+                <button type="submit">{loginText}</button>
             </form>
         </div>
     )
