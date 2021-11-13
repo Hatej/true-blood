@@ -12,7 +12,8 @@ CREATE TABLE "krvnaVrsta" (
 );
 
 CREATE TABLE "korisnikAplikacije" (
-  "korisnikId" VARCHAR PRIMARY KEY,
+  "korisnikId" SERIAL PRIMARY KEY,
+  "korIme" VARCHAR PRIMARY KEY,
   "lozinka" VARCHAR,
   "ime" VARCHAR NOT NULL,
   "prezime" VARCHAR NOT NULL,
@@ -35,8 +36,8 @@ CREATE TABLE "pokusajDoniranja" (
   "brDoniranja" SERIAL PRIMARY KEY,
   "datum" DATE NOT NULL,
   "mjestoDarivanja" VARCHAR NOT NULL,
-  "korisnikIdDjelatnika" VARCHAR NOT NULL,
-  "korisnikId" VARCHAR NOT NULL,
+  "korisnikIdDjelatnika" INT NOT NULL,
+  "korisnikId" INT NOT NULL,
   "uspjeh" boolean NOT NULL,
   "razlogOdbijanja" VARCHAR
 );
@@ -46,7 +47,7 @@ CREATE TABLE "potrosnjaKrvi" (
   "timestampPotrosnje" timestamp NOT NULL,
   "krvId" INT NOT NULL,
   "kolicinaJedinica" INT NOT NULL,
-  "korisnikIdDjelatnika" VARCHAR NOT NULL,
+  "korisnikIdDjelatnika" INT NOT NULL,
   "lokacijaPotrosnje" VARCHAR NOT NULL
 );
 
