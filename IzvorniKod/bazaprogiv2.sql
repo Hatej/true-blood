@@ -36,7 +36,7 @@ CREATE TABLE "pokusajDoniranja" (
   "korisnikIdDjelatnika" VARCHAR NOT NULL,
   "korisnikId" VARCHAR NOT NULL,
   "uspjeh" boolean NOT NULL,
-  "razlogObijanja" VARCHAR
+  "razlogOdbijanja" VARCHAR
 );
 
 CREATE TABLE "adresa" (
