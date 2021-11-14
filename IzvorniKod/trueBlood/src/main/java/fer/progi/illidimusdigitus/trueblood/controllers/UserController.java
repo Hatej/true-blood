@@ -5,10 +5,9 @@ import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
 import fer.progi.illidimusdigitus.trueblood.repository.RoleRepository;
 import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 //import javax.ws.rs.Consumes;
@@ -52,8 +51,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
-    //@Consumes("application/json")
+    @RequestMapping(value = "/login",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            method = {RequestMethod.POST})
     public ResponseEntity<User> login(@RequestBody User user) {
         if(user == null)
             return ResponseEntity.badRequest().build();
