@@ -57,7 +57,7 @@ function Header(props) {
                     <Link to="/login" hidden={isLoggedIn()}>{loginText}</Link>
                 </li>
                 <li className="right">
-                    <span hidden={!isLoggedIn()}> {props.log.email} </span>
+                    <span hidden={!isLoggedIn()} className='userInfo'> {props.log.email} </span>
                 </li>   
                 <li className="right">        
                     <button disabled={!isLoggedIn()} onClick={logout} hidden={!isLoggedIn()} className="right">{logoutText}</button> 

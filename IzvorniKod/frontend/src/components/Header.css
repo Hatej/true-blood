@@ -21,12 +21,9 @@
 }
 
 .Header li.right {
+    border-right: none;
     border-left: solid 1px #cccccc;
     float:right;
-}
-
-.Header li:first-child {
-    border-right: solid 1px #cccccc;
 }
 
 .Header a {
@@ -36,6 +33,11 @@
     padding: 5px 10px;
     font-size: larger;
     text-decoration: none;
+}
+
+.Header span.userInfo {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .Header img {
