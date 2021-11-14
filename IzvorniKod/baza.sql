@@ -1,24 +1,24 @@
 CREATE TABLE "uloge" (
   "ulogaId" SERIAL PRIMARY KEY,
-  "ulogaName" VARCHAR NOT NULL
+  "ulogaName" VARCHAR UNIQUE NOT NULL
 );
 
 CREATE TABLE "krvnaVrsta" (
   "krvId" SERIAL PRIMARY KEY,
-  "imeKrvneGrupe" VARCHAR NOT NULL,
+  "imeKrvneGrupe" VARCHAR UNIQUE NOT NULL,
   "gornjaGranica" INT NOT NULL,
   "donjaGranica" INT NOT NULL,
   "trenutnaZaliha" INT NOT NULL
 );
 
 CREATE TABLE "korisnikAplikacije" (
-  "korisnikId" SERIAL PRIMARY KEY,
-  "korIme" VARCHAR PRIMARY KEY,
+  "Id" SERIAL PRIMARY KEY,
+  "korisnikId" VARCHAR UNIQUE,
   "lozinka" VARCHAR,
   "ime" VARCHAR NOT NULL,
   "prezime" VARCHAR NOT NULL,
-  "mjestoRođenja" VARCHAR,
-  "oib" numeric(11) NOT NULL,
+  "mjestoRodenja" VARCHAR,
+  "oib" numeric(11) UNIQUE NOT NULL,
   "adresaStanovanja" VARCHAR,
   "mjestoZaposlenja" VARCHAR,
   "email" VARCHAR,
@@ -36,8 +36,8 @@ CREATE TABLE "pokusajDoniranja" (
   "brDoniranja" SERIAL PRIMARY KEY,
   "datum" DATE NOT NULL,
   "mjestoDarivanja" VARCHAR NOT NULL,
-  "korisnikIdDjelatnika" INT NOT NULL,
-  "korisnikId" INT NOT NULL,
+  "korisnikIdDjelatnika" VARCHAR NOT NULL,
+  "korisnikId" VARCHAR NOT NULL,
   "uspjeh" boolean NOT NULL,
   "razlogOdbijanja" VARCHAR
 );
@@ -47,7 +47,7 @@ CREATE TABLE "potrosnjaKrvi" (
   "timestampPotrosnje" timestamp NOT NULL,
   "krvId" INT NOT NULL,
   "kolicinaJedinica" INT NOT NULL,
-  "korisnikIdDjelatnika" INT NOT NULL,
+  "korisnikIdDjelatnika" VARCHAR NOT NULL,
   "lokacijaPotrosnje" VARCHAR NOT NULL
 );
 
