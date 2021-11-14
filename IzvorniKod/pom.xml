@@ -8,7 +8,7 @@
         <version>2.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>fer.progi.IlldimusDigitus</groupId>
+    <groupId>fer.progi.IllidimusDigitus</groupId>
     <artifactId>TrueBlood</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>TrueBlood</name>
@@ -25,7 +25,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -35,6 +34,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.12</version>
         </dependency>
     </dependencies>
 

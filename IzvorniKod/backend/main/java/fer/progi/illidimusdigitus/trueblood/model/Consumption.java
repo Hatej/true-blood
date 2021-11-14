@@ -55,7 +55,11 @@ public class Consumption {
     @JoinColumn(name = "korisnikId")
     
     public User employee;
-    
+
+	public Consumption() {
+
+	}
+
     public Consumption(Timestamp timestamp, int quantity, String location, Blood bloodType, User employee) {
 		super();
 		this.timestamp = timestamp;

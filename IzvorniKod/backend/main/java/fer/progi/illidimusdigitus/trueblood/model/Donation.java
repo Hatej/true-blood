@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
  * @author david
  */
 public class Donation {
+
 	/**
      * Donation id
      */
@@ -64,6 +65,9 @@ public class Donation {
     
     public User employee;
 
+	public Donation() {
+
+	}
 
 	public Donation(Date date, String donationPlace, boolean success, String reasonRefusal, User donor, User employee) {
 		super();

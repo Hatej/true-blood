@@ -1,8 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This class represents role in the system.
@@ -10,7 +8,11 @@ import javax.persistence.Id;
  * It also has name.
  * @author david
  */
+
+@Entity
+@Table(name = "uloge")
 public class Role {
+
 	/**
      * Role id
      */
@@ -24,6 +26,10 @@ public class Role {
      */
     @Column(name = "ulogaName", nullable = false)
     public String name;
+
+	public Role() {
+
+	}
 
 	public Role(String name) {
 		this.name = name;

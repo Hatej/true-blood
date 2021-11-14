@@ -1,8 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This class represents a Blood type. 
@@ -12,6 +10,8 @@ import javax.persistence.Id;
  * @author david
  */
 
+@Entity
+@Table(name = "krvnaVrsta")
 public class Blood {
 	/**
      * Blood id
@@ -45,9 +45,13 @@ public class Blood {
     @Column(name = "trenutnaZaliha", nullable = false)
     public int supply;
 
+	//@OneToMany(mappedBy = "krvnaVrsta")
+	//private List<User> users = n
+
     public Blood() {
     	
     }
+
 	public Blood(Long id, String name, int lowerbound, int upperbound, int supply) {
 		this.id = id;
 		this.name = name;

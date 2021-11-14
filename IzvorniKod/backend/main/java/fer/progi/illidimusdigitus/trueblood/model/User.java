@@ -122,7 +122,6 @@ public class User {
      */
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "krvId")
-    
     public Blood bloodType;
     
 
@@ -131,7 +130,6 @@ public class User {
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ulogaId")
-    
     public Role role;
     
     public User() {
@@ -141,7 +139,7 @@ public class User {
     public User(String username, String name, String surname,
                     String birthplace, int oib, String address, String workplace,
                     String email, int mobilePrivate, int mobileBusiness, Date birthdate,
-                    Role role) {
+                    Role role, Blood bloodType) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -149,10 +147,12 @@ public class User {
         this.email = email;
         this.oib = oib;
         this.address = address;
+		this.workplace = workplace;
         this.mobilePrivate = mobilePrivate;
         this.mobileBusiness = mobileBusiness;
         this.birthdate = birthdate;
         this.role = role;
+		this.bloodType = bloodType;
     }
     
     public User(String username, String name, String surname,
@@ -174,7 +174,6 @@ public class User {
 		this.role = role;
 		this.bloodType = bloodType;
     }
-
 
 	public String getUsername() {
 		return username;
