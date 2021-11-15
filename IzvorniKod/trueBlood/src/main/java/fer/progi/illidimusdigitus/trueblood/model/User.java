@@ -60,7 +60,7 @@ public class User {
      * User oib
      */
     @Column(name = "oib", nullable = false)
-    public int oib;
+    public String oib;
     
     /**
      * User address
@@ -84,13 +84,13 @@ public class User {
      * User mobilePrivate
      */
     @Column(name = "brojMobitelaPrivatni")
-    public int mobilePrivate;
+    public String mobilePrivate;
     
     /**
      * User mobileBusiness
      */
     @Column(name = "brojMobitelaPoslovni")
-    public int mobileBusiness;
+    public String mobileBusiness;
     
     /**
      * User birthdate
@@ -136,8 +136,8 @@ public class User {
     
     
     public User(String username, String name, String surname,
-                    String birthplace, int oib, String address, String workplace,
-                    String email, int mobilePrivate, int mobileBusiness, Date birthdate,
+                    String birthplace, String oib, String address, String workplace,
+                    String email, String mobilePrivate, String mobileBusiness, Date birthdate,
                     Role role, Blood bloodType) {
         this.username = username;
         this.name = name;
@@ -155,8 +155,8 @@ public class User {
     }
     
     public User(String username, String name, String surname,
-            String birthplace, int oib, String address, String workplace,
-            String email, int mobilePrivate, int mobileBusiness, Date birthdate,
+            String birthplace, String oib, String address, String workplace,
+            String email, String mobilePrivate, String mobileBusiness, Date birthdate,
             boolean rejected, String rejection, Role role, Blood bloodType) {
 		this.username = username;
 		this.name = name;
@@ -254,24 +254,22 @@ public class User {
 	}
 
 
-	public int getMobilePrivate() {
+	public String getMobilePrivate() {
 		return mobilePrivate;
 	}
 
 
-	public void setMobilePrivate(int mobilePrivate) {
+	public void setMobilePrivate(String mobilePrivate) {
 		this.mobilePrivate = mobilePrivate;
 	}
 
 
-	public int getMobileBusiness() {
+	public String getMobileBusiness() {
 		return mobileBusiness;
 	}
 
 
-	public void setMobileBusiness(int mobileBusiness) {
-		this.mobileBusiness = mobileBusiness;
-	}
+	public void setMobileBusiness(String mobileBusiness) { this.mobileBusiness = mobileBusiness; }
 
 
 	public Date getBirthdate() {
@@ -339,7 +337,7 @@ public class User {
 	}
 
 
-	public int getOib() {
+	public String getOib() {
 		return oib;
 	}
 

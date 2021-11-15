@@ -1,6 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents role in the system.
@@ -26,6 +28,9 @@ public class Role {
      */
     @Column(name = "ulogaName", nullable = false)
     public String name;
+
+	@OneToMany(mappedBy = "role")
+	private Set<User> users = new HashSet<>();
 
 	public Role() {
 

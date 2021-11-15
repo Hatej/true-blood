@@ -4,19 +4,32 @@ import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
 import fer.progi.illidimusdigitus.trueblood.repository.RoleRepository;
 import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
+import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 //import javax.ws.rs.Consumes;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserRepository userRepo;
+    private UserService userService;
+
+    @GetMapping("")
+    public List<User> listUsers() {
+        return userService.listAll();
+    }
+
+    @PostMapping("")
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
 
     @Autowired
     private RoleRepository roleRepo;
@@ -24,6 +37,7 @@ public class UserController {
     @Autowired
     private BloodRepository bloodRepo;
 
+    /*
     @PostMapping("/signin")
     //@Consumes("application/json")
     public ResponseEntity<User> signIn(@RequestBody User user){
@@ -69,6 +83,6 @@ public class UserController {
             return ResponseEntity.accepted().body(foundUserrtr);
         }
 
-    }
+    }*/
 
 }

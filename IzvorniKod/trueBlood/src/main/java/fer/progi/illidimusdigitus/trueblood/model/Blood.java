@@ -1,6 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents a Blood type. 
@@ -45,8 +47,8 @@ public class Blood {
     @Column(name = "trenutnaZaliha", nullable = false)
     public int supply;
 
-	//@OneToMany(mappedBy = "krvnaVrsta")
-	//private List<User> users = n
+	@OneToMany(mappedBy = "bloodType")
+	private Set<User> users = new HashSet<>();
 
     public Blood() {
     	
