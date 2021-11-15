@@ -47,8 +47,8 @@
 			
 			
 			
-		Za potrebe naseg sustava koristit cemo relacijsku bazu podataka koja svojom strukturom olaksava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaca baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
-Baza podataka ove aplikacije sastoji se od sljedecih entiteta: 
+		Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
+Baza podataka ove aplikacije sastoji se od sljedećih entiteta: 
 \begin{itemize}
 		\item korisnikAplikacije
 		\item uloge
@@ -60,13 +60,13 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 		
 	\end{itemize}
 
-		
+		\eject
 			\subsection{Opis tablica}
 			
 
 				\textbf{korisnikAplikacije \textit{•}}
-				 Ovaj entitet predstavlja sve korisnike apliakacije (admin,djelatnik,donor) i diferencira ih pomoću ulogaId što je referenca na tablicu uloga. KorisnikId i lozinka se koristi za login u aplikaciju, ako korisnik još nije aktivirao svoj račun, onda u atributu lozinka stoji null. Za admina i djelatnika postoje atributi : ime, prezime, oib dok su ostale vrijednosti null. Kod stvaranja atributa trajnoOdbijanjeDarivanja je false, a razlogOdbijanja je null ,ako se korisniku odbije darivanje zauvijek onda se ti atributi mjenjaju.
-				
+				 Ovaj entitet predstavlja sve korisnike aplikacije (admin, djelatnik, donor) i diferencira ih pomoću ulogaId što je referenca na tablicu uloga. KorisnikId i lozinka se koristi za login u aplikaciju. Za admina i djelatnika postoje atributi : ime, prezime, oib, email dok su ostale vrijednosti null. Kod stvaranja atributa trajnoOdbijanjeDarivanja je false, a razlogOdbijanja je null ,ako se korisniku odbije darivanje zauvijek onda se ti atributi mjenjaju.
+
 				
 				\begin{longtblr}[
 					label=none,
@@ -77,25 +77,26 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{korisnikAplikacije}}	 \\ \hline[3pt]
-					\setCell{LightGreen} brKor & SERIAL & samo inkrementirajući ključ koji služi kao ključ korisnika \\ \hline					
-					korisnikId & VARCHAR & id pomocu kojeg se korisnik prijavljuje u sustav (jednako donorid za donore) -> Generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
+					\SetCell{LightGreen} brKor & SERIAL & samoinkrementirajući ključ koji služi kao broj korisnika \\ \hline					
+					korisnikId & VARCHAR & id pomoću kojeg se korisnik prijavljuje u sustav (jednako donorId za donore) -> generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
 					Ivica ivic 0303041001340 ima korisnikId = ii01340\\ \hline
-					lozinka	& VARCHAR &  lozinka za login (nullable)	\\ \hline 
+					lozinka	& VARCHAR &  lozinka za login 	\\ \hline 
 					ime & VARCHAR	&  ime korisnika		\\ \hline 
 					prezime & VARCHAR	& prezime korisnika	\\ \hline 
-					mjestoRodenja & VARCHAR & mjesto na kojem se korisnik rodio (nullable) \\ \hline
+					mjestoRodenja & VARCHAR & mjesto gdje se korisnik rodio (nullable) \\ \hline
 					oib & CHAR(11) & oib korisnika \\ \hline
-					 adresaStanovanja & VARCHAR & id adrese na kojoj korisnik stanuje \\ \hline
+					adresaStanovanja & VARCHAR & adresa na kojoj korisnik stanuje (nullable) \\ \hline
 					mjestoZaposlenja & VARCHAR & firma u kojoj je korisnik zaposlen (nullable) \\ \hline
 					email & VARCHAR & email na koji korisniku dolaze korisne informacije (nullable) \\ \hline 
 					brojMobitelaPrivatni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije privatni	(nullable)	\\ \hline
-					brojMobitelaPoslovni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije poslovni ( ne obavezan za sve uloge) (nullable)		\\ \hline
-                     datumRodenja & DATE &  datum rodenja (nullable)	\\ \hline
-                     \setCell{LightBlue} krvId & INT & vrsta Krvi donora \\ \hline
-                     trajnoOdbijanjeDarivanja & Boolean	&  (nullable)		\\ \hline
+					brojMobitelaPoslovni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije poslovni ( neobavezan za sve uloge) (nullable)		\\ \hline
+                     datumRodenja & DATE &  datum rođenja	\\ \hline
+                     \SetCell{LightBlue}krvId & INT & vrsta krvi donora \\ \hline
+                     trajnoOdbijenoDarivanje & Boolean &  (nullable)\\ \hline
                      
-					\SetCell{LightBlue} uloga id	& INT &  označuje da li je korisnik admin, djelatnik ili donor 	\\ \hline 
-					aktivacijskiKljuc & VARCHAR(10) & aktivacijski ključ koji služi za aktivaciju računa, nakon aktivacije NULL
+					 \SetCell{LightBlue}ulogaId & INT &  označava je li korisnik admin, djelatnik ili donor \\ \hline 
+					aktivacijskiKljuc & VARCHAR(10) & aktivacijski ključ koji služi za aktivaciju računa, nakon aktivacije NULL \\
+\hline		
 					\end{longtblr}
 				
 				\textbf{uloge \textit{•}}
@@ -109,11 +110,13 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Uloge}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ulogaId & INT	& označuje id uloge (admin, djelatnik ili donor)\\ \hline
+					\SetCell{LightGreen}ulogaId & INT	& označava id uloge (admin, djelatnik ili donor)\\ \hline
 					ulogaName	& VARCHAR & ime uloge(donor,admin...)  	\\ \hline 
+					
 				\end{longtblr}
-				\textbf{pokusajDoniranja\textit{•}}
-				-entitet koji služi za spremanje pokusaja doniranja, sprema podatke o datumu, mjestu, darivatelju, djelatniku, uspješnosti i razlogu odbijanja ako je uspješnost negativna
+	\eject
+				\textbf{pokusajDonacije\textit{•}}
+				-entitet koji služi za spremanje pokušaja doniranja, sprema podatke o datumu, mjestu, darivatelju, djelatniku, uspješnosti i razlogu odbijanja ako je uspješnost false
 				
 				\begin{longtblr}[
 					label=none,
@@ -136,7 +139,7 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 				
 				\textbf{krvnaVrsta\textit{•}}
 				
-				- entitet čuva podatke o zalihi i predviđenim zalihama svih krvnih grupa
+				- entitet čuva podatke o zalihi i predviđenim gornjim i donjim granicama za sve krvnih grupa
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -155,7 +158,7 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 					
 					
 				\end{longtblr}
-				
+\eject			
 				
 				\textbf{potrosnjaKrvi\textit{•}}
 				
@@ -169,19 +172,19 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{potrosnjaKrvi}}	 \\ \hline[3pt]
-					\SetCell{LightGreen} idPotrosnje & SERIAL & Redni broj isporuke krvi \\ \hline
+					\SetCell{LightGreen} idPotrosnje & SERIAL & redni broj isporuke krvi \\ \hline
 					timestampPotrosnje & timestamp & timestamp potrošnje \\ \hline
 					\SetCell{LightBlue}krvId & INT & id krvne grupe \\ \hline
-					količinaJedinica 	& INT &  broj jedinica koji su se potrošili 	\\ \hline 
+					količinaJedinica & INT &  broj jedinica koje su se potrošili \\ \hline 
 					
-					\SetCell{LightBlue} korisnikIdDjelatnika & VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
+					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
 					lokacijaPotrosnje & VARCHAR & opisna lokacija kamo ide isporuka krvi \\ \hline
 					
 				\end{longtblr}
 				
 				\textbf{zdravstveniPodaci\textit{•}}
 				
-				entitet koji sprema sve moguće Zdravstvene podatke koji se pitaju korisnika u upitniku. Oni sadrže svoj id, koji se sam generira u tablici, opis zdravstvenog podatka i težinu kriterija odnosno, 0 ako se na temelju toga podatka trajno odbija darivanje i 1 ako se privremeno odbija.
+				entitet koji sprema sve moguće zdravstvene podatke koji se pitaju korisnika u upitniku. Oni sadrže svoj id, koji se sam generira u tablici, opis zdravstvenog podatka i težinu kriterija odnosno, 0 ako se na temelju toga podatka trajno odbija darivanje i 1 ako se privremeno odbija, inače null.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -198,10 +201,10 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 
 					
 				\end{longtblr}
-				
+\eject				
 				\textbf{doniranjeZdravljeOdgovori\textit{•}}
 				
-				entitet koji služi kao spremiše odgovora korisnika koji su došli donirati krv
+				entitet koji služi kao spremište odgovora korisnika koji su došli donirati krv
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -212,8 +215,8 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{doniranjeZdravljeOdgovori}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} brDoniranja & INT & brDoniranja iz tablice pokusajDoniranja \\ \hline
-					\setCell{LightGreen} idZdravstvenih & INT &  idZdravstvenih iz tablice zdravstveni podaci \\ \hline
-					odgovorDonora & boolean & true ako donor pada tam tom kriteriju i odbija se privremeno/trajno ,inaće false
+					\SetCell{LightGreen} idZdravstvenih & INT &  idZdravstvenih iz tablice zdravstveni podaci \\ \hline
+					odgovorDonora & boolean & true ako donor pada po kriteriju i odbija se privremeno/trajno ,inače false\\ \hline
 					
 				\end{longtblr}
 			
@@ -221,7 +224,7 @@ Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 				\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/relShema.png}
-	\caption{relacijski model baze podataka UC8}
+	\caption{relacijski model baze podataka}
 	\label{fig:dijagram_baze}
 \end{figure}
 			\eject
