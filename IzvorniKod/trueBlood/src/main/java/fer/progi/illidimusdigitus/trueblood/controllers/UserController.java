@@ -1,9 +1,10 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
-import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
-import fer.progi.illidimusdigitus.trueblood.repository.RoleRepository;
-import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
+import fer.progi.illidimusdigitus.trueblood.service.BloodService;
+import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,21 +22,47 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BloodService bloodService;
+
+    @Autowired
+    private RoleService roleService;
+
     @GetMapping("")
     public List<User> listUsers() {
         return userService.listAll();
     }
 
-    @PostMapping("")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping("/add")
+    public User createUser(@RequestBody CreateUserDTO dto) {
+
+        if (roleService.findByName(dto.getRoleName()).isEmpty()
+            || bloodService.findByName(dto.getBloodTypeName()).isEmpty()) {
+
+        }
+
+        Role userRole = roleService.findByName(dto.getRoleName()).get();
+        Blood userBloodType = bloodService.findByName(dto.getBloodTypeName()).get();
+
+        User newUser = new User(
+                dto.getName().charAt(0) + dto.getSurname().charAt(0) + dto.getOib().substring(6),
+                dto.getPassword(),
+                dto.getName(),
+                dto.getSurname(),
+                dto.getBirthplace(),
+                dto.getEmail(),
+                dto.getOib(),
+                dto.getAddress(),
+                dto.getWorkplace(),
+                dto.getMobilePrivate(),
+                dto.getMobileBusiness(),
+                dto.getBirthdate(),
+                userRole,
+                userBloodType
+                );
+
+        return userService.createUser(newUser);
     }
-
-    @Autowired
-    private RoleRepository roleRepo;
-
-    @Autowired
-    private BloodRepository bloodRepo;
 
     /*
     @PostMapping("/signin")

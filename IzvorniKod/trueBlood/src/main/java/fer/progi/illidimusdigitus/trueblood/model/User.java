@@ -135,11 +135,12 @@ public class User {
     }
     
     
-    public User(String username, String name, String surname,
+    public User(String username, String password, String name, String surname,
                     String birthplace, String oib, String address, String workplace,
                     String email, String mobilePrivate, String mobileBusiness, Date birthdate,
                     Role role, Blood bloodType) {
         this.username = username;
+		this.password = password;
         this.name = name;
         this.surname = surname;
         this.birthplace = birthplace;
@@ -152,6 +153,8 @@ public class User {
         this.birthdate = birthdate;
         this.role = role;
 		this.bloodType = bloodType;
+		this.rejected = false;
+		this.activation = oib.substring(1);
     }
     
     public User(String username, String name, String surname,
