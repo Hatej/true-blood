@@ -76,9 +76,8 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 						colspec={|X[15,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{korisnikAplikacije}}	 \\ \hline[3pt]
-					\SetCell{LightGreen} brKor & SERIAL & samoinkrementirajući ključ koji služi kao broj korisnika \\ \hline					
-					korisnikId & VARCHAR & id pomoću kojeg se korisnik prijavljuje u sustav (jednako donorId za donore) -> generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
+					\hline \multicolumn{3}{|c|}{\textbf{korisnikAplikacije}}	 \\ \hline[3pt]				
+					\SetCell{LightGreen}korisnikId & VARCHAR & id pomoću kojeg se korisnik prijavljuje u sustav (jednako donorId za donore) -> generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
 					Ivica ivic 0303041001340 ima korisnikId = ii01340\\ \hline
 					lozinka	& VARCHAR &  lozinka za login 	\\ \hline 
 					ime & VARCHAR	&  ime korisnika		\\ \hline 
