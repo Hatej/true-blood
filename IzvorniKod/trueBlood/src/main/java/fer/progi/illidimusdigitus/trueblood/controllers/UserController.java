@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 //import javax.ws.rs.Consumes;
@@ -33,8 +32,9 @@ public class UserController {
         return userService.listAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/add")
-    public User createUser(@RequestBody CreateUserDTO dto) {
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDTO dto) {
 
         if (roleService.findByName(dto.getRoleName()).isEmpty()
             || bloodService.findByName(dto.getBloodTypeName()).isEmpty()) {
@@ -45,15 +45,15 @@ public class UserController {
         Blood userBloodType = bloodService.findByName(dto.getBloodTypeName()).get();
 
         User newUser = new User(
-                dto.getName().charAt(0) + dto.getSurname().charAt(0) + dto.getOib().substring(6),
-                dto.getPassword(),
+                String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
+                "Random Password",
                 dto.getName(),
                 dto.getSurname(),
                 dto.getBirthplace(),
-                dto.getEmail(),
                 dto.getOib(),
                 dto.getAddress(),
                 dto.getWorkplace(),
+                dto.getEmail(),
                 dto.getMobilePrivate(),
                 dto.getMobileBusiness(),
                 dto.getBirthdate(),
@@ -61,7 +61,8 @@ public class UserController {
                 userBloodType
                 );
 
-        return userService.createUser(newUser);
+        userService.createUser(newUser);
+        return ResponseEntity.ok().build();
     }
 
     /*

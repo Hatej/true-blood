@@ -4,8 +4,6 @@ import java.util.Date;
 
 public class CreateUserDTO {
 
-    public String password;
-
     public String name;
 
     public String surname;
@@ -29,10 +27,6 @@ public class CreateUserDTO {
     public String bloodTypeName;
 
     public String roleName;
-
-    public String getPassword() {
-        return password;
-    }
 
     public String getName() {
         return name;
@@ -81,11 +75,7 @@ public class CreateUserDTO {
     public String getRoleName() {
         return roleName;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    
     public void setName(String name) {
         this.name = name;
     }

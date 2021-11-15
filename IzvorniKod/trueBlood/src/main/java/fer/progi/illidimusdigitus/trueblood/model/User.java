@@ -157,7 +157,7 @@ public class User {
 		this.activation = oib.substring(1);
     }
     
-    public User(String username, String name, String surname,
+    /*public User(String username, String name, String surname,
             String birthplace, String oib, String address, String workplace,
             String email, String mobilePrivate, String mobileBusiness, Date birthdate,
             boolean rejected, String rejection, Role role, Blood bloodType) {
@@ -175,7 +175,7 @@ public class User {
 		this.rejection = rejection;
 		this.role = role;
 		this.bloodType = bloodType;
-    }
+    }*/
 
 	public String getUsername() {
 		return username;

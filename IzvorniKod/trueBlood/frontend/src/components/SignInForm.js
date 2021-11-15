@@ -45,17 +45,18 @@ function SignInForm(props) {
         setError("")
       
         const data = {
-            ime: signinForm.givenName,
-            prezime: signinForm.familyName,
-            OIB: signinForm.OIB,
-            datumRod: signinForm.dateOfBirth,
-            mjestoRod: signinForm.birthPlace,
-            adresaStanovanja: signinForm.residenceAdress,
-            mjestoZaposlenja: signinForm.workplaceName,
-            telPrivatni: signinForm.privatePhoneNumber,
-            telPoslovni: signinForm.workPhoneNumber,
+            name: signinForm.givenName,
+            surname: signinForm.familyName,
+            birthplace: signinForm.birthPlace,
+            oib: signinForm.OIB,
+            address: signinForm.residenceAdress,
+            workplace: signinForm.workplaceName,
             email: signinForm.email,
-            tipKrvi: signinForm.bloodType
+            mobilePrivate: signinForm.privatePhoneNumber,
+            mobileBusiness: signinForm.workPhoneNumber,
+            birthdate: signinForm.dateOfBirth,
+            bloodTypeName: signinForm.bloodType,
+            roleName: "korisnik"
         };
 
         console.log(data);
@@ -63,12 +64,12 @@ function SignInForm(props) {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'appication/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         };
         setError("");
-        return fetch('/signin', options)
+        return fetch('http://localhost:8080/user/add', options)
             .then(response => {
                 if(response.ok){
                     history.push('/login');
@@ -118,7 +119,7 @@ function SignInForm(props) {
                 </div>
                 <div className="FormRow">
                     <label>{residencePlaceText}</label>
-                    <input name='residencePlace' onChange={onChange} value={signinForm.residenceAdress} type="text" required/>
+                    <input name='residenceAdress' onChange={onChange} value={signinForm.residenceAdress} type="text" required/>
                 </div>
                 <div className="FormRow">
                     <label>Mjesto zaposlenja (naziv firme)</label>
