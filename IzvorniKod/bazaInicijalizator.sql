@@ -12,8 +12,7 @@ CREATE TABLE "krvnaVrsta" (
 );
 
 CREATE TABLE "korisnikAplikacije" (
-  "brKor" SERIAL PRIMARY KEY,
-  "korisnikId" VARCHAR UNIQUE,
+  "korisnikId" VARCHAR PRIMARY KEY,
   "lozinka" VARCHAR,
   "ime" VARCHAR NOT NULL,
   "prezime" VARCHAR NOT NULL,
