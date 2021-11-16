@@ -30,24 +30,12 @@ public class Donation {
      */
     @Column(name = "mjestoDarivanja", nullable = false)
     public String donationPlace;
-    /**
-     * Donation success
-     */
-    @Column(name = "uspjeh", nullable = false)
-    public boolean success;
-    /**
-     * Reason for donation refusal
-     */
-    @Column(name = "razlogOdbijanja")
-    public String reasonRefusal;
-    
 
     /**
      * User donor
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "korisnikId")
-    
     public User donor;
     
 
@@ -55,20 +43,24 @@ public class Donation {
      * User employee
      */
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "korisnikId")
-    
+    @JoinColumn(name = "korisnikIdDjelatnika")
     public User employee;
+
+	/**
+	 * Donation success
+	 */
+	@Column(name = "uspjeh", nullable = false)
+	public boolean success;
 
 	public Donation() {
 
 	}
 
-	public Donation(Date date, String donationPlace, boolean success, String reasonRefusal, User donor, User employee) {
+	public Donation(Date date, String donationPlace, boolean success, User donor, User employee) {
 		super();
 		this.date = date;
 		this.donationPlace = donationPlace;
 		this.success = success;
-		this.reasonRefusal = reasonRefusal;
 		this.donor = donor;
 		this.employee = employee;
 	}
@@ -102,17 +94,6 @@ public class Donation {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-
-
-	public String getReasonRefusal() {
-		return reasonRefusal;
-	}
-
-
-	public void setReasonRefusal(String reasonRefusal) {
-		this.reasonRefusal = reasonRefusal;
-	}
-
 
 	public Long getId() {
 		return id;

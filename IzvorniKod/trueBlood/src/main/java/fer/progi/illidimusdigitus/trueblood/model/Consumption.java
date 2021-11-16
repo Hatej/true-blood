@@ -23,31 +23,32 @@ public class Consumption {
      */
     @Column(name = "timestampPotrosnje", nullable = false)
     public Timestamp timestamp;
+
+	/**
+	 * Blood Type
+	 */
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "krvId")
+	public Blood bloodType;
+
     /**
      * Consumption quantity
      */
     @Column(name = "kolicinaJedinica", nullable = false)
     public int quantity;
-    /**
-     * Consumption hospital location
-     */
-    @Column(name = "lokacijaPotrosnje", nullable = false)
-    public String location;
-	/**
-     * Blood Type
-     */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "krvId")
-    
-    public Blood bloodType;
-	
+
 	/**
      * User employee
      */
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "korisnikId")
-    
     public User employee;
+
+	/**
+	 * Consumption hospital location
+	 */
+	@Column(name = "lokacijaPotrosnje", nullable = false)
+	public String location;
 
 	public Consumption() {
 

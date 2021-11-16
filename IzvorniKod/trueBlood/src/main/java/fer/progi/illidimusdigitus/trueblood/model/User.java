@@ -22,7 +22,7 @@ public class User {
      * User username
      */
 	@Id
-    @Column(name = "korIme", unique = true, nullable = false)
+    @Column(name = "korisnikId", unique = true, nullable = false)
     public String username;
     
     /**

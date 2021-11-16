@@ -28,18 +28,19 @@ public class Blood {
      */
     @Column(name = "imeKrvneGrupe", nullable = false)
     public String name;
-    
+
+	/**
+	 * Blood upperbound
+	 */
+	@Column(name = "gornjaGranica", nullable = false)
+	public int upperbound;
+
     /**
      * Blood lowerbound
      */
     @Column(name = "donjaGranica", nullable = false)
     public int lowerbound;
 
-    /**
-     * Blood upperbound
-     */
-    @Column(name = "gornjaGranica", nullable = false)
-    public int upperbound;
 
     /**
      * Current blood supply
