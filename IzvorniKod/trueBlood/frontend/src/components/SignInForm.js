@@ -5,11 +5,13 @@ import "./SignInForm.css";
 
 function SignInForm(props) {
 
-    let givenNameText, familyNameText, birthYearText, residencePlaceText, phoneNumberText, emailText, passwordText, passwordRepeatedText, signinText, passwordsNotSameText, showPasswordText;
+    let givenNameText, familyNameText, oibText, dateOfBirthText, birthPlaceText, residencePlaceText, phoneNumberText, emailText, passwordText, passwordRepeatedText, signinText, passwordsNotSameText, showPasswordText, placeOfEmploymentText, privatePhoneNumberText, officialPhoneNumberText, bloodTypeText;
     if (props.language === "croatian") {
         givenNameText = "Ime"
         familyNameText = "Prezime"
-        birthYearText = "Datum rođenja"
+        oibText = "OIB"
+        dateOfBirthText = "Datum rođenja"
+        birthPlaceText = "Mjesto rođenja"
         residencePlaceText = "Adresa stanovanja"
         phoneNumberText = "Broj mobitela"
         emailText = "Elektronička pošta"
@@ -18,11 +20,18 @@ function SignInForm(props) {
         signinText = "Registriraj se"
         passwordsNotSameText = "Lozinke se ne poklapaju"
         showPasswordText = "Prikaži lozinke"
+        placeOfEmploymentText = "Mjesto zaposlenja (naziv firme)"
+        privatePhoneNumberText = "Privatni telefonski broj"
+        officialPhoneNumberText = "Službeni telefonski broj"
+        bloodTypeText = "Tip krvi"
+
     }
     if (props.language === "english") {
         givenNameText = "Name"
         familyNameText = "Family name"
-        birthYearText = "Date of birth"
+        oibText = "OIB"
+        dateOfBirthText = "Date of birth"
+        birthPlaceText = "Birth place"
         residencePlaceText = "Residence adress"
         phoneNumberText = "Phone number"
         emailText = "email"
@@ -31,6 +40,10 @@ function SignInForm(props) {
         passwordsNotSameText = "Passwords do not match"
         signinText = "Sign in"
         showPasswordText = "Show passwords"
+        placeOfEmploymentText = "Place of employment"
+        privatePhoneNumberText = "Private phone number"
+        officialPhoneNumberText = "Official phone number"
+        bloodTypeText = "Blood type"
     }
 
 
@@ -105,15 +118,15 @@ function SignInForm(props) {
                     <input name='familyName' onChange={onChange} value={signinForm.familyName} type="text" required/>
                 </div>
                 <div className="FormRow">
-                    <label>OIB</label>
+                    <label>{oibText}</label>
                     <input name='OIB' onChange={onChange} value={signinForm.OIB} type="text" minLength="11" maxLength="11" required/>
                 </div>
                 <div className="FormRow">
-                    <label>{birthYearText}</label>
+                    <label>{dateOfBirthText}</label>
                     <input name='dateOfBirth' onChange={onChange} value={signinForm.dateOfBirth} type="date" required/>
                 </div>
                 <div className="FormRow">
-                    <label>Mjesto rođenja</label>
+                    <label>{birthPlaceText}</label>
                     <input name='birthPlace' onChange={onChange} value={signinForm.birthPlace} type="text" required/>
                 </div>
                 <div className="FormRow">
@@ -121,15 +134,15 @@ function SignInForm(props) {
                     <input name='residenceAdress' onChange={onChange} value={signinForm.residenceAdress} type="text" required/>
                 </div>
                 <div className="FormRow">
-                    <label>Mjesto zaposlenja (naziv firme)</label>
+                    <label>{placeOfEmploymentText}</label>
                     <input name='workplaceName' onChange={onChange} value={signinForm.workplaceName} type="text"/>
                 </div>
                 <div className="FormRow">
-                    <label>Kontank telefon privatni</label>
+                    <label>{privatePhoneNumberText}</label>
                     <input name='privatePhoneNumber' onChange={onChange} value={signinForm.privatePhoneNumber} type="tel" pattern="[0-9]{10}" required/>
                 </div>
                 <div className="FormRow">
-                    <label>Kontakt telefon na poslu</label>
+                    <label>{officialPhoneNumberText}</label>
                     <input name='workPhoneNumber' onChange={onChange} value={signinForm.workPhoneNumber} type="tel" pattern="[0-9]{10}"/>
                 </div>
                 <div className="FormRow">
@@ -137,7 +150,7 @@ function SignInForm(props) {
                     <input name='email' onChange={onChange} value={signinForm.email} type="email" required/>
                 </div>
                 <div className="FormRow">
-                    <label>Tip krvi</label>
+                    <label>{bloodTypeText}</label>
                     <select name='bloodType' onChange={onChange} value={signinForm.bloodType} required>
                         <option value='A+' selected>A+</option>
                         <option value='A-'>A-</option>
