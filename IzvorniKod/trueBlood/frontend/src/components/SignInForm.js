@@ -85,7 +85,7 @@ function SignInForm(props) {
         const {name, value} = event.target;
         let newForm = {givenName: signinForm.givenName, familyName: signinForm.familyName, 
                        OIB: signinForm.OIB, dateOfBirth: signinForm.dateOfBirth, birthPlace: signinForm.birthPlace,
-                       residencePlace: signinForm.residenceAdress, workplaceName: signinForm.workplaceName, 
+                       residenceAdress: signinForm.residenceAdress, workplaceName: signinForm.workplaceName,
                        privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, bloodType: signinForm.bloodType};
         newForm[name] = value;
         
