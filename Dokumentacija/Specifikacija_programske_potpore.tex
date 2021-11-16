@@ -542,7 +542,7 @@ Donor, koji nema trajnu zabranu darivanja krvi, kod svakog spajanja u sustav dob
 
 \textbf{Obrazac uporabe UC9 - Evidentiranje "potrošnje" krvi}
 
-Djelatnik banke može evidentirati "potrošnju" krvi odnosno slanje određenog broja jedinica krvi u vanjsku instituciju. U bazi podataka se smanjuje količina određene vrste krvi.
+Djelatnik banke može evidentirati "potrošnju" krvi odnosno slanje određenog broja jedinica krvi u vanjsku instituciju. U bazi podataka se smanjuje količina određene vrste krvi i ako se prešla donja granica šalje se mail djelatniku.
 
 \begin{figure}[H]
 	\centering
@@ -564,7 +564,7 @@ Djelatnik banke evidentira i uspješne i neuspješne pokušaje doniranja. Na tem
 
 \textbf{Obrazac uporabe UC14 - Definiranje optimalnih granica}
 
-Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optimalne količine. Administratoru se prikazuju trenutne granice za pojedinu vrstu krvi. Zatim on ih on može mijenjati i promjene se spremaju i bazu podataka.
+Za svaku krvnu grupu administrator sustava definira gornju i donju granicu optimalne količine. Administratoru se prikazuju trenutne granice za pojedinu vrstu krvi. Zatim on ih on može mijenjati i promjene se spremaju i bazu podataka. Ako je prijeđena gornja granica šalje se mail djelatniku. Ako je prijeđena donja granica šalje se mail djelatniku i poruke donorima.
 
 \begin{figure}[H]
 	\centering
