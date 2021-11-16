@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * This class represents User.
- * User has Id and username which are primary keys.
+ * User username which is primary key.
  * user also has name, surname, birthplace, birthdate
  * address, workplace, email, mobilePrivate, 
  * mobileBusiness, bloodId which represents blood type and roleId 

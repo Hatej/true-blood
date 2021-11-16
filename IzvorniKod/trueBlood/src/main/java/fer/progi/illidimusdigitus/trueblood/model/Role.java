@@ -28,7 +28,8 @@ public class Role {
      */
     @Column(name = "ulogaName", nullable = false)
     public String name;
-
+    
+    //ne znam dal je ovo potrebno
 	@OneToMany(mappedBy = "role")
 	private Set<User> users = new HashSet<>();
 

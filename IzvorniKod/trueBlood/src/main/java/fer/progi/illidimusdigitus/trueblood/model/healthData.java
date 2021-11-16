@@ -3,6 +3,12 @@ package fer.progi.illidimusdigitus.trueblood.model;
 
 import javax.persistence.*;
 
+/**
+ * This class represents health data.
+ * It has id, which is primary key.
+ * It also has a name and a criterion. 
+ * @author matija
+ */
 @Entity
 @Table(name = "zdravsteniPodaci")
 public class healthData {
@@ -19,30 +25,23 @@ public class healthData {
      * healthData name
      */
     @Column(name = "zdravstevniPodatak", nullable = false)
-    public String healthData;
+    public String name;
 
     /**
-     * healthData weight
+     * healthData criterion
      */
     @Column(name = "tezinaKriterija", nullable = false)
-    public String healthDataWeight;
+    public String criterion;
 
-    public String getHealthData() {
-        return healthData;
+    public String getName() {
+        return name;
     }
 
-    public void setHealthData(String healthData) {
-        this.healthData = healthData;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getHealthDataWeight() {
-        return healthDataWeight;
-    }
-
-    public void setHealthDataWeight(String healthDataWeight) {
-        this.healthDataWeight = healthDataWeight;
-    }
-
+   
     public Long getIdHealth() {
         return idHealth;
     }
@@ -51,12 +50,20 @@ public class healthData {
         this.idHealth = idHealth;
     }
 
-    public healthData(String healthData,Long idHealth,String healthDataWeight) {
-        this.healthData = healthData;
-        this.healthDataWeight = healthDataWeight;
+    public healthData(Long idHealth,String name,String criterion) {
+        this.name = name;
+        this.criterion = criterion;
         this.idHealth = idHealth;
     }
 
-    public healthData() {
+    public String getCriterion() {
+		return criterion;
+	}
+
+	public void setCriterion(String criterion) {
+		this.criterion = criterion;
+	}
+
+	public healthData() {
     }
 }

@@ -48,6 +48,7 @@ public class Blood {
     @Column(name = "trenutnaZaliha", nullable = false)
     public int supply;
 
+    //ne znam dal je ovo potrebno
 	@OneToMany(mappedBy = "bloodType")
 	private Set<User> users = new HashSet<>();
 
