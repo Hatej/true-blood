@@ -3,6 +3,8 @@ package fer.progi.illidimusdigitus.trueblood.controllers;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
@@ -37,12 +39,20 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<User> createUser(@RequestBody CreateUserDTO dto) {
 
-        if (bloodService.findByName(dto.getBloodTypeName()).isEmpty()) {
+        Role userRole = roleService.findByName(RoleName.DONOR).get();
 
-        }
-
-        Role userRole = roleService.findByName("DONOR").get();
-        Blood userBloodType = bloodService.findByName(dto.getBloodTypeName()).get();
+        BloodType userBT = switch(dto.getBloodTypeName()) {
+          case "A+" -> BloodType.A_PLUS;
+          case "A-" -> BloodType.A_MINUS;
+          case "B+" -> BloodType.B_PLUS;
+          case "B-" -> BloodType.B_MINUS;
+          case "0+" -> BloodType.ZERO_PLUS;
+          case "0-" -> BloodType.ZERO_MINUS;
+          case "AB+" -> BloodType.AB_PLUS;
+          case "AB-" -> BloodType.AB_MINUS;
+          default -> BloodType.A_PLUS;
+        };
+        Blood userBloodType = bloodService.findByName(userBT).get();
 
         User newUser = new User(
                 String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),

@@ -1,5 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +28,9 @@ public class Role {
     /**
      * role name
      */
+	@Enumerated(EnumType.STRING)
     @Column(name = "ulogaName", nullable = false)
-    public String name;
+    public RoleName name;
     
     //ne znam dal je ovo potrebno
 	@OneToMany(mappedBy = "role")
@@ -37,15 +40,15 @@ public class Role {
 
 	}
 
-	public Role(String name) {
+	public Role(RoleName name) {
 		this.name = name;
 	}
 
-	public String getName() {
+	public RoleName getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(RoleName name) {
 		this.name = name;
 	}
 

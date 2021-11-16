@@ -1,5 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +28,9 @@ public class Blood {
     /**
      * Blood name
      */
+	@Enumerated(EnumType.STRING)
     @Column(name = "imeKrvneGrupe", nullable = false)
-    public String name;
+    public BloodType name;
 
 	/**
 	 * Blood upperbound
@@ -56,17 +59,17 @@ public class Blood {
     	
     }
 
-	public Blood(Long id, String name, int lowerbound, int upperbound, int supply) {
+	public Blood(Long id, BloodType name, int lowerbound, int upperbound, int supply) {
 		this.id = id;
 		this.name = name;
 		this.lowerbound = lowerbound;
 		this.upperbound = upperbound;
 		this.supply = supply;
 	}
-	public String getName() {
+	public BloodType getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(BloodType name) {
 		this.name = name;
 	}
 	public int getLowerbound() {

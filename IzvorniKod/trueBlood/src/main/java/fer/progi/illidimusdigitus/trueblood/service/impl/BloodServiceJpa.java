@@ -1,6 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class BloodServiceJpa implements BloodService {
     private BloodRepository bloodRepo;
 
     @Override
-    public Optional<Blood> findByName(String name) {
+    public Optional<Blood> findByName(BloodType name) {
         return bloodRepo.findByName(name);
     }
 }

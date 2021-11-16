@@ -1,6 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
 import fer.progi.illidimusdigitus.trueblood.model.Role;
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.repository.RoleRepository;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class RoleServiceJpa implements RoleService {
     private RoleRepository roleRepo;
 
     @Override
-    public Optional<Role> findByName(String name) {
+    public Optional<Role> findByName(RoleName name) {
         return roleRepo.findByName(name);
     }
 }
