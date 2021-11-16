@@ -15,15 +15,30 @@
 		\end{figure}
 \eject
 	
-	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol. Poslužitelj služi za prosljeđivanje zahtjeva koji se naknadno obrađuju.}
+	
 	
 	\underbar{ \textit{Web preglednik} }{je program koji korisniku omogućuje pregled web-stranica i multi-medijalnih sadržaja vezanih uz njih. Korisnik putem web preglednika šalje zahtjeve na obradu poslužitelju.}
-	
+
 	\underbar{ \textit{Baza podataka}}{ je zbirka zapisa pohranjenih u računalu na sustavan način, tako da joj se računalni program može obratiti prilikom odgovaranja na problem. Web poslužitelj komunicira s bazom podataka te povlači potrebne zapise iz nje.}
-	{Klijent koristi web aplikaciju za slanje određenih zahtjeva. Zahtjev se obrađuje, te se kao odgovor na zahtjev prikazuje HTML dokument.}
-	\\
-	{Pri izradi web aplikacije koristili smo Java Spring Boot iz Spring framework-a zajedno sa Reactom na klijentskoj strani. Korišteno je razvojno okruženje IntellJ IDEA.}
-	{Arhitektura sustava temeljiti će se na MVC (Model-View-Controller) konceptu. Prednosti korištenja MVC arhitekture je taj što je moguće nezavisno razvijanje i spajanje u cjelinu što uvelike olakšava razvoj aplikacije.}
+	
+	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol.Korisnik i aplikacija razmjenjuju HTTP zahtjeve (eng. HTTP request) i HTTP odgovore (HTTP response). Radi jednostavnosti, baza podataka je također smještena na poslužitelju.}\\
+	Korisnik kroz grafičko sučelje, odnosno prednji kraj, šalje zahtjeve na REST pristupne točke stražnjeg kraja. Tada stražnji kraj procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, stražnji kraj šalje odgovor prednjem kraju u obliku JSON objekta, a prednji kraj procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
+	Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
+	\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.9]{slike/arhitektura2.png}
+			\caption{Podjela slojeva}
+			\label{fig:slojevi}
+		\end{figure}
+	\begin{itemize}
+\eject
+		\item 	\textit{sloj korisničke strane} - korisničko sučelje implementirano u Reactu
+		\item 	\textit{sloj nadglednika} - REST nadglednici
+		\item 	\textit{sloj domene}	- model podataka iz domene primjene
+		\item 	\textit{sloj za pristup podacima} - posrednik između sloja domene i baze podataka
+		\item 	\textit{sloj baze podataka} - pohrana podataka	
+		\end{itemize}
+	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija prednjeg i stražnjeg kraja ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i prednji i stražnji kraj neovisni jeziku implementacije, što potiče ponovnu uporabu. }
 	
 	 {Model-View-Controller se sastoji od:}
 	\begin{itemize}
@@ -230,9 +245,37 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
-			
-			\textbf{\textit{dio 1. revizije}}\\
+	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7. prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
+	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/}
+%	\caption{Dijagram razreda koji opisuje model}
+%	\label{fig:dijagram_modela}
+%\end{figure}
+		
+	\eject
+	Na idućoj slici prikazana je sredina \text{backenda}. Kao glavna komponenta na slici prikazano je sučelje JpaRepository, koje predstavlja apstraktni repozitorij podataka. Iz tog sučelja, izvedena su sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite ServiceJpa klase koje koriste te repozitorije, te one implementiraju sučelje imeKlase_Service. 
+	
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/}
+%	\caption{Dijagram razreda koji opisuju repozitorije}
+%	\label{fig:dijagram_repozitorija}
+%\end{figure}
+
+\eject
+
+	Na zadnjoj slici prikazan je prednji dio \text{backend} dijela koji je povezan sa stvarnim svijetom. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController i DonationController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
+	
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth, scale=2.0]%{dijagrami/}
+%	\caption{Dijagram razreda koji opisuju kontrolere}
+%	\label{fig:dijagram_kontrolera}
+%\end{figure}
+
+\eject
 			
 			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
 			
