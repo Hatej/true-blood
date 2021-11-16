@@ -17,18 +17,11 @@ import java.util.Date;
 @Entity
 @Table(name = "korisnikAplikacije")
 public class User {
-	
-	/**
-     * User id
-     */
-    @Id
-    @GeneratedValue
-    @Column(name = "korisnikId")
-    public Long id;
-    
+
     /**
      * User username
      */
+	@Id
     @Column(name = "korIme", unique = true, nullable = false)
     public String username;
     
@@ -102,13 +95,7 @@ public class User {
      * User rejected
      */
     @Column(name = "trajnoOdbijenoDarivanje")
-    public boolean rejected = false;
-    
-    /**
-     * User rejection
-     */
-    @Column(name = "razlogOdbijanja")
-    public String rejection;
+    public boolean rejected;
     
     /**
      * User activation
@@ -295,16 +282,6 @@ public class User {
 	}
 
 
-	public String getRejection() {
-		return rejection;
-	}
-
-
-	public void setRejection(String rejection) {
-		this.rejection = rejection;
-	}
-
-
 	public String getActivation() {
 		return activation;
 	}
@@ -335,15 +312,9 @@ public class User {
 	}
 
 
-	public Long getId() {
-		return id;
-	}
-
-
 	public String getOib() {
 		return oib;
 	}
-
 
 
 }

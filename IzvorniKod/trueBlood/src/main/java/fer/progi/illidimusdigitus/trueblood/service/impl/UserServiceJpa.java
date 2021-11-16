@@ -23,7 +23,6 @@ public class UserServiceJpa implements UserService {
     @Override
     public User createUser(User user) {
         Assert.notNull(user, "User object must be given!");
-        Assert.isNull(user.getId(), "User id must be null!");
         return userRepo.save(user);
     }
 }

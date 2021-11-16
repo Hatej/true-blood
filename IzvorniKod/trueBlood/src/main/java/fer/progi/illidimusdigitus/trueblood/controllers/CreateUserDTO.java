@@ -26,8 +26,6 @@ public class CreateUserDTO {
 
     public String bloodTypeName;
 
-    public String roleName;
-
     public String getName() {
         return name;
     }
@@ -70,10 +68,6 @@ public class CreateUserDTO {
 
     public String getBloodTypeName() {
         return bloodTypeName;
-    }
-
-    public String getRoleName() {
-        return roleName;
     }
     
     public void setName(String name) {
@@ -120,7 +114,4 @@ public class CreateUserDTO {
         this.bloodTypeName = bloodTypeName;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }

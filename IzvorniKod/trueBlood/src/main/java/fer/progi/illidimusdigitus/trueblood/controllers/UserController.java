@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 //import javax.ws.rs.Consumes;
 
 @RestController
@@ -36,17 +37,16 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<User> createUser(@RequestBody CreateUserDTO dto) {
 
-        if (roleService.findByName(dto.getRoleName()).isEmpty()
-            || bloodService.findByName(dto.getBloodTypeName()).isEmpty()) {
+        if (bloodService.findByName(dto.getBloodTypeName()).isEmpty()) {
 
         }
 
-        Role userRole = roleService.findByName(dto.getRoleName()).get();
+        Role userRole = roleService.findByName("DONOR").get();
         Blood userBloodType = bloodService.findByName(dto.getBloodTypeName()).get();
 
         User newUser = new User(
                 String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
-                "Random Password",
+                alphaNumericString(8),
                 dto.getName(),
                 dto.getSurname(),
                 dto.getBirthplace(),
@@ -112,5 +112,15 @@ public class UserController {
         }
 
     }*/
+    public static String alphaNumericString(int len) {
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random rnd = new Random();
+
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
+    }
 
 }
