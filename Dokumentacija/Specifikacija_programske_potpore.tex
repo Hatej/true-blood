@@ -92,7 +92,7 @@
 \subsubsection{Opis obrazaca uporabe}
 
 
-\noindent \underbar{\textbf{UC1 - Pregled količine krvi}}
+\noindent \underbar{\textbf{UC1 - Pregledaj količine krvi}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Neregistrirani/neprijavljeni korisnik
@@ -109,7 +109,7 @@
 
 					\end{packed_item}
 
-\noindent \underbar{\textbf{UC2 - Registracija}}
+\noindent \underbar{\textbf{UC2 - Registriraj korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Neregistrirani/Neprijavljeni korisnik, djelatnik banke
@@ -121,8 +121,10 @@
 						\item[] \begin{packed_enum}
 	
 							\item Neregistriran/neprijavljen korisnik/djelatnik banke odabire opciju za registraciju novog donora
-							\item Neregistriran/neprijavljen korisnik/djelatnik banke unosi potrebne podatke
-							\item Neregistriran/neprijavljen korisnik/donor na svoj mail dobiva aktivacijski link
+							\item Sustav otvara obrazac za registraciju
+							\item Neregistriran/neprijavljen korisnik/djelatnik banke unosi potrebne podatke i odabire akciju "Kreiraj račun" 
+							\item Sustav validira unesene podatke i sprema ih u bazu podataka
+							\item Sustav generira email poruku s podacima o korisničkom računu i aktivacijskim linkom i šalje na mail adresu korisnika
 							
 						\end{packed_enum}
 						
@@ -133,8 +135,7 @@
 							\item[2.a] Odabir već korištenog e-maila, unos podataka u nedozvoljenom formatu ili unos neispravnog e-maila
 							\item[] \begin{packed_enum}
 								
-								\item Korisnik dobiva obavijest o neuspjelom upisu i vraća ga na stranicu za registraciju
-								\item Korisnik mijenja potrebne podatke ili odustaje od registracije
+								\item Korisnik dobiva obavijest o neuspjelom upisu i vraća ga na korak 2 osnovnog tijeka
 								
 							\end{packed_enum}
 							
@@ -142,7 +143,7 @@
 						\end{packed_item}
 					\end{packed_item}
 \eject 
-\noindent \underbar{\textbf{UC3 - Prijava u sustav}}
+\noindent \underbar{\textbf{UC3 - Prijavi se u sustav}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Donor
@@ -153,9 +154,9 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Unos e-maila i lozinke
-							\item Potvrda ispravnosti unesenih podataka
-							\item Pristup dodatnim mogućnostima
+							\item Donor/djelatnik/administrator unosi e-mail i lozinku u login formu te odabire akciju "Login"
+							\item Sustav validira unesene podatke, provodi autentikaciju i autorizaciju korisnika
+							\item Sustav otvara početni ekran aplikacije te korisniku ispisuje obavijest da pogleda pretinac svojih poruka
 							\item Pregledavanje ispisane obavijesti na ekranu da pogleda u pretinac svojih poruka ako su prijeđene optimalne granice ili ako dobiva poziv na doniranje
 							
 						\end{packed_enum}
@@ -166,13 +167,13 @@
 							\item[2.a] Neispravan e-mail i/ili lozinka
 							\item[] \begin{packed_enum}
 								
-								\item  Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga na stranicu za prijavu
+								\item  Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga u korak 1 osnovnog tijeka
 
 								
 							\end{packed_enum}
 					\end{packed_item}
 					\end{packed_item}
-\noindent \underbar{\textbf{UC4 - Pregled osobnih podataka}}
+\noindent \underbar{\textbf{UC4 - Pregledaj osobne podatke}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Donor
@@ -184,13 +185,13 @@
 						\item[] \begin{packed_enum}
 	
 							\item Donor odabire opciju "Osobni podaci"
-							\item Aplikacija prikazuje osobne podatke donora
+							\item Sustav dohvaća osobne podatke donora iz baze podataka te ih prikazuje
 							
 						\end{packed_enum}
 
 					\end{packed_item}
 \eject 
-\noindent \underbar{\textbf{UC5 - Promjena osobnih podataka}}
+\noindent \underbar{\textbf{UC5 - Promjeni osobne podatke}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Donor
@@ -202,9 +203,10 @@
 						\item[] \begin{packed_enum}
 	
 							\item Donor odabire opciju "Promijeni osobne podatke"
-							\item Donor mijenja svoje podatke
-							\item Donor sprema promjene
-							\item Ažurira se baza podataka
+							\item Sustav otvara obrazac za promjenu osobnih podataka
+							\item Donor mijenja svoje podatke i odabire opciju "Spremi promjene"
+							
+							\item Sustav ažurira bazu podataka
 							
 						\end{packed_enum}
 
@@ -212,16 +214,17 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Korisnik ne spremi promjenu
+							\item[3.a] Korisnik ne spremi promjenu
 							\item[] \begin{packed_enum}
 								
-								\item  Sustav obavještava korisnika da nije spremio podatke prilikom izlaska iz prozora
+								\item  Sustav obavještava korisnika da nije spremio podatke prilikom izlaska iz prozora i vraća ga u korak 3 osnovnog tijeka
+							 
 
 								
 									\end{packed_enum}
 								\end{packed_item}
 					\end{packed_item}
-\noindent \underbar{\textbf{UC6 - Pregled povijesti darivanja}}
+\noindent \underbar{\textbf{UC6 - Pregledaj povijest darivanja}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Donor
@@ -233,16 +236,16 @@
 						\item[] \begin{packed_enum}
 	
 							\item Donor odabire opciju "Povijest darivanja"
-							\item aplikacija prikazuje donorovu povijest darivanja
+							\item Sustav dohvaća povijest darivanja s baze podataka te ju prikazuje
 							
 						\end{packed_enum}
 
 					\end{packed_item}
 \eject 
-\noindent \underbar{\textbf{UC7 - Dobivanje PDF potvrde}}
+\noindent \underbar{\textbf{UC7 - Dobi PDF potvrdu}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Donor
+						\item \textbf{Glavni sudionik:} Donor
 						\item \textbf{Cilj:} Dobiti PDF potvrdu o doniranju
 						\item \textbf{Sudionici:} Baza podataka
 						\item \textbf{Preduvjet:} Donor je prijavljen i barem jedanput uspješno darovao krv
@@ -251,14 +254,15 @@
 						\item[] \begin{packed_enum}
 	
 							\item Donor odabire opciju "Povijest darivanja"
-							\item Donor odabire opciju "Želim PDF potvrdu"
+							\item Sustav dohvaća povijest darivanja s baze podataka te ju prikazuje
+							\item Donor odabire opciju "Želim PDF potvrdu" koja se nalazi uz svaki zapis darivanja krvi
 							\item Sustav donoru šalje potvrdu na mail
 							
 						\end{packed_enum}
 
 					\end{packed_item}
 
-\noindent \underbar{\textbf{UC8 - Pregledavanje poruka}}
+\noindent \underbar{\textbf{UC8 - Pregledaj poruke}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Donor
@@ -269,15 +273,16 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Poruke"
-							\item Donor pregledava dospjele poruke
+							\item Donor odabire opciju "Pretinac"
+							\item Sustav dohvaća poruke iz baze podataka i prikazuje ih
+							\item Donor pregledava prikazane poruke
 							
 						\end{packed_enum}
 
 					\end{packed_item}
 
 
-\noindent \underbar{\textbf{UC9 - Smanjivanje količine krvi}}
+\noindent \underbar{\textbf{UC9 - Smanji količinu krvi}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Djelatnik banke
@@ -288,17 +293,37 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Djelatnik odabire krvnu grupu čiju zalihu želi evidentirati
-							\item Djelatnik upisuje količinu
-							\item Djelatnik šalje krv u vanjsku instituciju
-							\item {Ako su se prešle donje granice šalje se notifikacija na mail djelatniku banke i donoru(donoru se također šalje poruka u pretinac za poruke)}
+							\item Djelatnik odabire krvnu grupu čiju zalihu želi smanjiti
+							\item Djelatnik upisuje količinu i naziv institucije u koju je potrebno poslati krv
+							\item Djelatnik odabire akciju "Smanji zalihu"
+							\item Sustav provjerava je li moguće provesti smanjivanje
+							\item Sustav provodi smanjivanje u bazi podataka
 						\end{packed_enum}
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							\item[4.a] Djelatnik je upisao ili preveliku količinu krvi ili manju od 1				
+							\item[] \begin{packed_enum}
+								
+								\item  Sustav obavještava djelatnika o neispravnom unosu te ga vraća na korak 2 osnovnog tijeka
+									\end{packed_enum}
+							\item[5.a] Smanjivanjem se prešla donja granica optimalne količine krvi
+							\item[] \begin{packed_enum}
+								
+								\item  Sustav šalje notifikaciju na mail adresu djelatinu banke i donoru(donoru se također šalje poruka u pretinac poruke)
+							 
+
+								
+									\end{packed_enum}
+								\end{packed_item}			
+									
+									
 									
 					\end{packed_item}
 				
 
 \eject 
-\noindent \underbar{\textbf{UC10 - Pregled popisa donora}}
+\noindent \underbar{\textbf{UC10 - Pregledaj popis donora}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Djelatnik banke, administrator
@@ -310,13 +335,13 @@
 						\item[] \begin{packed_enum}
 	
 							\item Djelatnik/administrator odabire opciju "Popis donora"
-							\item Sustav djelatniku/administratoru prikazuje popis registriranih donora
+							\item Sustav djelatniku/administratoru dohvaća iz baze popis registriranih donora te ga prikazuje
 						\end{packed_enum}
 
 					\end{packed_item}
 
 
-\noindent \underbar{\textbf{UC$11$ -{Aktivacija računa}	}}
+\noindent \underbar{\textbf{UC11 -{Aktivacija računa}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: } {Neregistrirani/neprijavljeni korisnik, djelatnik banke}
@@ -335,7 +360,7 @@
 	
 \end{packed_item}
 \eject
-\noindent \underbar{\textbf{UC$12$ -{Evidentiranje pokušaja doniranja}	}}
+\noindent \underbar{\textbf{UC12 -{Evidentiranje pokušaja doniranja}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Djelatnik banke}
@@ -369,7 +394,7 @@
 	
 \end{packed_item}
 \eject 
-\noindent \underbar{\textbf{UC$13$ -{Brisanje donora}	}}
+\noindent \underbar{\textbf{UC13 -{Brisanje donora}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
@@ -388,7 +413,7 @@
 	
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$14$ -{Definiranje optimalnih granica}	}}
+\noindent \underbar{\textbf{UC14 -{Definiranje optimalnih granica}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
@@ -408,7 +433,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$15$ -{Pregled popisa djelatnika}	}}
+\noindent \underbar{\textbf{UC15 -{Pregled popisa djelatnika}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
@@ -425,7 +450,7 @@
 \end{packed_item}
 
 \eject 
-\noindent \underbar{\textbf{UC$16$ -{Brisanje djelatnika banke}	}}
+\noindent \underbar{\textbf{UC16 -{Brisanje djelatnika banke}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
@@ -444,7 +469,7 @@
 	
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$17$ -{Kreiranje kor. računa djelatnika banke}	}}
+\noindent \underbar{\textbf{UC17 -{Kreiranje kor. računa djelatnika banke}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
@@ -475,7 +500,7 @@
 	\end{packed_item}
 \end{packed_item}
 \eject 
-\noindent \underbar{\textbf{UC$18$ -{Slanje notifikacije nakon 3/4 mjeseca}	}}
+\noindent \underbar{\textbf{UC18 -{Slanje notifikacije nakon 3/4 mjeseca}	}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Sustav za automatske poslove}
