@@ -5,15 +5,19 @@ import SignInForm from './components/SignInForm'
 import Home from './components/Home'
 import ChooseLanguageForm from './components/ChooseLanguageForm'
 import {BrowserRouter, Switch, Route} from "react-router-dom";
+import AuthHandler from "./components/AuthHandler";
 
 function App() {
 
-  const [log, setIsLoggedIn] = React.useState({isLoggedIn: false, email:""})
-
   const [language, setLanguage] = React.useState("english")
+  const [log, setLog] = React.useState("");
 
-  function logSet(isLoggedIn, email) {
-    setIsLoggedIn({isLoggedIn: isLoggedIn, email: email})
+  if(AuthHandler.isUserLoggedIn()) {
+    AuthHandler.setupAxiosInterceptors(AuthHandler.createBasicAuthToken(AuthHandler.getLoggedInUserName(), AuthHandler.getLoggedInPassword()));
+  }
+
+  function logSet(isLoggedIn){
+    setLog(isLoggedIn);
   }
 
   function languageSet(language) {

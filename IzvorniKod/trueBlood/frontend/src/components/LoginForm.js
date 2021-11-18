@@ -33,8 +33,8 @@ function LoginForm(props) {
         AuthHandler
             .executeBasicAuthenticationService(loginForm.username, loginForm.password)
             .then(() => {
-                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password);
-                props.logSet(true, loginForm.username);
+                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password)
+                props.logSet(true);
                 history.push('/home');
             }).catch(() => {
                 setError("Login failed!");

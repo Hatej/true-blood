@@ -24,16 +24,11 @@ function Header(props) {
         logoutText = "Logout"
     }
 
-
     const history = useHistory();
 
-    function isLoggedIn() {
-        return (props.log.isLoggedIn === true)
-    }
-
     function logout() {
+        props.logSet(false);
         AuthHandler.logout();
-        props.logSet(false, "")
         history.push("/home");
     }
 
@@ -53,16 +48,16 @@ function Header(props) {
                     <Link to="/language">{chooseLanguageText}</Link>
                 </li>
                 <li className="right">
-                    <Link to="/signin" hidden={isLoggedIn()}>{signupText}</Link>
+                    <Link to="/signin" hidden={AuthHandler.isUserLoggedIn()}>{signupText}</Link>
                 </li>
                 <li className="right">
-                    <Link to="/login" hidden={isLoggedIn()}>{loginText}</Link>
+                    <Link to="/login" hidden={AuthHandler.isUserLoggedIn()}>{loginText}</Link>
                 </li>
                 <li className="right">
-                    <span hidden={!isLoggedIn()} className='userInfo'> {props.log.email} </span>
+                    <span hidden={!AuthHandler.isUserLoggedIn()} className='userInfo'> {AuthHandler.getLoggedInUserName()} </span>
                 </li>   
                 <li className="right">        
-                    <button disabled={!isLoggedIn()} onClick={logout} hidden={!isLoggedIn()} className="right">{logoutText}</button> 
+                    <button disabled={!AuthHandler.isUserLoggedIn()} onClick={logout} hidden={!AuthHandler.isUserLoggedIn()} className="right">{logoutText}</button>
                 </li>
             </ul> 
         </header>

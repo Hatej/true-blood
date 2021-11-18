@@ -10,6 +10,7 @@ import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -40,10 +41,11 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping("")
-    public List<User> listUsers() {
-        return userService.listAll();
-    }
+    //@CrossOrigin(origins = "*", allowCredentials = "true")
+    //@GetMapping("")
+    //public ResponseEntity<List<User>> listUsers() {
+        //return ResponseEntity.ok().body(userService.listAll());
+    //}
 
     @CrossOrigin(origins = "*")
     @PostMapping("/add")
