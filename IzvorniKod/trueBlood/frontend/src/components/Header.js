@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useHistory} from "react-router-dom";
 import logo from './logo.png';
 import "./Header.css";
+import AuthHandler from "./AuthHandler";
 
 function Header(props) {
 
@@ -31,6 +32,7 @@ function Header(props) {
     }
 
     function logout() {
+        AuthHandler.logout();
         props.logSet(false, "")
         history.push("/home");
     }

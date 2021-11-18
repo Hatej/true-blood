@@ -1,12 +1,13 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
 import "./SignInForm.css";
+import AuthHandler from "./AuthHandler";
 
 function LoginForm(props) {
 
-    let emailText, passwordText, loginText, showPasswordText;
+    let usernameText, passwordText, loginText, showPasswordText;
     if (props.language === "croatian") {
-        emailText = "e-pošta"
+        usernameText = "Korisničko ime"
         passwordText = "Lozinka"
         loginText = "Prijavi se"
         showPasswordText = "Prikaži lozinku"
@@ -14,47 +15,37 @@ function LoginForm(props) {
     }
 
     if (props.language === "english") {
-        emailText = "email"
+        usernameText = "Username"
         passwordText = "Password"
         loginText = "Log in"
         showPasswordText = "Show password"
     
     }
 
-    const [loginForm, setLoginForm] = React.useState({ email: '', password: ''});
-    const [error, setError] = React.useState('');
+    const [loginForm, setLoginForm] = React.useState({ username: '', password: ''});
+    const [error, setError] = React.useState("");
     const [passwordType, setPasswordType] = React.useState("password")
     const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
-        setError("");
-        const body = `email=${loginForm.email}&password=${loginForm.password}`;
-        const options = {
-            method: 'POST',
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: body
-        };
-        /*
-        fetch('/login', options)
-            .then(response => {
-                if(response.status === 401){
-                    setError("Login failed");
-                } else {
-                    props.logSet(true, loginForm.email); //
-                }
-            }) 
-        */
-        props.logSet(true, loginForm.email);
-        history.push('/home');
+        setError("")
+        AuthHandler
+            .executeBasicAuthenticationService(loginForm.username, loginForm.password)
+            .then(() => {
+                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password);
+                props.logSet(true, loginForm.username);
+                history.push('/home');
+            }).catch(() => {
+                setError("Login failed!");
+                history.push('/login');
+        })
 
     }
 
     function onChange(event) {
         const {name, value} = event.target;
-        let newForm = {email: loginForm.email, password:loginForm.password};
+        let newForm = {username: loginForm.username, password:loginForm.password};
         newForm[name] = value;
         setLoginForm(newForm);
     }   
@@ -72,8 +63,8 @@ function LoginForm(props) {
         <div className="SignupLoginForm">
             <form onSubmit={onSubmit}>
                 <div className="FormRow">
-                    <label>{emailText}</label>
-                    <input name='email' onChange={onChange} value={loginForm.email} type='email' required/>
+                    <label>{usernameText}</label>
+                    <input name='username' onChange={onChange} value={loginForm.username} type='text' required/>
                 </div>
                 <div className="FormRow">
                     <label>{passwordText}</label>

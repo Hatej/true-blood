@@ -8,10 +8,17 @@ import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -30,12 +37,15 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @GetMapping("")
     public List<User> listUsers() {
         return userService.listAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @PostMapping("/add")
     public ResponseEntity<User> createUser(@RequestBody CreateUserDTO dto) {
 
@@ -54,9 +64,12 @@ public class UserController {
         };
         Blood userBloodType = bloodService.findByName(userBT).get();
 
+        String nPass = alphaNumericString(8);
+        System.out.println(nPass);
+
         User newUser = new User(
                 String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
-                alphaNumericString(8),
+                passwordEncoder.encode(nPass),
                 dto.getName(),
                 dto.getSurname(),
                 dto.getBirthplace(),
@@ -75,53 +88,26 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    /*
-    @PostMapping("/signin")
-    //@Consumes("application/json")
-    public ResponseEntity<User> signIn(@RequestBody User user){
-        if (user == null)
-            return ResponseEntity.badRequest().build();
+    @CrossOrigin(origins = "*")
+    @GetMapping("/login")
+    public ResponseEntity<User> loginAttempt(@RequestHeader String authorization) {
+        authorization = authorization.substring(6);
+        String decodedString = new String(Base64.getDecoder().decode(authorization));
+        String[] userPass = decodedString.split(":");
 
-        User createdUser = new User(
-                user.getName().charAt(0) + user.getSurname().charAt(0) + String.valueOf(user.getOib()).substring(6), //funkcija za generiranje usera
-                user.getName(),
-                user.getSurname(),
-                user.getBirthplace(),
-                user.getOib(),
-                user.getAddress(),
-                user.getWorkplace(),
-                user.getEmail(),
-                user.getMobilePrivate(),
-                user.getMobileBusiness(),
-                user.getBirthdate(),
-                user.getRole(),
-                user.getBloodType()
-        );
-        createdUser.setBloodType(user.getBloodType());
-        userRepo.save(createdUser);
-        return ResponseEntity.accepted().body(createdUser);
+        if (userService.findByUsername(userPass[0]).isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User usr = userService.findByUsername(userPass[0]).get();
+        System.out.println(userPass[1] + "\n" + usr.getPassword());
+        if (!passwordEncoder.matches(userPass[1], usr.getPassword())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
-
-    @RequestMapping(value = "/login",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            method = {RequestMethod.POST})
-    public ResponseEntity<User> login(@RequestBody User user) {
-        if(user == null)
-            return ResponseEntity.badRequest().build();
-
-        Optional<User> foundUser = userRepo.getUsernamePassword(user.username,user.password);
-
-        if(foundUser.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        else{
-            User foundUserrtr = foundUser.get();
-            return ResponseEntity.accepted().body(foundUserrtr);
-        }
-
-    }*/
     public static String alphaNumericString(int len) {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random rnd = new Random();

@@ -32,4 +32,18 @@ INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'AB-',1,1,1);
 INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'B-',1,1,1);
 INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'O-',1,1,1);
 
-INSERT INTO korisnikAplikacije VALUES (DEFAULT,'admin','admin','admin','adminkovic',NULL,'00365123411',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL);
+INSERT INTO "korisnikAplikacije" VALUES ('admin','admin','admin','adminkovic',NULL,'00365123411',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,19,NULL);
+
+
+INSERT INTO ULOGE VALUES (1,'ADMIN');
+INSERT INTO ULOGE VALUES (2,'DJELATNIK');
+INSERT INTO ULOGE VALUES (3,'DONOR');
+
+INSERT INTO "krvna_vrsta" VALUES (1,1,'A+',1,1);
+INSERT INTO "krvna_vrsta" VALUES (2,1,'AB+',1,1);
+INSERT INTO "krvna_vrsta" VALUES (3,1,'B+',1,1);
+INSERT INTO "krvna_vrsta" VALUES (4,1,'O+',1,1);
+INSERT INTO "krvna_vrsta" VALUES (5,1,'A-',1,1);
+INSERT INTO "krvna_vrsta" VALUES (6,1,'AB-',1,1);
+INSERT INTO "krvna_vrsta" VALUES (7,1,'B-',1,1);
+INSERT INTO "krvna_vrsta" VALUES (8,1,'O-',1,1);

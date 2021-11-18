@@ -49,7 +49,7 @@ function SignInForm(props) {
 
     const [signinForm, setSignInForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
                                                         workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:"A+"});
-    const [error, setError] = React.useState('');
+    const [error, setError] = React.useState("");
     const [passwordType, setPasswordType] = React.useState("password")
     const history = useHistory();
 
@@ -86,9 +86,9 @@ function SignInForm(props) {
                 if(response.ok){
                     history.push('/login');
                 }
-                // privremeno da baci na login, makar još POST ne radi
-                if(response.status === 404){
-                    history.push('/login');
+                if(response.status === 400){
+                    setError("Error on signup!");
+                    history.push('/signin');
                 }
             });
     }

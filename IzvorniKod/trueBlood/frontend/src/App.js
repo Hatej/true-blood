@@ -40,9 +40,7 @@ function App() {
               <Route exact path='/language'>
                 <ChooseLanguageForm language={language} languageSet={languageSet}/>
               </Route>
-
             </Switch>
-        
         </div>
     </BrowserRouter>
   );
