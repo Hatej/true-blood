@@ -80,7 +80,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
 
 				\textbf{korisnikAplikacije \textit{•}}
-				 Ovaj entitet predstavlja sve korisnike aplikacije (admin, djelatnik, donor) i diferencira ih pomoću ulogaId što je referenca na tablicu uloga. KorisnikId i lozinka se koristi za login u aplikaciju. Za admina i djelatnika postoje atributi : ime, prezime, oib, email dok su ostale vrijednosti null. Kod stvaranja atributa trajnoOdbijanjeDarivanja je false, a razlogOdbijanja je null ,ako se korisniku odbije darivanje zauvijek onda se ti atributi mjenjaju.
+				 Ovaj entitet predstavlja sve korisnike aplikacije (admin, djelatnik, donor) i diferencira ih pomoću ulogaId što je referenca na tablicu uloga.Za admina i djelatnika postoje atributi : ime, prezime, oib, email dok su ostale vrijednosti null. Kod stvaranja atributa trajnoOdbijanjeDarivanja je false, a razlogOdbijanja je null ,ako se korisniku odbije darivanje zauvijek onda se ti atributi mijenjaju. One-to-many veza s pokusajDoniranja preko korisnikID dvaput, One-to-many veza s potrosnjaKrvi preko korisnikId, many-to-one veza s uloge preko ulogaId i many-to-one veza s krvnaVrsta preko krvId.
 
 				
 				\begin{longtblr}[
@@ -92,29 +92,28 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{korisnikAplikacije}}	 \\ \hline[3pt]				
-					\SetCell{LightGreen}korisnikId & VARCHAR & id pomoću kojeg se korisnik prijavljuje u sustav (jednako donorId za donore) -> generira se pomoću inicijala i zadnjih 5 znamenki oiba npr.
-					Ivica ivic 0303041001340 ima korisnikId = ii01340\\ \hline
-					lozinka	& VARCHAR &  lozinka za login 	\\ \hline 
+					\SetCell{LightGreen}korisnikId & VARCHAR & id pomoću kojeg se korisnik prijavljuje u sustav (jednako donorId za donore)\\ \hline
+					lozinka	& VARCHAR &  hash korisničke lozinke 	\\ \hline 
 					ime & VARCHAR	&  ime korisnika		\\ \hline 
 					prezime & VARCHAR	& prezime korisnika	\\ \hline 
-					mjestoRodenja & VARCHAR & mjesto gdje se korisnik rodio (nullable) \\ \hline
-					oib & CHAR(11) & oib korisnika \\ \hline
-					adresaStanovanja & VARCHAR & adresa na kojoj korisnik stanuje (nullable) \\ \hline
+					mjestoRodenja & VARCHAR & mjesto rođenja (nullable) \\ \hline
+					oib & VARCHAR & oib korisnika \\ \hline
+					adresaStanovanja & VARCHAR & adresa stanovanja (nullable) \\ \hline
 					mjestoZaposlenja & VARCHAR & firma u kojoj je korisnik zaposlen (nullable) \\ \hline
 					email & VARCHAR & email na koji korisniku dolaze korisne informacije (nullable) \\ \hline 
-					brojMobitelaPrivatni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije privatni	(nullable)	\\ \hline
-					brojMobitelaPoslovni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije poslovni ( neobavezan za sve uloge) (nullable)		\\ \hline
+					brojMobitelaPrivatni & VARCHAR	&  privatni broj korisnika	(nullable)	\\ \hline
+					brojMobitelaPoslovni & VARCHAR	&  broj na koji korisniku dolaze korisne infromacije poslovni(nullable)\\ \hline
                      datumRodenja & DATE &  datum rođenja	\\ \hline
                      \SetCell{LightBlue}krvId & INT & vrsta krvi donora \\ \hline
-                     trajnoOdbijenoDarivanje & Boolean &  (nullable)\\ \hline
-                     
-					 \SetCell{LightBlue}ulogaId & INT &  označava je li korisnik admin, djelatnik ili donor \\ \hline 
-					aktivacijskiKljuc & VARCHAR(10) & aktivacijski ključ koji služi za aktivaciju računa, nakon aktivacije NULL \\
+                     trajnoOdbijenoDarivanje & BOOLEAN &  true ako je korisniku zabranjeno trajno darivanje, false ako nije \\ \hline
+					 \SetCell{LightBlue}ulogaId & BIGINT &  oznaka uloge korisnika \\ \hline 
+					aktivacijskiKljuc & VARCHAR(10) & aktivacijski ključ koji služi za aktivaciju računa \\
 \hline		
 					\end{longtblr}
 				
 				\textbf{uloge \textit{•}}
 				entitet koji sadrži dva atributa, id za oznaku rednog broja uloge i ulogaName za ime 						uloge
+				One-to-many veza s korisnikAplikacije preko ulogaId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -124,13 +123,14 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Uloge}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}ulogaId & INT	& označava id uloge (admin, djelatnik ili donor)\\ \hline
-					ulogaName	& VARCHAR & ime uloge(donor,admin...)  	\\ \hline 
+					\SetCell{LightGreen}ulogaId & BIGINT & označava id uloge \\ \hline
+					ulogaName	& VARCHAR & naziv uloge	\\ \hline 
 					
 				\end{longtblr}
 	\eject
 				\textbf{pokusajDonacije\textit{•}}
-				-entitet koji služi za spremanje pokušaja doniranja, sprema podatke o datumu, mjestu, darivatelju, djelatniku, uspješnosti i razlogu odbijanja ako je uspješnost false
+				-entitet koji predstavlja pokušaj doniranja, sadrži podatke o datumu, mjestu, darivatelju, djelatniku, uspješnosti i razlogu odbijanja ako je uspješnost false.
+				Many-to-one veza preko korisnikIdDjelatnika s korisnikAplikacije , Many-to-one veza preko korisnikIdDonora s korisnikAplikacije, one-to-many veza s doniranjeZdravljeOdgovori reko brDoniranja.
 				
 				\begin{longtblr}[
 					label=none,
@@ -141,19 +141,19 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{pokusajDonacije}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}brDoniranja & VARCHAR & redni broj donacije\\ \hline
+					\SetCell{LightGreen}brDoniranja & BIGINT & redni broj donacije\\ \hline
 					datum & DATE & datum donacije \\ \hline
 					mjestoDarivanja	& VARCHAR & opisno mjesto donacije	\\ \hline 
-					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR & korisnikId od djelatnika \\ \hline
-					\SetCell{LightBlue}korisnikId & VARCHAR & korisnikId od donora \\ \hline
+					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR & identifikator djelatnika \\ \hline
+					\SetCell{LightBlue}korisnikId & VARCHAR & identifikator donora \\ \hline
 
-					uspjeh	& boolean & true za uspjeh, false za neuspjeh  	\\ \hline 			
+					uspjeh	& BOOLEAN & oznaka uspješnosti darivanja  	\\ \hline 			
 					
 				\end{longtblr}
 				
 				\textbf{krvnaVrsta\textit{•}}
 				
-				- entitet čuva podatke o zalihi i predviđenim gornjim i donjim granicama za sve krvnih grupa
+				- entitet čuva podatke o zalihi i predviđenim gornjim i donjim granicama za sve krvne grupe.  one-to-many veza s potrosnjaKrvi preko krvId i one-to-many veza s korisnikAplikacije preko krvId.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -163,12 +163,12 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{krvnaVrsta}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}krvId & SERIAL & ID krvi serial \\ \hline
-					imeKrvneGrupe & VARCHAR & (A+,A-,AB+,B-...) \\ \hline
+					\SetCell{LightGreen}krvId & SERIAL & identifikator krvne grupe \\ \hline
+					imeKrvneGrupe & VARCHAR & naziv krvne grupe \\ \hline
 					gornjaGranica & INT & gornja granica dopuštene količine krvi u jedinicama\\ \hline
 
 					donjaGranica	& INT & donja granica dopuštene količine krvi u jedinicama  	\\ \hline 
-					trenutnaZaliha	& INT &  trenutna zaliha konkretne krve grupe u jedinicama 	\\ \hline 
+					trenutnaZaliha	& INT &  trenutna zaliha konkretne krvne grupe u jedinicama 	\\ \hline 
 					
 					
 				\end{longtblr}
@@ -176,7 +176,9 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 				
 				\textbf{potrosnjaKrvi\textit{•}}
 				
-				entitet koji prati isporuke krvi
+				entitet koji prati isporuke krvi . 
+				Many-to-one veza s korisnikAplikacije preko korisnikIdDjelatnika i Many-to-one veza s krvnaVrsta preko krvId.
+
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -187,11 +189,11 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{potrosnjaKrvi}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} idPotrosnje & SERIAL & redni broj isporuke krvi \\ \hline
-					timestampPotrosnje & timestamp & timestamp potrošnje \\ \hline
+					timestampPotrosnje & TIMESTAMP & timestamp potrošnje \\ \hline
 					\SetCell{LightBlue}krvId & INT & id krvne grupe \\ \hline
 					količinaJedinica & INT &  broj jedinica koje su se potrošili \\ \hline 
 					
-					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR &  korisničko ime djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
+					\SetCell{LightBlue}korisnikIdDjelatnika & VARCHAR &  identifikator djelatnika koji je inicirao slanje krvi bolnici	\\ \hline 
 					lokacijaPotrosnje & VARCHAR & opisna lokacija kamo ide isporuka krvi \\ \hline
 					
 				\end{longtblr}
@@ -199,6 +201,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 				\textbf{zdravstveniPodaci\textit{•}}
 				
 				entitet koji sprema sve moguće zdravstvene podatke koji se pitaju korisnika u upitniku. Oni sadrže svoj id, koji se sam generira u tablici, opis zdravstvenog podatka i težinu kriterija odnosno, 0 ako se na temelju toga podatka trajno odbija darivanje i 1 ako se privremeno odbija, inače null.
+				One-to-many veza s doniranjeZdravljeOdgovori preko idZdravstvenih.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -209,7 +212,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{zdravstveniPodaci}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}idZdravstvenih & SERIAL & id zdravstvenog podatka \\ \hline
-					zdravstveniPodatak & VARCHAR & opis zdravstvenog podatka koji se ispisuje, trebala bi biti izjava, koja ako je istinita, odbija donora privremeno ili trajno
+					zdravstveniPodatak & VARCHAR & opis zdravstvenog podatka koji se ispituje
 					npr. osoba teži manje od 55 kg \\ \hline
 					tezinaKriterija 	& INT &  tezina kriterija ( 0 za trajno, 1 za privremeno) 	\\ \hline 
 
@@ -218,7 +221,8 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 \eject				
 				\textbf{doniranjeZdravljeOdgovori\textit{•}}
 				
-				entitet koji služi kao spremište odgovora korisnika koji su došli donirati krv
+				entitet koji služi kao spremište odgovora korisnika koji su došli donirati krv.
+				Many-to-one veza s zdravstveniPodaci preko idZdravstvenih. Many-to-one veza s pokusajDoniranja preko brDoniranja.
 				\begin{longtblr}[
 					label=none,
 					entry=none
@@ -230,7 +234,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 					\hline \multicolumn{3}{|c|}{\textbf{doniranjeZdravljeOdgovori}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} brDoniranja & INT & brDoniranja iz tablice pokusajDoniranja \\ \hline
 					\SetCell{LightGreen} idZdravstvenih & INT &  idZdravstvenih iz tablice zdravstveni podaci \\ \hline
-					odgovorDonora & boolean & true ako donor pada po kriteriju i odbija se privremeno/trajno ,inače false\\ \hline
+					odgovorDonora & BOOLEAN & odgovor donora na zdravstveni podatak pod idZdravstvenih\\ \hline
 					
 				\end{longtblr}
 			
