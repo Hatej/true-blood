@@ -10,7 +10,7 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=\textwidth, scale=2.0]{slike/arhitektura.png}
-			\caption{Arhitektura našeg sustava}
+			\caption{Arhitektura sustava}
 			\label{fig:arhitektura}
 		\end{figure}
 \eject
@@ -22,7 +22,7 @@
 	\underbar{ \textit{Baza podataka}}{ je zbirka zapisa pohranjenih u računalu na sustavan način, tako da joj se računalni program može obratiti prilikom odgovaranja na problem. Web poslužitelj komunicira s bazom podataka te povlači potrebne zapise iz nje.}
 	
 	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol.Korisnik i aplikacija razmjenjuju HTTP zahtjeve (eng. HTTP request) i HTTP odgovore (HTTP response). Radi jednostavnosti, baza podataka je također smještena na poslužitelju.}\\
-	Korisnik kroz grafičko sučelje, odnosno prednji kraj, šalje zahtjeve na REST pristupne točke stražnjeg kraja. Tada stražnji kraj procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, stražnji kraj šalje odgovor prednjem kraju u obliku JSON objekta, a prednji kraj procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
+	Korisnik kroz grafičko sučelje, odnosno frontend, šalje zahtjeve na REST pristupne točke backenda. Tada stražnji kraj procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, stražnji kraj šalje odgovor prednjem kraju u obliku JSON objekta, a prednji kraj procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
 	Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
 	\begin{figure}[H]
 			\centering
@@ -32,13 +32,13 @@
 		\end{figure}
 	\begin{itemize}
 \eject
-		\item 	\textit{sloj korisničke strane} - korisničko sučelje implementirano u Reactu
+		\item 	\textit{sloj korisničke strane} - korisničko sučelje
 		\item 	\textit{sloj nadglednika} - REST nadglednici
 		\item 	\textit{sloj domene}	- model podataka iz domene primjene
 		\item 	\textit{sloj za pristup podacima} - posrednik između sloja domene i baze podataka
 		\item 	\textit{sloj baze podataka} - pohrana podataka	
 		\end{itemize}
-	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija prednjeg i stražnjeg kraja ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i prednji i stražnji kraj neovisni jeziku implementacije, što potiče ponovnu uporabu. }
+	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija prednjeg i stražnjeg kraja ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i prednji i stražnji kraj neovisno o jeziku implementacije, što potiče ponovnu uporabu. }
 	
 	 {Model-View-Controller se sastoji od:}
 	\begin{itemize}
@@ -259,7 +259,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 \end{figure}
 		
 	\eject
-	Na idućoj slici prikazana je sredina \text{backenda}. Kao glavna komponenta na slici prikazano je sučelje JpaRepository, koje predstavlja apstraktni repozitorij podataka. Iz tog sučelja, izvedena su sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite ServiceJpa klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService. 
+	Na idućoj slici prikazana je sloj \textit{backenda} koji je odgovoran za neposrednu komunikaciju s poslužiteljem baze podataka. Kao glavna komponenta na slici prikazano je sučelje JpaRepository, koje predstavlja apstraktni repozitorij podataka. Iz tog sučelja, izvedena su sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite ServiceJpa klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService. 
 	
 \begin{figure}[H]
 	\centering
@@ -270,7 +270,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 \eject
 
-	Na zadnjoj slici prikazan je prednji dio \text{backend} dijela koji je povezan sa stvarnim svijetom. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController i DonationController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
+	Na zadnjoj slici prikazani su \textit{Controlleri} koji komuniciraju s vanjskim svijetom odnosno \textit{frontendom} te upravljaju modelom podataka. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController i DonationController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
 	
 \begin{figure}[H]
 	\centering
