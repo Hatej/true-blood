@@ -290,24 +290,48 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\eject
 		
 		\section{Dijagram stanja}
+			Dijagram stanja primijenjuje se za opis stanja objekta i za opisivanje prijelaza iz jednog u drugo stanje. Priložena slika prikazuje stanjadijagram stanja za registriranog donora. Početno stanje je početna stranica aplikacije. U izborniku aplikacije donor može odabrati jednu od mogućnosti. Klikom na "Moji podaci" prikazuju mu se njegovi podaci, koje moeže urediti. Odabirom opcije "Poruke" prikazuju se poruke donoru koje mu javlja sustav. Klikom na 
+"Povijest darivanja" prikazuju se prijašnja darivanja za koje, ako je darivanje uspješno,  može izvaditi PDF potvrdu.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.7]{dijagrami/dijagram_stanja}
+	\caption{Dijagram stanja}
+	\label{fig:dijagram_stanja}
+\end{figure}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			Dijagram aktivnosti prikazuje povezane aktivnosti na visokoj apstrakcijskoj razini,odnosno intuitivno prikazuje kako podaci teku kroz aplikaciju i kako se
+kontrola nad podacima mijenja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog. Idući dijagram prikazuje proces smanjivanja količine krvi slanjem u zdravstvenu ustanovu. Ovaj proces može provesti djelatnik banke. Proces započinje prijavom, djelatnik banke odabere krvnu grupu na prikazu količina krvi i unese količinu krvi koju želi poslati zdravstvenoj ustanovi. Kada transakcija završi prikazuje mu se potvrda o smanjenju krvi.
+		
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_aktivnosti}
+	\caption{Dijagram aktivnosti}
+	\label{fig:dijagram_aktivnosti}
+\end{figure}
+				
 			
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			Dijagram komponenti omogućuje nam pogled na sustav s visoke razine apstrak-
+cije. Web aplikacija komunicira sa sustavom preko dva sučelja. Prvo sučelje služi
+za dohvat samih stranica, dakle HTML, CSS i JS datoteka. Drugo sučelje služi
+za komunikaciju između aplikacije i baze podataka. Dakle, web aplikacija šalje
+zahtjev REST API-u, koji preko kontrolera komunicira s repozitorijima
+podataka, koji predstavljaju sloj povezanosti između baze podataka i kontrolera.  Podaci koji su pristigli
+iz baze se šalju dalje MVC arhitekturi u obliku DTO (Data transfer object).
+React view komponenta preko dostupnih sučelja komunicira s web aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_komponenti}
+	\caption{Dijagram komponenti}
+	\label{fig:dijagram_komponenti}
+\end{figure}
