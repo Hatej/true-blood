@@ -1,5 +1,50 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+import fer.progi.illidimusdigitus.trueblood.service.BloodService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+@RestController
 public class BloodController {
 
+    @Autowired
+    private BloodService bloodService;
+
+    @RequestMapping(value = "/bloodGroups",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Blood> getBloodGroups(HttpServletRequest request) {
+
+        List<Blood> bloodGroups = bloodService.findAll();
+
+        return bloodGroups;
+    }
+
+    @PostMapping("/bloodGroups")
+    public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto, HttpServletRequest request) {
+
+        BloodType userBT = switch(dto.getName()) {
+            case "A+" -> BloodType.A_PLUS;
+            case "A-" -> BloodType.A_MINUS;
+            case "B+" -> BloodType.B_PLUS;
+            case "B-" -> BloodType.B_MINUS;
+            case "0+" -> BloodType.ZERO_PLUS;
+            case "0-" -> BloodType.ZERO_MINUS;
+            case "AB+" -> BloodType.AB_PLUS;
+            case "AB-" -> BloodType.AB_MINUS;
+            default -> BloodType.A_PLUS;
+        };
+        Blood userBloodType = bloodService.findByName(userBT).get();
+
+        userBloodType.setLowerbound(dto.getLowerbound());
+        userBloodType.setUpperbound(dto.getUpperbound());
+
+        return ResponseEntity.ok().build();
+    }
 }

@@ -7,6 +7,7 @@ import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,5 +19,10 @@ public class BloodServiceJpa implements BloodService {
     @Override
     public Optional<Blood> findByName(BloodType name) {
         return bloodRepo.findByName(name);
+    }
+
+    @Override
+    public List<Blood> findAll() {
+       return bloodRepo.findAll();
     }
 }
