@@ -13,4 +13,12 @@ public interface UserService {
     Optional<User> findByUsername(String username);
 
     Optional<User> findByOib(String oib);
+
+    Optional<User> findByEmail(String email);
+
+    boolean verify(String verificationCode);
+
+    void sendMail(User user, String siteURL);
+
+    boolean updateUserActivated(User user);
 }
