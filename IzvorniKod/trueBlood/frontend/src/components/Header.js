@@ -6,6 +6,21 @@ import AuthHandler from "./AuthHandler";
 
 function Header(props) {
 
+    let role = "donor";///inace role = AuthHandler.getRole()    to moze biti admin, donor ili employee
+    let isLoggedIn = true; // inace isLoggedIn = AuthHandler.isUserLoggedIn();
+    let loggedInUserName = "konrad"; //inace loggedInUserName = AuthHandler.getLoggedInUserName();
+
+    var roleLink, roleText;
+    if (role === "admin") {
+        roleLink = "/admin";
+        roleText = "Administrator";
+    } else if (role === "employee") {
+        roleLink =  "/employee";
+        roleText = "Employee";
+    } else if (role === "donor") {
+        roleLink = "/donor";
+        roleText = "Donor";
+    }
 
     let homeText, chooseLanguageText, signupText, loginText, logoutText;
     if (props.language === "croatian") {
@@ -48,16 +63,19 @@ function Header(props) {
                     <Link to="/language">{chooseLanguageText}</Link>
                 </li>
                 <li className="right">
-                    <Link to="/signin" hidden={AuthHandler.isUserLoggedIn()}>{signupText}</Link>
+                    <Link to={roleLink} hidden={!isLoggedIn}>{roleText}</Link>
                 </li>
                 <li className="right">
-                    <Link to="/login" hidden={AuthHandler.isUserLoggedIn()}>{loginText}</Link>
+                    <Link to="/signin" hidden={isLoggedIn}>{signupText}</Link>
                 </li>
                 <li className="right">
-                    <span hidden={!AuthHandler.isUserLoggedIn()} className='userInfo'> {AuthHandler.getLoggedInUserName()} </span>
+                    <Link to="/login" hidden={isLoggedIn}>{loginText}</Link>
+                </li>
+                <li className="right">
+                    <span hidden={!isLoggedIn} className='userInfo'> {loggedInUserName} </span>
                 </li>   
                 <li className="right">        
-                    <button disabled={!AuthHandler.isUserLoggedIn()} onClick={logout} hidden={!AuthHandler.isUserLoggedIn()} className="right">{logoutText}</button>
+                    <button disabled={!isLoggedIn} onClick={logout} hidden={!isLoggedIn} className="right">{logoutText}</button>
                 </li>
             </ul> 
         </header>

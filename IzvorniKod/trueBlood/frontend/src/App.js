@@ -6,6 +6,9 @@ import Home from './components/Home'
 import ChooseLanguageForm from './components/ChooseLanguageForm'
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import AuthHandler from "./components/AuthHandler";
+import Admin from './components/Admin';
+import Employee from './components/Employee';
+import Donor from './components/Donor';
 
 function App() {
 
@@ -24,6 +27,7 @@ function App() {
     setLanguage(language)
   }
 
+ 
   return (
     <BrowserRouter>
       <Header log={log} logSet={logSet} language={language}/>
@@ -43,6 +47,15 @@ function App() {
               </Route>
               <Route exact path='/language'>
                 <ChooseLanguageForm language={language} languageSet={languageSet}/>
+              </Route>
+              <Route exact path='/admin'>
+                <Admin/>
+              </Route>
+              <Route exact path='/employee'>
+                <Employee/>
+              </Route>
+              <Route exact path='/donor'>
+                <Donor/>
               </Route>
             </Switch>
         </div>
