@@ -89,6 +89,7 @@ function LoginForm(props) {
                 <Button className="btn-danger" type="submit">
                     Submit
                 </Button>
+                <div>{error}</div>
             </Form>
         </div>
     )

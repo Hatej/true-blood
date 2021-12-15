@@ -256,7 +256,7 @@ function SignInForm(props) {
                         <Button className="btn-danger" type="submit">
                             Signup
                         </Button>
-                        <span>{error}</span>
+                        <div>{error}</div>
                     </Form.Group>
                 </Row>
             </Form>

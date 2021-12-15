@@ -3,7 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom";
 import "./Home.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, Accordion } from 'react-bootstrap';
 
 import epruveta from './epruveta.gif';
 import krvSlika from './krvSlika.gif';
@@ -60,21 +60,40 @@ function Home(props) {
     }
 
     return (
-        <div>
-        <div id="sveSkup">
-            {bloodData.map(blood => {
-                return (
-                    <div className="cijela" key={blood.name}>
-                        <div className="imeGrupe">{bloodName(blood.name)}</div>
-                        <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
-                        <div className="donjaGranica" style={{ bottom: "100px" }}></div>
-                        <div className="epruveta"></div>
-                        <div className="fix"></div>
-                        <div className="kolicKrvi" style={{ height: bloodHeight() }}></div>
-                    </div>
-                )
-            })}
-        </div>
+        <div className="container justify-content-end align-items-right">
+            <div className="row justify-content-end align-items-right">
+                <div id="sveSkup" className="col-6 ps-3 border border-danger border-end-0 rounded-start">
+                    {bloodData.map(blood => {
+                        return (
+                            <div className="cijela" key={blood.name}>
+                                <div className="imeGrupe">{bloodName(blood.name)}</div>
+                                <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
+                                <div className="donjaGranica" style={{ bottom: "100px" }}></div>
+                                <div className="epruveta"></div>
+                                <div className="fix"></div>
+                                <div className="kolicKrvi" style={{ height: bloodHeight(blood.amount, blood.upperbound, blood.lowerbound) }}></div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <Accordion className="col-2 border border-danger border-start-0 rounded-end pe-0">
+                        {bloodData.map(blood => {
+                            return (
+                            <Accordion.Item eventKey={blood.id}>
+                                <Accordion.Header>
+                                    {bloodName(blood.name)}
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <p>Name: {bloodName(blood.name)}</p>
+                                    <p>Amount: {blood.supply}</p>
+                                    <p>Upper bound: {blood.upperbound}</p>
+                                    <p>Lower bound: {blood.lowerbound}</p>
+                                </Accordion.Body>
+                            </Accordion.Item>  
+                            )
+                        })}
+                </Accordion>
+            </div>
         </div>
 
 
