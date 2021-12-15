@@ -18,6 +18,7 @@ public class BloodController {
     @Autowired
     private BloodService bloodService;
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/bloodGroups",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Blood> getBloodGroups(HttpServletRequest request) {
 
@@ -26,6 +27,7 @@ public class BloodController {
         return bloodGroups;
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/bloodGroups")
     public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto, HttpServletRequest request) {
 

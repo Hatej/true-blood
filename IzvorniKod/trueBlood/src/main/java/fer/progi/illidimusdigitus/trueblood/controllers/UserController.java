@@ -125,7 +125,8 @@ public class UserController {
         return sb.toString();
     }
 
-    @GetMapping("/register/confirm")
+    @CrossOrigin(origins = "*")
+    @GetMapping("/add/confirm")
     public ResponseEntity<String> verifyUser(@Param("code") String code) {
         if (userService.verify(code)) {
             return ResponseEntity.ok("verifySuccess=true");
