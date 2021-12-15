@@ -3,12 +3,13 @@ import {Link, useHistory} from "react-router-dom";
 import logo from './logo.png';
 import "./Header.css";
 import AuthHandler from "./AuthHandler";
+import { Nav } from 'react-bootstrap';
 
 function Header(props) {
 
-    let role = "donor";///inace role = AuthHandler.getRole()    to moze biti admin, donor ili employee
-    let isLoggedIn = true; // inace isLoggedIn = AuthHandler.isUserLoggedIn();
-    let loggedInUserName = "konrad"; //inace loggedInUserName = AuthHandler.getLoggedInUserName();
+    let role = AuthHandler.getLoggedInRole();
+    let isLoggedIn = AuthHandler.isUserLoggedIn();
+    let loggedInUserName = AuthHandler.getLoggedInUserName();
 
     var roleLink, roleText;
     if (role === "admin") {
@@ -48,37 +49,38 @@ function Header(props) {
     }
 
     return (
-        <header className="Header">
-            <div className="logoContainer container">
-                
-            </div>
-            <ul> 
-                <li>
-                    <Link to="/home"><img src={logo}/><span> True Blood</span></Link>
-                </li>
-                <li>
-                    <Link to="/home">{homeText}</Link>
-                </li>
-                <li className="right">
-                    <Link to="/language">{chooseLanguageText}</Link>
-                </li>
-                <li className="right">
-                    <Link to={roleLink} hidden={!isLoggedIn}>{roleText}</Link>
-                </li>
-                <li className="right">
-                    <Link to="/signin" hidden={isLoggedIn}>{signupText}</Link>
-                </li>
-                <li className="right">
-                    <Link to="/login" hidden={isLoggedIn}>{loginText}</Link>
-                </li>
-                <li className="right">
-                    <span hidden={!isLoggedIn} className='userInfo'> {loggedInUserName} </span>
-                </li>   
-                <li className="right">        
-                    <button disabled={!isLoggedIn} onClick={logout} hidden={!isLoggedIn} className="right">{logoutText}</button>
-                </li>
-            </ul> 
-        </header>
+        <div>
+            <nav class="navbar navbar-expand navbar-light bg-light">
+                <Nav.Item>
+                    <Nav.Link class="navbar-brand" href="/home">
+                        <img src={logo} width="30" height="30" class="d-inline-block align-top" alt=""/>
+                        Home
+                    </Nav.Link>
+                </Nav.Item>
+                <div class="navbar-nav justify-content-end ms-auto">
+                    <Nav.Item>
+                        <Nav.Link href="/language">{chooseLanguageText}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href={roleLink} hidden={!isLoggedIn}>{roleText}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/signin" hidden={isLoggedIn}>{signupText}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/login" hidden={isLoggedIn}>{loginText}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link hidden={!isLoggedIn} disabled>{loggedInUserName}</Nav.Link>
+                    </Nav.Item> 
+                    <Nav.Item>
+                        <Nav.Link disabled={!isLoggedIn} onClick={logout} hidden={!isLoggedIn}>{logoutText}</Nav.Link>
+                    </Nav.Item>
+                </div>
+            </nav>
+            <br/>
+        </div>
+        
     )
 }
 

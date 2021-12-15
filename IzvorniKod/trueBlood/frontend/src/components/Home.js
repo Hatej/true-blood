@@ -11,89 +11,71 @@ import logo from './logo.png';
 
 function Home(props) {
 
-    const [users, setUsers] = useState([]);
-    /*
-        useEffect(() => {
-            axios.get("http://localhost:8080/user", {withCredentials: true})
-                .then()
-                .catch(err => console.log(err));
-        })
-    
-     */
+    const [bloodData, setBloodData] = useState([]);
+
+    useEffect(() => {
+        async function getBloodData() {
+            let data = await axios.get(`http://localhost:8080/bloodGroups`).then(res => res.data);
+            setBloodData(data);
+        }
+
+        getBloodData();
+    }, [bloodData]);
+
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB+"
+            case "B_MINUS":
+                return "B+"
+            case "ZERO_MINUS":
+                return "O+"       
+            default:
+                break;
+        }
+    }
+
+    function bloodHeight(amount, upper, lower){
+        if(amount < lower){
+            return "50px";
+        } else if(amount == lower){
+            return "100px";
+        } else if(amount == upper){
+            return "200px";
+        } else if(amount > lower && amount < upper){
+            return "250px";
+        } else {
+            return "280px";
+        }
+    }
 
     return (
-
+        <div>
         <div id="sveSkup">
-
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "180px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-            <div class="cijela">
-                <div class="imeGrupe">A+</div>
-                <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                <div class="epruveta"></div>
-                <div class="fix"></div>
-                <div class="kolicKrvi" style={{ height: "250px" }}></div>
-            </div>
-
-
+            {bloodData.map(blood => {
+                return (
+                    <div class="cijela">
+                        <div class="imeGrupe">{bloodName(blood.name)}</div>
+                        <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
+                        <div class="donjaGranica" style={{ bottom: "100px" }}></div>
+                        <div class="epruveta"></div>
+                        <div class="fix"></div>
+                        <div class="kolicKrvi" style={{ height: bloodHeight() }}></div>
+                    </div>
+                )
+            })}
         </div>
-
+        </div>
 
 
         /*<Container>
@@ -179,11 +161,6 @@ function Home(props) {
 
             </Row>
         </Container>*/
-        /*<div>home
-            {users.map(user => {
-                return <pre>{JSON.stringify(user)}</pre>
-            })}
-        </div>*/
     )
 
 
