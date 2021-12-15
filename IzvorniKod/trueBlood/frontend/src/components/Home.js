@@ -20,7 +20,7 @@ function Home(props) {
         }
 
         getBloodData();
-    }, [bloodData]);
+    }, []);
 
     function bloodName(name){
         switch(name){

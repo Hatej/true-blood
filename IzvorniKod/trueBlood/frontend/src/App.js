@@ -9,6 +9,7 @@ import AuthHandler from "./components/AuthHandler";
 import Admin from './components/Admin';
 import Employee from './components/Employee';
 import Donor from './components/Donor';
+import Confirm from './components/Confirm';
 
 function App() {
 
@@ -56,6 +57,9 @@ function App() {
               </Route>
               <Route exact path='/donor'>
                 <Donor/>
+              </Route>
+              <Route exact path='/user/add/confirm'>
+                <Confirm/>
               </Route>
             </Switch>
         </div>
