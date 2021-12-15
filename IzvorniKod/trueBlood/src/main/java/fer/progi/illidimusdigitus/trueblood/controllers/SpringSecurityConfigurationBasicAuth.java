@@ -30,7 +30,7 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"user/add/confirm").permitAll()
+                .antMatchers(HttpMethod.GET,"/user/add/confirm").permitAll()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()

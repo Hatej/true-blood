@@ -8,22 +8,14 @@ import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 //import javax.ws.rs.Consumes;
 
@@ -89,7 +81,7 @@ public class UserController {
                 );
 
         userService.createUser(newUser);
-        userService.sendMail(newUser,request.getRequestURL().toString());
+        userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
 
         return ResponseEntity.ok().build();
     }
@@ -110,6 +102,9 @@ public class UserController {
         if (!passwordEncoder.matches(userPass[1], usr.getPassword())) {
             return ResponseEntity.badRequest().build();
         }
+        if (usr.getActivation() != null) {
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok().build();
     }
@@ -127,10 +122,10 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/add/confirm")
-    public ResponseEntity<String> verifyUser(@Param("code") String code) {
-        if (userService.verify(code)) {
+    public ResponseEntity<String> verifyUser(@RequestHeader String code, @RequestHeader String password) {
+        //TREBA NAPRAVITI REGISTER PASSWORDA, A CODE POSLATI NA FRONTEND SITE
+        if (userService.verify(code, password)) {
             return ResponseEntity.ok("verifySuccess=true");
-
         }
         return ResponseEntity.ok("verifySuccess=false");
     }

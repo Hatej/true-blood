@@ -100,7 +100,7 @@ public class User {
     /**
      * User activation
      */
-    @Column(name = "aktivacijskiKljuc", unique = true, nullable = false)
+    @Column(name = "aktivacijskiKljuc", unique = true)
     public String activation;
 
     /**
