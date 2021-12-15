@@ -46,6 +46,7 @@ function Home(props) {
     }
 
     function bloodHeight(amount, upper, lower){
+        console.log(amount + " " + upper + " " + lower);
         if(amount < lower){
             return "50px";
         } else if(amount == lower){
@@ -53,7 +54,7 @@ function Home(props) {
         } else if(amount == upper){
             return "200px";
         } else if(amount > lower && amount < upper){
-            return "250px";
+            return "150px";
         } else {
             return "280px";
         }
@@ -65,13 +66,13 @@ function Home(props) {
                 <div id="sveSkup" className="col-6 ps-3 border border-danger border-end-0 rounded-start">
                     {bloodData.map(blood => {
                         return (
-                            <div className="cijela" key={blood.name}>
+                            <div className="cijela" key={blood.id}>
                                 <div className="imeGrupe">{bloodName(blood.name)}</div>
                                 <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
                                 <div className="donjaGranica" style={{ bottom: "100px" }}></div>
                                 <div className="epruveta"></div>
                                 <div className="fix"></div>
-                                <div className="kolicKrvi" style={{ height: bloodHeight(blood.amount, blood.upperbound, blood.lowerbound) }}></div>
+                                <div className="kolicKrvi" style={{ height: bloodHeight(blood.supply, blood.upperbound, blood.lowerbound) }}></div>
                             </div>
                         )
                     })}
@@ -79,7 +80,7 @@ function Home(props) {
                 <Accordion className="col-2 border border-danger border-start-0 rounded-end pe-0">
                         {bloodData.map(blood => {
                             return (
-                            <Accordion.Item eventKey={blood.id}>
+                            <Accordion.Item key={blood.id} eventKey={blood.id}>
                                 <Accordion.Header>
                                     {bloodName(blood.name)}
                                 </Accordion.Header>
@@ -95,91 +96,6 @@ function Home(props) {
                 </Accordion>
             </div>
         </div>
-
-
-        /*<Container>
-            <Row className="justify-content-md-center">
-                <Col md={2}>4</Col>
-
-
-                <Col md={4} className="sopar">
-                    <Container>
-                        <Row className="justify-content-md-center">
-                            <Col md={3} >
-                                <div >
-                                    <img src={krvSlika} className="krv"></img>
-
-                                </div>
-                                <div >
-                                    <img src={epruveta} className="epruveta"></img>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                    
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div >
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-                <Col md={4} className="sopar">
-                    <Container>
-                        <Row className="justify-content-md-center">
-                            <Col md={3} >
-                                <div >
-                                    <img src={krvSlika} className="krv"></img>
-
-                                </div>
-                                <div >
-                                    <img src={epruveta} className="epruveta"></img>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-
-            </Row>
-        </Container>*/
     )
 
 

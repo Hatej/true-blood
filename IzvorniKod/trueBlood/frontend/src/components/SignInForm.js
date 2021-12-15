@@ -83,7 +83,7 @@ function SignInForm(props) {
         return fetch('http://localhost:8080/user/add', options)
             .then(response => {
                 if(response.ok){
-                    history.push('/login');
+                    history.push('/home');
                 }
                 if(response.status === 400){
                     setError("Error on signup!");
