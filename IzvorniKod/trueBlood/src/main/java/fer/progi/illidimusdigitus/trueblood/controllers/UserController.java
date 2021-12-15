@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 //import javax.ws.rs.Consumes;
 
@@ -88,7 +90,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
-    public ResponseEntity<User> loginAttempt(@RequestHeader String authorization) {
+    public ResponseEntity<Map<String, String>> loginAttempt(@RequestHeader String authorization) {
         authorization = authorization.substring(6);
         String decodedString = new String(Base64.getDecoder().decode(authorization));
         String[] userPass = decodedString.split(":");
@@ -106,7 +108,9 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().build();
+        Map<String, String> userRole = new HashMap<>();
+        userRole.put("role", usr.role.name.toString());
+        return ResponseEntity.ok(userRole);
     }
 
     public static String alphaNumericString(int len) {
@@ -128,6 +132,46 @@ public class UserController {
             return ResponseEntity.ok("verifySuccess=true");
         }
         return ResponseEntity.ok("verifySuccess=false");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<UserInfoDTO> getUserInfo(@RequestHeader String username) {
+        User usr = userService.findByUsername(username).get();
+
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        userInfoDTO.setName(usr.getName());
+        userInfoDTO.setSurname(usr.getSurname());
+        userInfoDTO.setBirthplace(usr.getBirthplace());
+        userInfoDTO.setOib(usr.getOib());
+        userInfoDTO.setAddress(usr.getAddress());
+        userInfoDTO.setWorkplace(usr.getWorkplace());
+        userInfoDTO.setEmail(usr.getEmail());
+        userInfoDTO.setMobilePrivate(usr.getMobilePrivate());
+        userInfoDTO.setMobileBusiness(usr.getMobileBusiness());
+        userInfoDTO.setBirthdate(usr.getBirthdate());
+        userInfoDTO.setBloodTypeName(usr.getBloodType().getName());
+        userInfoDTO.setRejected(usr.isRejected());
+        userInfoDTO.setRoleName(usr.getRole().getName());
+
+        return ResponseEntity.ok(userInfoDTO);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getEditUserInfo")
+    public ResponseEntity<EditUserInfoDTO> getEditUserInfo(@RequestHeader String username) {
+        User usr = userService.findByUsername(username).get();
+
+        EditUserInfoDTO editUserInfoDTO = new EditUserInfoDTO();
+        editUserInfoDTO.setName(usr.getName());
+        editUserInfoDTO.setSurname(usr.getSurname());
+        editUserInfoDTO.setAddress(usr.getAddress());
+        editUserInfoDTO.setWorkplace(usr.getWorkplace());
+        editUserInfoDTO.setEmail(usr.getEmail());
+        editUserInfoDTO.setMobilePrivate(usr.getMobilePrivate());
+        editUserInfoDTO.setMobileBusiness(usr.getMobileBusiness());
+
+        return ResponseEntity.ok(editUserInfoDTO);
     }
 
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
-import "./SignInForm.css";
 import AuthHandler from "./AuthHandler";
+import { Form, Button } from 'react-bootstrap';
 
 function LoginForm(props) {
 
@@ -32,8 +32,8 @@ function LoginForm(props) {
         setError("")
         AuthHandler
             .executeBasicAuthenticationService(loginForm.username, loginForm.password)
-            .then(() => {
-                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password, "donor")
+            .then((res) => {
+                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password, res.data.role);
                 props.logSet(true);
                 history.push('/home');
             }).catch(() => {
@@ -60,23 +60,36 @@ function LoginForm(props) {
        
 
     return (
-        <div className="SignupLoginForm">
-            <form onSubmit={onSubmit}>
-                <div className="FormRow">
-                    <label>{usernameText}</label>
-                    <input name='username' onChange={onChange} value={loginForm.username} type='text' required/>
-                </div>
-                <div className="FormRow">
-                    <label>{passwordText}</label>
-                    <input name='password' type={passwordType} onChange={onChange} value={loginForm.password} required/>
-                </div>
-                <div className="FormRow">
-                    <label>{showPasswordText}</label>
-                    <input name='showPassword' onClick={onClick} type="checkbox" checked={passwordType==="text"}/>
-                </div>
-                <div className='error'>{error}</div>
-                <button type="submit">{loginText}</button>
-            </form>
+        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+            <Form className="mt-3 mb-3" onSubmit={onSubmit}>
+                <Form.Group className="col-xs-2">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control 
+                        required
+                        type="text"
+                        name="username"
+                        value={loginForm.username}
+                        onChange={onChange}
+                        placeholder="First name"  
+                    />
+                </Form.Group>
+                <br/>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control 
+                        required
+                        type="password"
+                        name="password"
+                        value={loginForm.password}
+                        onChange={onChange}
+                        placeholder="Password"  
+                    />
+                </Form.Group>
+                <hr/>
+                <Button className="btn-danger" type="submit">
+                    Submit
+                </Button>
+            </Form>
         </div>
     )
 }

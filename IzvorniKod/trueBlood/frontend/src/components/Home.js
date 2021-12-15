@@ -64,13 +64,13 @@ function Home(props) {
         <div id="sveSkup">
             {bloodData.map(blood => {
                 return (
-                    <div class="cijela">
-                        <div class="imeGrupe">{bloodName(blood.name)}</div>
-                        <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                        <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                        <div class="epruveta"></div>
-                        <div class="fix"></div>
-                        <div class="kolicKrvi" style={{ height: bloodHeight() }}></div>
+                    <div className="cijela" key={blood.name}>
+                        <div className="imeGrupe">{bloodName(blood.name)}</div>
+                        <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
+                        <div className="donjaGranica" style={{ bottom: "100px" }}></div>
+                        <div className="epruveta"></div>
+                        <div className="fix"></div>
+                        <div className="kolicKrvi" style={{ height: bloodHeight() }}></div>
                     </div>
                 )
             })}

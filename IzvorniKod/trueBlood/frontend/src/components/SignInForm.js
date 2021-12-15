@@ -1,7 +1,6 @@
 import React from 'react';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
-import "./SignInForm.css";
-
 
 function SignInForm(props) {
 
@@ -107,67 +106,161 @@ function SignInForm(props) {
     }
     
     return (
-        <div className="SignupLoginForm">
-            <form onSubmit={onSubmit}>
-                <div className="FormRow">
-                    <label>{givenNameText}</label>
-                    <input name='givenName' onChange={onChange} value={signinForm.givenName} type="text" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{familyNameText}</label>
-                    <input name='familyName' onChange={onChange} value={signinForm.familyName} type="text" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{oibText}</label>
-                    <input name='OIB' onChange={onChange} value={signinForm.OIB} type="text" minLength="11" maxLength="11" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{dateOfBirthText}</label>
-                    <input name='dateOfBirth' onChange={onChange} value={signinForm.dateOfBirth} type="date" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{birthPlaceText}</label>
-                    <input name='birthPlace' onChange={onChange} value={signinForm.birthPlace} type="text" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{residencePlaceText}</label>
-                    <input name='residenceAdress' onChange={onChange} value={signinForm.residenceAdress} type="text" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{placeOfEmploymentText}</label>
-                    <input name='workplaceName' onChange={onChange} value={signinForm.workplaceName} type="text"/>
-                </div>
-                <div className="FormRow">
-                    <label>{privatePhoneNumberText}</label>
-                    <input name='privatePhoneNumber' onChange={onChange} value={signinForm.privatePhoneNumber} type="tel" pattern="[0-9]{10}" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{officialPhoneNumberText}</label>
-                    <input name='workPhoneNumber' onChange={onChange} value={signinForm.workPhoneNumber} type="tel" pattern="[0-9]{10}"/>
-                </div>
-                <div className="FormRow">
-                    <label>{emailText}</label>
-                    <input name='email' onChange={onChange} value={signinForm.email} type="email" required/>
-                </div>
-                <div className="FormRow">
-                    <label>{bloodTypeText}</label>
-                    <select name='bloodType' onChange={onChange} value={signinForm.bloodType} required>
-                        <option value='A+' selected>A+</option>
-                        <option value='A-'>A-</option>
-                        <option value='B+'>B+</option>
-                        <option value='B-'>B-</option>
-                        <option value='O+'>O+</option>
-                        <option value='O-'>O-</option>
-                        <option value='AB+'>AB+</option>
-                        <option value='AB-'>AB-</option>
-                    </select>
-                </div>
-                <hr/>
-                <div className='error'>{error}</div>
-                <button type="submit">{signinText}</button>
-            </form>
+        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+            <Form className="mt-3 mb-3" onSubmit={onSubmit}>
+                <Row className="mb-2">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>First name</Form.Label>
+                        <Form.Control 
+                            required
+                            type="text"
+                            name="givenName"
+                            value={signinForm.givenName}
+                            onChange={onChange}
+                            placeholder="First name"  
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Last name</Form.Label>
+                        <Form.Control 
+                            required
+                            type="text"
+                            name="familyName"
+                            value={signinForm.familyName}
+                            onChange={onChange}
+                            placeholder="Last name"  
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>OIB</Form.Label>
+                        <Form.Control 
+                            required
+                            type="text"
+                            name="OIB"
+                            value={signinForm.OIB}
+                            onChange={onChange}
+                            minLength="11"
+                            maxLength="11"
+                            placeholder="OIB"  
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Date of birth</Form.Label>
+                        <Form.Control 
+                            required
+                            type="date"
+                            name="dateOfBirth"
+                            value={signinForm.dateOfBirth}
+                            onChange={onChange}  
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Birth place</Form.Label>
+                        <Form.Control 
+                            required
+                            type="text"
+                            name="birthPlace"
+                            value={signinForm.birthPlace}
+                            onChange={onChange}  
+                            placeholder="Birth place"
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Residence address</Form.Label>
+                        <Form.Control 
+                            required
+                            type="text"
+                            name="residenceAdress"
+                            value={signinForm.residenceAdress}
+                            onChange={onChange} 
+                            placeholder="Residence adress"
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="12">
+                        <Form.Label>Place of employment</Form.Label>
+                        <Form.Control 
+                            type="text"
+                            name="workplaceName"
+                            value={signinForm.workplaceName}
+                            onChange={onChange}  
+                            placeholder="Place of employment"
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Private phone number</Form.Label>
+                        <Form.Control 
+                            required
+                            type="tel"
+                            pattern="[0-9]{10}"
+                            name="privatePhoneNumber"
+                            value={signinForm.privatePhoneNumber}
+                            onChange={onChange}  
+                            placeholder="0123456789"
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Official phone number</Form.Label>
+                        <Form.Control 
+                            type="tel"
+                            pattern="[0-9]{10}"
+                            name="workPhoneNumber"
+                            value={signinForm.workPhoneNumber}
+                            onChange={onChange} 
+                            placeholder="0123456789"
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="12">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control 
+                            required
+                            type="email"
+                            name="email"
+                            value={signinForm.email}
+                            onChange={onChange}  
+                            placeholder="Place of employment"
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Blood type</Form.Label>
+                        <Form.Select
+                            name="bloodType"
+                            onChange={onChange}
+                            value={signinForm.bloodType}
+                            required
+                        >
+                            <option value='A+'>A+</option>
+                            <option value='A-'>A-</option>
+                            <option value='B+'>B+</option>
+                            <option value='B-'>B-</option>
+                            <option value='O+'>O+</option>
+                            <option value='O-'>O-</option>
+                            <option value='AB+'>AB+</option>
+                            <option value='AB-'>AB-</option>
+                        </Form.Select>
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Button className="btn-danger" type="submit">
+                            Signup
+                        </Button>
+                        <span>{error}</span>
+                    </Form.Group>
+                </Row>
+            </Form>
         </div>
-
     )
 }
 

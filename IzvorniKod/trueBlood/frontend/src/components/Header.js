@@ -12,13 +12,13 @@ function Header(props) {
     let loggedInUserName = AuthHandler.getLoggedInUserName();
 
     var roleLink, roleText;
-    if (role === "admin") {
+    if (role === "ADMIN") {
         roleLink = "/admin";
         roleText = "Administrator";
-    } else if (role === "employee") {
+    } else if (role === "DJELATNIK") {
         roleLink =  "/employee";
         roleText = "Employee";
-    } else if (role === "donor") {
+    } else if (role === "DONOR") {
         roleLink = "/donor";
         roleText = "Donor";
     }
@@ -50,14 +50,14 @@ function Header(props) {
 
     return (
         <div>
-            <nav class="navbar navbar-expand navbar-light bg-light">
+            <nav className="navbar navbar-expand navbar-light bg-light">
                 <Nav.Item>
-                    <Nav.Link class="navbar-brand" href="/home">
-                        <img src={logo} width="30" height="30" class="d-inline-block align-top" alt=""/>
+                    <Nav.Link className="navbar-brand" href="/home">
+                        <img src={logo} width="30" height="30" className="d-inline-block align-top" alt=""/>
                         Home
                     </Nav.Link>
                 </Nav.Item>
-                <div class="navbar-nav justify-content-end ms-auto">
+                <div className="navbar-nav justify-content-end ms-auto">
                     <Nav.Item>
                         <Nav.Link href="/language">{chooseLanguageText}</Nav.Link>
                     </Nav.Item>
