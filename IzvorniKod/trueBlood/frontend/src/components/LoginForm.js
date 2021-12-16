@@ -78,13 +78,17 @@ function LoginForm(props) {
                     <Form.Label>Password</Form.Label>
                     <Form.Control 
                         required
-                        type="password"
+                        type={passwordType}
                         name="password"
                         value={loginForm.password}
                         onChange={onChange}
                         placeholder="Password"  
                     />
                 </Form.Group>
+                <div className="FormRow">
+                    <input name='showPassword' onClick={onClick} type="checkbox" checked={passwordType==="text"}/> {showPasswordText}
+                </div>
+
                 <hr/>
                 <Button className="btn-danger" type="submit">
                     Submit
