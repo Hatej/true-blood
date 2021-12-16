@@ -9,7 +9,8 @@ import javax.persistence.*;
  * It also has a name and a criterion.
  * @author matija
  */
-
+@Entity
+@Table(name = "zdravstveniPodaci")
 public class HealthData {
 
     /**

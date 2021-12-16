@@ -8,8 +8,9 @@ import java.io.Serializable;
  * It also has an answer.
  * @author matija
  */
-
-public class HealthDataAnswered {
+@Entity
+@Table(name = "doniranjeZdravljeOdgovori")
+public class HealthDataAnswered implements Serializable{
 
 
     /**

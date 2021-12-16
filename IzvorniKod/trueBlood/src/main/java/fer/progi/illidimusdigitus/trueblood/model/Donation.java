@@ -10,6 +10,8 @@ import java.util.Date;
  * success and reasonRefusal.
  * @author david
  */
+@Entity
+@Table(name = "pokusajDonacije")
 public class Donation {
 
     /**
