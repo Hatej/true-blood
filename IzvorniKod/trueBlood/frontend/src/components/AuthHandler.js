@@ -4,7 +4,7 @@ const SPRING_URL = 'http://localhost:8080'
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username'
 export const USER_PASSWORD_SESSION_ATTRIBUTE_NAME = 'password'
-export const USER_ROLE_SESSION_ATTRIBUTE_NAME = 'donor'
+export const USER_ROLE_SESSION_ATTRIBUTE_NAME = 'user'
 
 class AuthHandler {
 

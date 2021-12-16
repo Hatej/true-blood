@@ -5,11 +5,15 @@ import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
 import fer.progi.illidimusdigitus.trueblood.service.RequestDeniedException;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
+import fer.progi.illidimusdigitus.trueblood.controllers.EditUserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -19,7 +23,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@EnableAsync
 public class UserServiceJpa implements UserService, UserDetailsService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepo;
@@ -71,9 +79,15 @@ public class UserServiceJpa implements UserService, UserDetailsService {
     }
 
     @Override
+    public Optional<User> findByActivation(String activation) {
+        return userRepo.findByActivation(activation);
+    }
+
+    @Override
+    @Async
     public void sendMail(User user, String siteURL) {
 
-        String  verifyURL = siteURL + "/confirm?code=" + user.getActivation();
+        String  verifyURL = siteURL + "?code=" + user.getActivation();
         emailService.send(user.getEmail(), user.getName(),user.getUsername() ,verifyURL);
 
     }
@@ -94,20 +108,44 @@ public class UserServiceJpa implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean verify(String verificationCode) {
-        Optional<User> user = findByUsername(verificationCode);
+    public boolean verify(String verificationCode, String password) {
+        Optional<User> user = findByActivation(verificationCode);
 
         if (user.isEmpty()) {
             return false;
         } else  {
             User existsUser = user.get();
-            if(existsUser.getActivation() == null)
+            if(existsUser.getActivation() == null) {
                 return false;
-
+            }
             existsUser.setActivation(null);
-
+            existsUser.setPassword(passwordEncoder.encode(password));
+            userRepo.save(existsUser);
             return true;
         }
     }
+
+    @Override
+    public boolean updateUserInfo(String username, EditUserInfoDTO userDTO) {
+        Optional<User> userMaybe = userRepo.findByUsername(username);
+
+        if (userMaybe.isEmpty()) {
+            return false;
+        }
+
+        User user = userMaybe.get();
+
+        user.setName(userDTO.getName());
+        user.setSurname(userDTO.getSurname());
+        user.setAddress(userDTO.getAddress());
+        user.setWorkplace(userDTO.getWorkplace());
+        user.setEmail(userDTO.getEmail());
+        user.setMobilePrivate(userDTO.getMobilePrivate());
+        user.setMobileBusiness(userDTO.getMobileBusiness());
+
+        userRepo.save(user);
+        return true;
+    }
+
 }
 

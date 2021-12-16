@@ -13,14 +13,9 @@ function Admin(props) {
     return(
         <div>
             <div>
-                <button onClick={() => setView("myData")}>Moji podaci</button>
                 <button onClick={() => setView("employees")}>Djelatnici</button>
                 <button onClick={() => setView("donors")}>Donori</button>
                 <button onClick={() => setView("limits")}>Granice</button>
-            </div>
-
-            <div hidden={!(view==="myData")}>
-                <MyData/>
             </div>
 
             <div hidden={!(view==="employees")}>

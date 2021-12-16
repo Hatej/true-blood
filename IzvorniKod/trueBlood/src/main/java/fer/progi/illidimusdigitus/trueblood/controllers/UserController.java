@@ -8,22 +8,16 @@ import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 //import javax.ws.rs.Consumes;
 
@@ -89,14 +83,14 @@ public class UserController {
                 );
 
         userService.createUser(newUser);
-        userService.sendMail(newUser,request.getRequestURL().toString());
+        userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
 
         return ResponseEntity.ok().build();
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
-    public ResponseEntity<User> loginAttempt(@RequestHeader String authorization) {
+    public ResponseEntity<Map<String, String>> loginAttempt(@RequestHeader String authorization) {
         authorization = authorization.substring(6);
         String decodedString = new String(Base64.getDecoder().decode(authorization));
         String[] userPass = decodedString.split(":");
@@ -110,8 +104,13 @@ public class UserController {
         if (!passwordEncoder.matches(userPass[1], usr.getPassword())) {
             return ResponseEntity.badRequest().build();
         }
+        if (usr.getActivation() != null) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        return ResponseEntity.ok().build();
+        Map<String, String> userRole = new HashMap<>();
+        userRole.put("role", usr.role.name.toString());
+        return ResponseEntity.ok(userRole);
     }
 
     public static String alphaNumericString(int len) {
@@ -127,12 +126,52 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/add/confirm")
-    public ResponseEntity<String> verifyUser(@Param("code") String code) {
-        if (userService.verify(code)) {
+    public ResponseEntity<String> verifyUser(@RequestHeader String code, @RequestHeader String password) {
+        //TREBA NAPRAVITI REGISTER PASSWORDA, A CODE POSLATI NA FRONTEND SITE
+        if (userService.verify(code, password)) {
             return ResponseEntity.ok("verifySuccess=true");
-
         }
         return ResponseEntity.ok("verifySuccess=false");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<UserInfoDTO> getUserInfo(@RequestHeader String username) {
+        User usr = userService.findByUsername(username).get();
+
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        userInfoDTO.setName(usr.getName());
+        userInfoDTO.setSurname(usr.getSurname());
+        userInfoDTO.setBirthplace(usr.getBirthplace());
+        userInfoDTO.setOib(usr.getOib());
+        userInfoDTO.setAddress(usr.getAddress());
+        userInfoDTO.setWorkplace(usr.getWorkplace());
+        userInfoDTO.setEmail(usr.getEmail());
+        userInfoDTO.setMobilePrivate(usr.getMobilePrivate());
+        userInfoDTO.setMobileBusiness(usr.getMobileBusiness());
+        userInfoDTO.setBirthdate(usr.getBirthdate());
+        userInfoDTO.setBloodTypeName(usr.getBloodType().getName());
+        userInfoDTO.setRejected(usr.isRejected());
+        userInfoDTO.setRoleName(usr.getRole().getName());
+
+        return ResponseEntity.ok(userInfoDTO);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getEditUserInfo")
+    public ResponseEntity<EditUserInfoDTO> getEditUserInfo(@RequestHeader String username) {
+        User usr = userService.findByUsername(username).get();
+
+        EditUserInfoDTO editUserInfoDTO = new EditUserInfoDTO();
+        editUserInfoDTO.setName(usr.getName());
+        editUserInfoDTO.setSurname(usr.getSurname());
+        editUserInfoDTO.setAddress(usr.getAddress());
+        editUserInfoDTO.setWorkplace(usr.getWorkplace());
+        editUserInfoDTO.setEmail(usr.getEmail());
+        editUserInfoDTO.setMobilePrivate(usr.getMobilePrivate());
+        editUserInfoDTO.setMobileBusiness(usr.getMobileBusiness());
+
+        return ResponseEntity.ok(editUserInfoDTO);
     }
 
 }

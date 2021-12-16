@@ -3,7 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom";
 import "./Home.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, Accordion } from 'react-bootstrap';
 
 import epruveta from './epruveta.gif';
 import krvSlika from './krvSlika.gif';
@@ -20,7 +20,7 @@ function Home(props) {
         }
 
         getBloodData();
-    }, [bloodData]);
+    }, []);
 
     function bloodName(name){
         switch(name){
@@ -46,6 +46,7 @@ function Home(props) {
     }
 
     function bloodHeight(amount, upper, lower){
+        console.log(amount + " " + upper + " " + lower);
         if(amount < lower){
             return "50px";
         } else if(amount == lower){
@@ -53,114 +54,48 @@ function Home(props) {
         } else if(amount == upper){
             return "200px";
         } else if(amount > lower && amount < upper){
-            return "250px";
+            return "150px";
         } else {
             return "280px";
         }
     }
 
     return (
-        <div>
-        <div id="sveSkup">
-            {bloodData.map(blood => {
-                return (
-                    <div class="cijela">
-                        <div class="imeGrupe">{bloodName(blood.name)}</div>
-                        <div class="gornjaGranica" style={{ bottom: "200px" }}></div>
-                        <div class="donjaGranica" style={{ bottom: "100px" }}></div>
-                        <div class="epruveta"></div>
-                        <div class="fix"></div>
-                        <div class="kolicKrvi" style={{ height: bloodHeight() }}></div>
-                    </div>
-                )
-            })}
+        <div className="container justify-content-end align-items-right">
+            <div className="row justify-content-end align-items-right">
+                <div id="sveSkup" className="col-6 ps-3 border border-danger border-end-0 rounded-start">
+                    {bloodData.map(blood => {
+                        return (
+                            <div className="cijela" key={blood.id}>
+                                <div className="imeGrupe">{bloodName(blood.name)}</div>
+                                <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
+                                <div className="donjaGranica" style={{ bottom: "100px" }}></div>
+                                <div className="epruveta"></div>
+                                <div className="fix"></div>
+                                <div className="kolicKrvi" style={{ height: bloodHeight(blood.supply, blood.upperbound, blood.lowerbound) }}></div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <Accordion className="col-2 border border-danger border-start-0 rounded-end pe-0">
+                        {bloodData.map(blood => {
+                            return (
+                            <Accordion.Item key={blood.id} eventKey={blood.id}>
+                                <Accordion.Header>
+                                    {bloodName(blood.name)}
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <p>Name: {bloodName(blood.name)}</p>
+                                    <p>Amount: {blood.supply}</p>
+                                    <p>Upper bound: {blood.upperbound}</p>
+                                    <p>Lower bound: {blood.lowerbound}</p>
+                                </Accordion.Body>
+                            </Accordion.Item>  
+                            )
+                        })}
+                </Accordion>
+            </div>
         </div>
-        </div>
-
-
-        /*<Container>
-            <Row className="justify-content-md-center">
-                <Col md={2}>4</Col>
-
-
-                <Col md={4} className="sopar">
-                    <Container>
-                        <Row className="justify-content-md-center">
-                            <Col md={3} >
-                                <div >
-                                    <img src={krvSlika} className="krv"></img>
-
-                                </div>
-                                <div >
-                                    <img src={epruveta} className="epruveta"></img>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                    
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div >
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-                <Col md={4} className="sopar">
-                    <Container>
-                        <Row className="justify-content-md-center">
-                            <Col md={3} >
-                                <div >
-                                    <img src={krvSlika} className="krv"></img>
-
-                                </div>
-                                <div >
-                                    <img src={epruveta} className="epruveta"></img>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                            <Col md={3} >
-                                <div>
-                                    <Image src={krvSlika} className="krv"></Image>
-                                    <Image src={epruveta} className="epruveta"></Image>
-                                </div>
-                                vrsta
-                            </Col>
-                        </Row>
-                    </Container>
-                </Col>
-
-            </Row>
-        </Container>*/
     )
 
 
