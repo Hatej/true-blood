@@ -31,7 +31,7 @@ public class BloodController {
     @PostMapping("/bloodGroups")
     public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto, HttpServletRequest request) {
 
-        BloodType userBT = switch(dto.getName()) {
+        BloodType type = switch(dto.getName()) {
             case "A+" -> BloodType.A_PLUS;
             case "A-" -> BloodType.A_MINUS;
             case "B+" -> BloodType.B_PLUS;
@@ -42,11 +42,7 @@ public class BloodController {
             case "AB-" -> BloodType.AB_MINUS;
             default -> BloodType.A_PLUS;
         };
-        Blood userBloodType = bloodService.findByName(userBT).get();
-
-        userBloodType.setLowerbound(dto.getLowerbound());
-        userBloodType.setUpperbound(dto.getUpperbound());
-
+        bloodService.updateBounds(type, dto);
         return ResponseEntity.ok().build();
     }
 }

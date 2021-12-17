@@ -9,6 +9,8 @@ import java.sql.Timestamp;
  * It also has timestamp of blood consumption , quantity and hospital location.
  * @author david
  */
+@Entity
+@Table(name = "potrosnjaKrvi")
 public class Consumption {
 
     /**
