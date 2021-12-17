@@ -4,33 +4,32 @@ import {useHistory} from "react-router-dom";
 
 function MyData(props) {
     
-    const [signinForm, setSignInForm] = React.useState(
-        {givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"dsd", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-        workplaceName:"", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+"}
+    const [myDataForm, setMyDataForm] = React.useState(
+        {givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
+        workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+"}
     );
 
-    let oldForm; //za cuvanje stare form 
+    const [oldMyDataForm, setOldMyDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
-    const [passwordType, setPasswordType] = React.useState("password")
     const [editingMode, setEditingMode]= React.useState(false)
-    const history = useHistory();
+    const history = useHistory(); 
 
     function onSubmit(e) {
         e.preventDefault();
         setError("")
       
         const data = {
-            name: signinForm.givenName,
-            surname: signinForm.familyName,
-            birthplace: signinForm.birthPlace,
-            oib: signinForm.OIB,
-            address: signinForm.residenceAdress,
-            workplace: signinForm.workplaceName,
-            email: signinForm.email,
-            mobilePrivate: signinForm.privatePhoneNumber,
-            mobileBusiness: signinForm.workPhoneNumber,
-            birthdate: signinForm.dateOfBirth,
-            bloodTypeName: signinForm.bloodType,
+            name: myDataForm.givenName,
+            surname: myDataForm.familyName,
+            birthplace: myDataForm.birthPlace,
+            oib: myDataForm.OIB,
+            address: myDataForm.residenceAdress,
+            workplace: myDataForm.workplaceName,
+            email: myDataForm.email,
+            mobilePrivate: myDataForm.privatePhoneNumber,
+            mobileBusiness: myDataForm.workPhoneNumber,
+            birthdate: myDataForm.dateOfBirth,
+            bloodTypeName: myDataForm.bloodType,
         };
 
         console.log(data);
@@ -56,25 +55,29 @@ function MyData(props) {
     }
 
     function onChange(event) {
+
         if (editingMode) {
             const {name, value} = event.target;
-            let newForm = {givenName: signinForm.givenName, familyName: signinForm.familyName, 
-                        OIB: signinForm.OIB, dateOfBirth: signinForm.dateOfBirth, birthPlace: signinForm.birthPlace,
-                        residenceAdress: signinForm.residenceAdress, workplaceName: signinForm.workplaceName,
-                        privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, bloodType: signinForm.bloodType};
+            let newForm = {givenName: myDataForm.givenName, familyName: myDataForm.familyName, 
+                        OIB: myDataForm.OIB, dateOfBirth: myDataForm.dateOfBirth, birthPlace: myDataForm.birthPlace,
+                        residenceAdress: myDataForm.residenceAdress, workplaceName: myDataForm.workplaceName,
+                        privatePhoneNumber: myDataForm.privatePhoneNumber, workPhoneNumber: myDataForm.workPhoneNumber, email: myDataForm.email, bloodType: myDataForm.bloodType};
             newForm[name] = value;
             
-            setSignInForm(newForm);
+            setMyDataForm(newForm);
         }
-    
+
     }
 
-    function changeEditingMode() {
-        setEditingMode(!editingMode)
+    function enterEditingMode() {
+        setEditingMode(true)
+        setOldMyDataForm({ ... myDataForm})  //ovako se kopira objekt
+
     }
 
     function returnToOld() {
-        setEditingMode(!editingMode)
+        setEditingMode(false)
+        setMyDataForm(oldMyDataForm);
     }
     
     return (
@@ -87,7 +90,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="givenName"
-                            value={signinForm.givenName}
+                            value={myDataForm.givenName}
                             onChange={onChange}
                             placeholder="First name"  
                         />
@@ -98,7 +101,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="familyName"
-                            value={signinForm.familyName}
+                            value={myDataForm.familyName}
                             onChange={onChange}
                             placeholder="Last name"  
                         />
@@ -111,7 +114,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="OIB"
-                            value={signinForm.OIB}
+                            value={myDataForm.OIB}
                             onChange={onChange}
                             minLength="11"
                             maxLength="11"
@@ -124,7 +127,7 @@ function MyData(props) {
                             required
                             type="date"
                             name="dateOfBirth"
-                            value={signinForm.dateOfBirth}
+                            value={myDataForm.dateOfBirth}
                             onChange={onChange}  
                         />
                     </Form.Group>
@@ -136,7 +139,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="birthPlace"
-                            value={signinForm.birthPlace}
+                            value={myDataForm.birthPlace}
                             onChange={onChange}  
                             placeholder="Birth place"
                         />
@@ -147,7 +150,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="residenceAdress"
-                            value={signinForm.residenceAdress}
+                            value={myDataForm.residenceAdress}
                             onChange={onChange} 
                             placeholder="Residence adress"
                         />
@@ -159,7 +162,7 @@ function MyData(props) {
                         <Form.Control 
                             type="text"
                             name="workplaceName"
-                            value={signinForm.workplaceName}
+                            value={myDataForm.workplaceName}
                             onChange={onChange}  
                             placeholder="Place of employment"
                         />
@@ -173,7 +176,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="privatePhoneNumber"
-                            value={signinForm.privatePhoneNumber}
+                            value={myDataForm.privatePhoneNumber}
                             onChange={onChange}  
                             placeholder="0123456789"
                         />
@@ -184,7 +187,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="workPhoneNumber"
-                            value={signinForm.workPhoneNumber}
+                            value={myDataForm.workPhoneNumber}
                             onChange={onChange} 
                             placeholder="0123456789"
                         />
@@ -197,7 +200,7 @@ function MyData(props) {
                             required
                             type="email"
                             name="email"
-                            value={signinForm.email}
+                            value={myDataForm.email}
                             onChange={onChange}  
                             placeholder="Place of employment"
                         />
@@ -205,7 +208,7 @@ function MyData(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Blood type: {signinForm.bloodType}</Form.Label>
+                        <Form.Label>Blood type: <b>{myDataForm.bloodType}</b></Form.Label>
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
@@ -213,11 +216,11 @@ function MyData(props) {
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
                         </Button>
-                        <Button hidden={editingMode} className="btn-danger" onClick={changeEditingMode}>
+                        <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
                             Edit
                         </Button>
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
-                            Vrati na staro
+                            Poništi izmjene
                         </Button>
                         <div>{error}</div>
                     </Form.Group>
