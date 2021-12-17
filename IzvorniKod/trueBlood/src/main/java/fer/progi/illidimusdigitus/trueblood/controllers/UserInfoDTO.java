@@ -14,25 +14,15 @@ public class UserInfoDTO {
 
     public String birthplace;
 
-    public String oib;
-
     public String address;
 
-    public String workplace ;
-
-    public String email;
+    public String workplace;
 
     public String mobilePrivate;
 
     public String mobileBusiness;
 
     public Date birthdate;
-
-    public BloodType bloodTypeName;
-
-    public boolean rejected;
-
-    public RoleName roleName;
 
     public String getName() {
         return name;
@@ -46,20 +36,12 @@ public class UserInfoDTO {
         return birthplace;
     }
 
-    public String getOib() {
-        return oib;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public String getWorkplace() {
         return workplace;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getMobilePrivate() {
@@ -70,21 +52,7 @@ public class UserInfoDTO {
         return mobileBusiness;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public BloodType getBloodTypeName() {
-        return bloodTypeName;
-    }
-
-    public boolean getRejected() {
-        return rejected;
-    }
-
-    public RoleName getRoleName() {
-        return roleName;
-    }
+    public Date getBirthdate() { return birthdate; }
 
     public void setName(String name) {
         this.name = name;
@@ -98,20 +66,12 @@ public class UserInfoDTO {
         this.birthplace = birthplace;
     }
 
-    public void setOib(String oib) {
-        this.oib = oib;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
     public void setWorkplace(String workplace) {
         this.workplace = workplace;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setMobilePrivate(String mobilePrivate) {
@@ -126,15 +86,4 @@ public class UserInfoDTO {
         this.birthdate = birthdate;
     }
 
-    public void setBloodTypeName(BloodType bloodTypeName) {
-        this.bloodTypeName = bloodTypeName;
-    }
-
-    public void setRejected(boolean rejected) {
-        this.rejected = rejected;
-    }
-
-    public void setRoleName(RoleName roleName) {
-        this.roleName = roleName;
-    }
 }

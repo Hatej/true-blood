@@ -1,13 +1,40 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
+import axios from "axios"
+import AuthHandler from '../AuthHandler';
 
 function MyData(props) {
     
     const [myDataForm, setMyDataForm] = React.useState(
-        {givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-        workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+"}
+        {givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
+        workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:""}
     );
+
+    async function getMyData() {
+        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
+            headers: {
+                'username':AuthHandler.getLoggedInUserName()
+            }
+        }).then(res => res.data);
+        var time = Date.parse(data.birthdate);
+        console.log(time);
+        var date = new Date(time);
+        var dateFormat =    date.getFullYear() + '-'
+                            + ('0' + (date.getMonth()+1)).slice(-2) + '-'
+                            + ('0' + date.getDate()).slice(-2);
+        let newForm = {givenName: data.name, familyName: data.surname, 
+                        OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
+                        residenceAdress: data.address, workplaceName: data.workplace,
+                        privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName)};
+        setMyDataForm(newForm);
+    }
+
+    useEffect(() => {
+        getMyData();
+    }, []);
+
 
     const [oldMyDataForm, setOldMyDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
@@ -22,35 +49,33 @@ function MyData(props) {
             name: myDataForm.givenName,
             surname: myDataForm.familyName,
             birthplace: myDataForm.birthPlace,
-            oib: myDataForm.OIB,
             address: myDataForm.residenceAdress,
             workplace: myDataForm.workplaceName,
-            email: myDataForm.email,
             mobilePrivate: myDataForm.privatePhoneNumber,
             mobileBusiness: myDataForm.workPhoneNumber,
             birthdate: myDataForm.dateOfBirth,
-            bloodTypeName: myDataForm.bloodType,
         };
 
-        console.log(data);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        const headers = {
+            'username':AuthHandler.getLoggedInUserName()
         };
-        setError("");
-        return fetch('http://localhost:8080/user/add', options)
-            .then(response => {
-                if(response.ok){
-                    history.push('/home');
-                }
-                if(response.status === 400){
-                    setError("Error on signup!");
-                    history.push('/signin');
-                }
+
+        return axios.post('http://localhost:8080/user/editUserInfo',
+                data, {
+                    headers:headers
+                })
+                .then(res => {
+                    console.log(res);
+                    if(res.status == 200){
+                        setError("Changes saved!");
+                        getMyData();
+                        setOldMyDataForm({ ... myDataForm});
+                        setEditingMode(false);
+                    } 
+                    if(res.status === 400){
+                        setError("Error on signup!");
+                        history.push('/donor');
+                    }
             });
     }
 
@@ -69,10 +94,32 @@ function MyData(props) {
 
     }
 
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB+"
+            case "B_MINUS":
+                return "B+"
+            case "ZERO_MINUS":
+                return "O+"       
+            default:
+                break;
+        }
+    }
+
     function enterEditingMode() {
         setEditingMode(true)
         setOldMyDataForm({ ... myDataForm})  //ovako se kopira objekt
-
     }
 
     function returnToOld() {
@@ -111,7 +158,7 @@ function MyData(props) {
                     <Form.Group as={Col} md="6">
                         <Form.Label>OIB</Form.Label>
                         <Form.Control 
-                            required
+                            readonly="true"
                             type="text"
                             name="OIB"
                             value={myDataForm.OIB}
@@ -197,7 +244,7 @@ function MyData(props) {
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
                         <Form.Control 
-                            required
+                            readonly="true"
                             type="email"
                             name="email"
                             value={myDataForm.email}
@@ -212,17 +259,19 @@ function MyData(props) {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
+                    <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
                         </Button>
                         <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
                             Edit
                         </Button>
+                        <span>{error}</span>
+                    </Form.Group>
+                    <Form.Group as={Col} md="2">
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
                             Poništi izmjene
                         </Button>
-                        <div>{error}</div>
                     </Form.Group>
                 </Row>
             </Form>

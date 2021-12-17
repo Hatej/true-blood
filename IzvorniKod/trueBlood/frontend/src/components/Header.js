@@ -6,15 +6,10 @@ import AuthHandler from "./AuthHandler";
 import { Nav } from 'react-bootstrap';
 
 function Header(props) {
-    /* Ovo je zapravo što bi trebalo biti
+
     let role = AuthHandler.getLoggedInRole();
     let isLoggedIn = AuthHandler.isUserLoggedIn();
-    let loggedInUserName = AuthHandler.getLoggedInUserName();*/
-
-    //ovo je samo za testiranje:
-    let role = "DONOR";
-    let isLoggedIn = true;
-    let loggedInUserName = "Tesla";
+    let loggedInUserName = AuthHandler.getLoggedInUserName();
 
     var roleLink, roleText;
     if (role === "ADMIN") {

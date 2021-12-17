@@ -5,7 +5,7 @@ import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
 import fer.progi.illidimusdigitus.trueblood.service.RequestDeniedException;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
-import fer.progi.illidimusdigitus.trueblood.controllers.EditUserInfoDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -126,7 +126,7 @@ public class UserServiceJpa implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean updateUserInfo(String username, EditUserInfoDTO userDTO) {
+    public boolean updateUserInfo(String username, UserInfoDTO userDTO) {
         Optional<User> userMaybe = userRepo.findByUsername(username);
 
         if (userMaybe.isEmpty()) {
@@ -137,11 +137,12 @@ public class UserServiceJpa implements UserService, UserDetailsService {
 
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
+        user.setBirthplace(userDTO.getBirthplace());
         user.setAddress(userDTO.getAddress());
         user.setWorkplace(userDTO.getWorkplace());
-        user.setEmail(userDTO.getEmail());
         user.setMobilePrivate(userDTO.getMobilePrivate());
         user.setMobileBusiness(userDTO.getMobileBusiness());
+        user.setBirthdate(userDTO.getBirthdate());
 
         userRepo.save(user);
         return true;
