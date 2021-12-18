@@ -1,13 +1,18 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
 import AuthHandler from "./AuthHandler";
-import MyData from "./CommonComponents/MyData";
 import DonorsList from "./CommonComponents/DonorsList";
 import BloodChange from "./EmployeeComponents/BloodChange";
+import EmployeeData from "./EmployeeComponents/EmployeeData";
 
 function Employee(props) {
+
+    const [employeeData, setEmployeeData] = React.useState(
+        {givenName:"Jasmin", familyName:"Stavros", OIB:"12312321", dateOfBirth:"fdfdf", birthPlace:"sdsdsd",  residenceAdress:"fdfdf", privatePhoneNumber:"dfvd", workPhoneNumber:"dfdfd", email:"sdfdf"}
+    )
+
     const [view, setView] = React.useState("myData");
-    let podatak = 3;
+   
     return(
         <div>
             <div>
@@ -17,7 +22,7 @@ function Employee(props) {
             </div>
 
             <div hidden={!(view==="myData")}>
-                <MyData/>
+               <EmployeeData mode="EMPLOYEE_ACCESING_DATA" employeeData={employeeData}/>
             </div>
 
             <div hidden={!(view==="donorsList")}>

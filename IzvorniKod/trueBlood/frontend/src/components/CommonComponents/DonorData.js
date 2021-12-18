@@ -2,14 +2,17 @@ import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
 
-function MyData(props) {
-    
-    const [myDataForm, setMyDataForm] = React.useState(
-        {givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-        workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+"}
-    );
+function DonorData(props) {
 
-    const [oldMyDataForm, setOldMyDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
+    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "DONOR_ACCESSING_DATA"    ; trebalo mi mozda dodati i mogucnost "DONOR_SIGNIN" da nemamo posebnu sign in formu
+    //props.donorData
+    const [donorDataForm, setDonorDataForm] = React.useState(props.donorData);
+    
+    React.useEffect( () => {
+        setDonorDataForm(props.donorData)
+    }, [props.donorData])  //Valentin je rekao da je ovo nepreproruciljivo rjesenje, ali radi
+
+    const [oldDonorDataForm, setOldDonorDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
     const history = useHistory(); 
@@ -19,17 +22,17 @@ function MyData(props) {
         setError("")
       
         const data = {
-            name: myDataForm.givenName,
-            surname: myDataForm.familyName,
-            birthplace: myDataForm.birthPlace,
-            oib: myDataForm.OIB,
-            address: myDataForm.residenceAdress,
-            workplace: myDataForm.workplaceName,
-            email: myDataForm.email,
-            mobilePrivate: myDataForm.privatePhoneNumber,
-            mobileBusiness: myDataForm.workPhoneNumber,
-            birthdate: myDataForm.dateOfBirth,
-            bloodTypeName: myDataForm.bloodType,
+            name: donorDataForm.givenName,
+            surname: donorDataForm.familyName,
+            birthplace: donorDataForm.birthPlace,
+            oib: donorDataForm.OIB,
+            address: donorDataForm.residenceAdress,
+            workplace: donorDataForm.workplaceName,
+            email: donorDataForm.email,
+            mobilePrivate: donorDataForm.privatePhoneNumber,
+            mobileBusiness: donorDataForm.workPhoneNumber,
+            birthdate: donorDataForm.dateOfBirth,
+            bloodTypeName: donorDataForm.bloodType,
         };
 
         console.log(data);
@@ -58,26 +61,23 @@ function MyData(props) {
 
         if (editingMode) {
             const {name, value} = event.target;
-            let newForm = {givenName: myDataForm.givenName, familyName: myDataForm.familyName, 
-                        OIB: myDataForm.OIB, dateOfBirth: myDataForm.dateOfBirth, birthPlace: myDataForm.birthPlace,
-                        residenceAdress: myDataForm.residenceAdress, workplaceName: myDataForm.workplaceName,
-                        privatePhoneNumber: myDataForm.privatePhoneNumber, workPhoneNumber: myDataForm.workPhoneNumber, email: myDataForm.email, bloodType: myDataForm.bloodType};
+            let newForm = { ... donorDataForm };
             newForm[name] = value;
             
-            setMyDataForm(newForm);
+            setDonorDataForm(newForm);
         }
 
     }
 
     function enterEditingMode() {
         setEditingMode(true)
-        setOldMyDataForm({ ... myDataForm})  //ovako se kopira objekt
+        setOldDonorDataForm({ ... donorDataForm})  //ovako se kopira objekt
 
     }
 
     function returnToOld() {
         setEditingMode(false)
-        setMyDataForm(oldMyDataForm);
+        setDonorDataForm(oldDonorDataForm);
     }
     
     return (
@@ -90,7 +90,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="givenName"
-                            value={myDataForm.givenName}
+                            value={donorDataForm.givenName}
                             onChange={onChange}
                             placeholder="First name"  
                         />
@@ -101,7 +101,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="familyName"
-                            value={myDataForm.familyName}
+                            value={donorDataForm.familyName}
                             onChange={onChange}
                             placeholder="Last name"  
                         />
@@ -114,7 +114,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="OIB"
-                            value={myDataForm.OIB}
+                            value={donorDataForm.OIB}
                             onChange={onChange}
                             minLength="11"
                             maxLength="11"
@@ -127,7 +127,7 @@ function MyData(props) {
                             required
                             type="date"
                             name="dateOfBirth"
-                            value={myDataForm.dateOfBirth}
+                            value={donorDataForm.dateOfBirth}
                             onChange={onChange}  
                         />
                     </Form.Group>
@@ -139,7 +139,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="birthPlace"
-                            value={myDataForm.birthPlace}
+                            value={donorDataForm.birthPlace}
                             onChange={onChange}  
                             placeholder="Birth place"
                         />
@@ -150,7 +150,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="residenceAdress"
-                            value={myDataForm.residenceAdress}
+                            value={donorDataForm.residenceAdress}
                             onChange={onChange} 
                             placeholder="Residence adress"
                         />
@@ -162,7 +162,7 @@ function MyData(props) {
                         <Form.Control 
                             type="text"
                             name="workplaceName"
-                            value={myDataForm.workplaceName}
+                            value={donorDataForm.workplaceName}
                             onChange={onChange}  
                             placeholder="Place of employment"
                         />
@@ -176,7 +176,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="privatePhoneNumber"
-                            value={myDataForm.privatePhoneNumber}
+                            value={donorDataForm.privatePhoneNumber}
                             onChange={onChange}  
                             placeholder="0123456789"
                         />
@@ -187,7 +187,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="workPhoneNumber"
-                            value={myDataForm.workPhoneNumber}
+                            value={donorDataForm.workPhoneNumber}
                             onChange={onChange} 
                             placeholder="0123456789"
                         />
@@ -200,7 +200,7 @@ function MyData(props) {
                             required
                             type="email"
                             name="email"
-                            value={myDataForm.email}
+                            value={donorDataForm.email}
                             onChange={onChange}  
                             placeholder="Place of employment"
                         />
@@ -208,7 +208,37 @@ function MyData(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Blood type: <b>{myDataForm.bloodType}</b></Form.Label>
+                        <Form.Label>Blood type: </Form.Label>
+                        <Form.Select
+                            name="bloodType"
+                            onChange={onChange}
+                            value={donorDataForm.bloodType}
+                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
+                        >
+                            <option value='A+'>A+</option>
+                            <option value='A-'>A-</option>
+                            <option value='B+'>B+</option>
+                            <option value='B-'>B-</option>
+                            <option value='O+'>O+</option>
+                            <option value='O-'>O-</option>
+                            <option value='AB+'>AB+</option>
+                            <option value='AB-'>AB-</option>
+                        </Form.Select>
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Mogućnost doniranja: </Form.Label>
+                        <Form.Select
+                            name="ableToDonate"
+                            onChange={onChange}
+                            value={donorDataForm.ableToDonate}
+                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
+                        >
+                            <option value='able'>Može</option>
+                            <option value='unable'>Ne može</option>
+                        
+                        </Form.Select>
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
@@ -231,4 +261,4 @@ function MyData(props) {
     
 }
 
-export default MyData;
+export default DonorData;

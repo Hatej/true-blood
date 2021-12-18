@@ -12,7 +12,7 @@ function Header(props) {
     let loggedInUserName = AuthHandler.getLoggedInUserName();*/
 
     //ovo je samo za testiranje:
-    let role = "DONOR";
+    let role = "DJELATNIK";
     let isLoggedIn = true;
     let loggedInUserName = "Tesla";
 
