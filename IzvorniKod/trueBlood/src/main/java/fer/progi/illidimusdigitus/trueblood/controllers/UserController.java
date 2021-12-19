@@ -125,8 +125,7 @@ public class UserController {
                 dto.getName(),
                 dto.getSurname(),
                 dto.getOib(),
-                userRole,
-                dto.getEmail()
+                userRole
                 );
 
         userService.createUser(newUser);
@@ -210,4 +209,7 @@ public class UserController {
         return ResponseEntity.ok("Could not update user!");
     }
 
+
+
 }
+

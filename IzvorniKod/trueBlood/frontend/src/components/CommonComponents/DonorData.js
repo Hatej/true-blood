@@ -14,14 +14,14 @@ function DonorData(props) {
 
     switch(props.mode){
         case "DONOR_ACCESSING_DATA":
-            targetUsername = "konrad" /*zapravo ovo: AuthHandler.getLoggedInUserName()*/;
+            targetUsername = AuthHandler.getLoggedInUserName();
             break;
         case "EMPLOYEE_ACCESSING_DATA":
             targetUsername = props.username;
             break;
     }
 
-    const [donorDataForm, setDonorDataForm] = React.useState({givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
+    const [donorDataForm, setDonorDataForm] = React.useState({givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd",
     workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+", ableToDonate:false});
     
     

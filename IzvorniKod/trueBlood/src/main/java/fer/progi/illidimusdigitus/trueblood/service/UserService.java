@@ -29,7 +29,11 @@ public interface UserService {
 
     boolean updateUserInfo(String username, UserInfoDTO userDTO);
 
+
 	List<User> findByBloodType(Blood blood);
 	
 	List<User> findByRole(Role role);
+
+    void deleteByUsername(String username);
+
 }

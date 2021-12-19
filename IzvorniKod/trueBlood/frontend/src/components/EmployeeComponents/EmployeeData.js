@@ -15,7 +15,7 @@ function EmployeeData(props) {
 
     switch(props.mode){
         case "EMPLOYEE_ACCESSING_DATA":
-            targetUsername = "konrad" /*zapravo ovo: AuthHandler.getLoggedInUserName()*/;
+            targetUsername = AuthHandler.getLoggedInUserName();
             break;
         case "ADMIN_ACCESSING_DATA":
             targetUsername = props.username;
