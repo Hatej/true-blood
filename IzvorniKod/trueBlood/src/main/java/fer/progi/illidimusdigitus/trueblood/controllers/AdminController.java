@@ -104,7 +104,7 @@ public class AdminController {
 
        User donor = donoroptional.get();
 
-       if(!donor.getRole().getName().toString().equals("djelatnik"))
+       if(!donor.getRole().getName().toString().equals("DJELATNIK"))
            return ResponseEntity.badRequest().build();
 
 
@@ -124,7 +124,7 @@ public class AdminController {
 
         User donor = donoroptional.get();
 
-        if(!donor.getRole().getName().toString().equals("donor"))
+        if(!donor.getRole().getName().toString().equals("DONOR"))
             return ResponseEntity.badRequest().build();
 
 
