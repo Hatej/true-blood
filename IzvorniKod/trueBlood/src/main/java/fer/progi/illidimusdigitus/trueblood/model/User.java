@@ -144,25 +144,16 @@ public class User {
 		this.activation = oib.substring(1);
     }
     
-    /*public User(String username, String name, String surname,
-            String birthplace, String oib, String address, String workplace,
-            String email, String mobilePrivate, String mobileBusiness, Date birthdate,
-            boolean rejected, String rejection, Role role, Blood bloodType) {
+    
+    public User(String username,String password, String name, String surname,
+            String oib, Role role) {
 		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
-		this.birthplace = birthplace;
-		this.email = email;
 		this.oib = oib;
-		this.address = address;
-		this.mobilePrivate = mobilePrivate;
-		this.mobileBusiness = mobileBusiness;
-		this.birthdate = birthdate;
-		this.rejected = rejected;
-		this.rejection = rejection;
 		this.role = role;
-		this.bloodType = bloodType;
-    }*/
+    }
 
 	public String getUsername() {
 		return username;

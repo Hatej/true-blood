@@ -87,7 +87,51 @@ public class UserController {
 
         return ResponseEntity.ok().build();
     }
+    
+    /*@CrossOrigin(origins = "*")
+    @PostMapping("/addAdmin")
+    public ResponseEntity<User> createAdmin(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
 
+        Role userRole = roleService.findByName(RoleName.ADMIN).get();
+
+        String nPass = alphaNumericString(8);
+        System.out.println(nPass);
+
+        User newUser = new User(
+                String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
+                passwordEncoder.encode(nPass),
+                dto.getName(),
+                dto.getSurname(),
+                dto.getOib(),
+                userRole
+                );
+
+        userService.createUser(newUser);
+        return ResponseEntity.ok().build();
+    }
+    
+    @CrossOrigin(origins = "*")
+    @PostMapping("/addDjelatnik")
+    public ResponseEntity<User> createDjelatnik(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
+
+        Role userRole = roleService.findByName(RoleName.DJELATNIK).get();
+
+        String nPass = alphaNumericString(8);
+        System.out.println(nPass);
+
+        User newUser = new User(
+                String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
+                passwordEncoder.encode(nPass),
+                dto.getName(),
+                dto.getSurname(),
+                dto.getOib(),
+                userRole
+                );
+
+        userService.createUser(newUser);
+        return ResponseEntity.ok().build();
+    }
+	*/
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
     public ResponseEntity<Map<String, String>> loginAttempt(@RequestHeader String authorization) {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Consumption;
@@ -19,7 +20,7 @@ import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.ConsumptionService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
-@Controller
+@RestController
 public class ConsumptionController {
 
 	@Autowired
