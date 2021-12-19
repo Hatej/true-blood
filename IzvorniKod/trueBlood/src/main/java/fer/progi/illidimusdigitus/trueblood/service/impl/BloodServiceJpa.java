@@ -21,7 +21,7 @@ public class BloodServiceJpa implements BloodService {
 
     @Override
     public Optional<Blood> findByName(BloodType name) {
-        return bloodRepo.findByName(name);
+        return bloodRepo.findByNameOrderById(name);
     }
 
     @Override

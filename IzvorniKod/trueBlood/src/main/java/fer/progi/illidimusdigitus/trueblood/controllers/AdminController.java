@@ -3,8 +3,15 @@ package fer.progi.illidimusdigitus.trueblood.controllers;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import fer.progi.illidimusdigitus.trueblood.model.User;
+
+import javax.annotation.security.RolesAllowed;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,13 +22,23 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
+    @Secured("ROLE_ADMIN")
     @CrossOrigin("*")
     @GetMapping("/donorList")
     public List<AdminListAllUserDTO> getDonorList() {
        List<User> allUsers =  userService.listAll();
 
+        //za sprobavanje
+        /*SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        List<?> authhshss = authentication.getAuthorities().stream().toList();
+        Object principal = authentication.getPrincipal();
+        System.out.println(authhshss.size());*/
+
        return allUsers.stream()
-               .filter((e) -> e.getRole().getName().equals("donor"))
+               .filter((e) -> e.getRole().getName().toString().equals("DONOR"))
                .map((e) -> {
                    AdminListAllUserDTO user = new AdminListAllUserDTO();
                    user.setAddress(e.getAddress());
@@ -41,9 +58,6 @@ public class AdminController {
                    return user;
                })
                .collect(Collectors.toList());
-
-
-
     }
 
 
@@ -54,7 +68,7 @@ public class AdminController {
         List<User> allUsers =  userService.listAll();
 
         List<AdminListAllUserDTO> filtriraniDjelatnici = allUsers.stream()
-                .filter((e) -> e.getRole().getName().equals("djelatnik"))
+                .filter((e) -> e.getRole().getName().toString().equals("DJELATNIK"))
                 .map((e) -> {
                     AdminListAllUserDTO user = new AdminListAllUserDTO();
                     user.setAddress(e.getAddress());
@@ -90,7 +104,7 @@ public class AdminController {
 
        User donor = donoroptional.get();
 
-       if(!donor.getRole().getName().equals("djelatnik"))
+       if(!donor.getRole().getName().toString().equals("djelatnik"))
            return ResponseEntity.badRequest().build();
 
 
@@ -110,7 +124,7 @@ public class AdminController {
 
         User donor = donoroptional.get();
 
-        if(!donor.getRole().getName().equals("donor"))
+        if(!donor.getRole().getName().toString().equals("donor"))
             return ResponseEntity.badRequest().build();
 
 

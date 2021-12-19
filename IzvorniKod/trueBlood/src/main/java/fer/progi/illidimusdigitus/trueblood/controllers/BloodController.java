@@ -20,7 +20,7 @@ public class BloodController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/bloodGroups",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Blood> getBloodGroups(HttpServletRequest request) {
+    public List<Blood> getBloodGroups() {
 
         List<Blood> bloodGroups = bloodService.findAll();
 
@@ -29,7 +29,7 @@ public class BloodController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/bloodGroups")
-    public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto, HttpServletRequest request) {
+    public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto) {
 
         BloodType type = switch(dto.getName()) {
             case "A+" -> BloodType.A_PLUS;
