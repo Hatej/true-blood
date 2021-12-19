@@ -1,7 +1,3 @@
-INSERT INTO ULOGE VALUES (DEFAULT,'ADMIN');
-INSERT INTO ULOGE VALUES (DEFAULT,'DJELATNIK');
-INSERT INTO ULOGE VALUES (DEFAULT,'DONOR');
-
 INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'težina ispod 55kg',1);
 INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'temperatura iznad 37c',1);
 INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'Krvni tlak: sistolični ispod 100 ili iznad 180 mm Hg, dijastolični ispod 60 ili iznad 110 mm Hg',1);
@@ -23,27 +19,51 @@ INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'Osobe koje su liječene zbog sp
 INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'Osobe koje su HIV-pozitivne',0);
 INSERT INTO "zdravstveniPodaci" VALUES (DEFAULT,'Seksualni partneri gore navedenih osoba',0);
 
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'A+',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'AB+',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'B+',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'O+',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'A-',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'AB-',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'B-',1,1,1);
-INSERT INTO "krvnaVrsta" VALUES (DEFAULT,'O-',1,1,1);
-
-INSERT INTO "korisnikAplikacije" VALUES ('admin','admin','admin','adminkovic',NULL,'00365123411',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,19,NULL);
-
 
 INSERT INTO ULOGE VALUES (1,'ADMIN');
 INSERT INTO ULOGE VALUES (2,'DJELATNIK');
 INSERT INTO ULOGE VALUES (3,'DONOR');
 
-INSERT INTO "krvna_vrsta" VALUES (1,1,'A+',1,1);
-INSERT INTO "krvna_vrsta" VALUES (2,1,'AB+',1,1);
-INSERT INTO "krvna_vrsta" VALUES (3,1,'B+',1,1);
-INSERT INTO "krvna_vrsta" VALUES (4,1,'O+',1,1);
-INSERT INTO "krvna_vrsta" VALUES (5,1,'A-',1,1);
-INSERT INTO "krvna_vrsta" VALUES (6,1,'AB-',1,1);
-INSERT INTO "krvna_vrsta" VALUES (7,1,'B-',1,1);
-INSERT INTO "krvna_vrsta" VALUES (8,1,'O-',1,1);
+INSERT INTO "krvna_vrsta" VALUES (1,1,'A_PLUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (2,1,'AB_PLUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (3,1,'B_PLUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (4,1,'ZERO_PLUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (5,1,'A_MINUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (6,1,'AB_MINUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (7,1,'B_MINUS',1,1);
+INSERT INTO "krvna_vrsta" VALUES (8,1,'ZERO_MINUS',1,1);
+
+INSERT INTO "korisnik_aplikacije" VALUES ('admin',NULL,'Adresa stanovanja','2021-12-23','mjesto rodjenja','adminmail@gmail.com','','0994206969','admin','74114785258','$2a$12$S5AvMwo32Glo/cwDdVZdGuQBYp8YrsUR7BWijVURzHts6mJAAJQTC','false','adminkovic','mjesto zaposlenja',1,1);
+
+INSERT INTO "korisnik_aplikacije" VALUES ('djelatnik',NULL,'Adresa stanovanja','2021-12-23','mjesto rodjenja','djelatnikmail@gmail.com','','0986942069','djelatnik','96524763127','$2a$12$82W7cA5Pvt/9kZxxvjEBE.hYSmvxjB88L0Rf3t24WBcS7CYcX7dZa','false','djelatnicic','mjesto zaposlenja',1,2);
+
+UPDATE krvna_vrsta
+SET donja_granica = 275, gornja_granica = 1150, trenutna_zaliha = 470
+WHERE ime_krvne_grupe = 'A_PLUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 320, gornja_granica = 1040, trenutna_zaliha = 720
+WHERE ime_krvne_grupe = 'AB_PLUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 150, gornja_granica = 890, trenutna_zaliha = 320
+WHERE ime_krvne_grupe = 'B_PLUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 175, gornja_granica = 960, trenutna_zaliha = 360
+WHERE ime_krvne_grupe = 'ZERO_PLUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 190, gornja_granica = 1230, trenutna_zaliha = 530
+WHERE ime_krvne_grupe = 'A_MINUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 220, gornja_granica = 1110, trenutna_zaliha = 290
+WHERE ime_krvne_grupe = 'AB_MINUS';
+UPDATE krvna_vrsta
+SET donja_granica = 185, gornja_granica = 830, trenutna_zaliha = 380
+WHERE ime_krvne_grupe = 'B_MINUS';
+
+UPDATE krvna_vrsta
+SET donja_granica = 250, gornja_granica = 970, trenutna_zaliha = 430
+WHERE ime_krvne_grupe = 'ZERO_MINUS';
