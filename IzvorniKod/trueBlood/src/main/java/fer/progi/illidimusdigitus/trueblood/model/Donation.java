@@ -110,6 +110,9 @@ public class Donation {
     public User getEmployee() {
         return employee;
     }
-
+    
+    public boolean getSuccess() {
+        return success;
+    }
 
 }

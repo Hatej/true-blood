@@ -1,6 +1,9 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
+import axios from "axios"
+import AuthHandler from '../AuthHandler';
 
 function EmployeeData(props) {
 
@@ -51,6 +54,29 @@ function EmployeeData(props) {
 
     }
 
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB+"
+            case "B_MINUS":
+                return "B+"
+            case "ZERO_MINUS":
+                return "O+"       
+            default:
+                break;
+        }
+    }
+
     function enterEditingMode() {
         setEditingMode(true)
         setOldEmployeeDataForm({ ... employeeDataForm})  //ovako se kopira objekt
@@ -93,7 +119,7 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="6">
                         <Form.Label>OIB</Form.Label>
                         <Form.Control 
-                            required
+                            readonly="true"
                             type="text"
                             name="OIB"
                             disabled={props.mode === "EMPLOYEE_ACCESING_DATA"}
@@ -169,7 +195,7 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
                         <Form.Control 
-                            required
+                            readonly="true"
                             type="email"
                             name="email"
                             value={employeeDataForm.email}
