@@ -16,5 +16,7 @@ public interface BloodService {
     
     boolean updateBounds(BloodType type,BloodDTO bloodDTO);
     boolean consume(BloodType type, ConsumptionDTO dto);
+	void sendNotifLower(Blood blood);
+	void sendNotifUpper(Blood blood);
 	
 }

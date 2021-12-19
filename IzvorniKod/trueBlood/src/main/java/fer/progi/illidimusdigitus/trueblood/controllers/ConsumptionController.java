@@ -32,7 +32,7 @@ public class ConsumptionController {
 	
 	@CrossOrigin(origins = "*")
     @PostMapping("/recordChange")
-    public ResponseEntity<Consumption> consumeBlood(@RequestBody ConsumptionDTO dto, HttpServletRequest request) {
+    public ResponseEntity<Consumption> consumeBlood(@RequestBody ConsumptionDTO dto) {
 
         BloodType type = switch(dto.getBloodType()) {
             case "A+" -> BloodType.A_PLUS;
@@ -45,15 +45,18 @@ public class ConsumptionController {
             case "AB-" -> BloodType.AB_MINUS;
             default -> BloodType.A_PLUS;
         };
-        Blood blood = bloodService.findByName(type).get();
         User usr = userService.findByUsername(dto.getEmployee()).get();
         boolean req = bloodService.consume(type, dto);
         
-        Consumption consumption = new Consumption(Timestamp.valueOf(dto.getTimestamp()), dto.getQuantity(), dto.getLocation(),blood , usr);
-        //treba dodati da samo djelatnik banke moze smanjiti potrosnju
-        //if(req == false) return ResponseEntity.badRequest();
-        consumptionService.makeConsump(consumption);
+        Blood blood = bloodService.findByName(type).get();
         
+        if(blood.getSupply() < blood.getLowerbound()) {
+        	bloodService.sendNotifLower(blood);
+        }
+        if(req == true) {
+        	Consumption consumption = new Consumption(Timestamp.valueOf(dto.getTimestamp()), dto.getQuantity(), dto.getLocation(),blood , usr);
+            consumptionService.makeConsump(consumption);
+        }
         return ResponseEntity.ok().build();
     }
 }

@@ -146,13 +146,14 @@ public class User {
     
     
     public User(String username,String password, String name, String surname,
-            String oib, Role role) {
+            String oib, Role role, String email) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.oib = oib;
 		this.role = role;
+		this.email = email;
     }
 
 	public String getUsername() {
