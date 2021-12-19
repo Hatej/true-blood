@@ -209,4 +209,35 @@ public class UserController {
         return ResponseEntity.ok("Could not update user!");
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<CreateUserDTO> getUserInfo(@RequestHeader String username) {
+        User usr = userService.findByUsername(username).get();
+
+        CreateUserDTO userInfoDTO = new CreateUserDTO();
+
+        userInfoDTO.setName(usr.getName());
+        userInfoDTO.setSurname(usr.getSurname());
+        userInfoDTO.setBirthplace(usr.getBirthplace());
+        userInfoDTO.setOib(usr.getOib());
+        userInfoDTO.setAddress(usr.getAddress());
+        userInfoDTO.setWorkplace(usr.getWorkplace());
+        userInfoDTO.setEmail(usr.getEmail());
+        userInfoDTO.setMobilePrivate(usr.getMobilePrivate());
+        userInfoDTO.setMobileBusiness(usr.getMobileBusiness());
+        userInfoDTO.setBirthdate(usr.getBirthdate());
+        userInfoDTO.setBloodTypeName(usr.getBloodType().getName().toString());
+
+        return ResponseEntity.ok(userInfoDTO);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/editUserInfo")
+    public ResponseEntity<String> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
+        if (userService.updateUserInfo(username, newUserInfo)) {
+            return ResponseEntity.ok("User updated!");
+        }
+        return ResponseEntity.ok("Could not update user!");
+    }
+
 }
