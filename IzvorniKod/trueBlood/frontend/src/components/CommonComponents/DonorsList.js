@@ -7,17 +7,15 @@ function DonorsList(props) {
     const [donorsList, setDonorsList] = React.useState(
         [
             {givenName:"Darko", familyName:"Pardon", OIB:"2323453432", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", donorId: 1, ableToDonate:true},
+            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", username: "jp2131", ableToDonate:true},
 
             {givenName:"Jorko", familyName:"Pardon", OIB:"112", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", donorId: 2, ableToDonate:false},
+            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", username: "kr12345", ableToDonate:false},
 
             {givenName:"Stjepan", familyName:"Pardon", OIB:"232", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"0", donorId: 4, ableToDonate:true}
+            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"0", username: "ku14867", ableToDonate:true}
         ]
     )
-
-    const emptyDonor = {givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:"", donorId: undefined, ableToDonate:""}
 
 
     const NORMAL = "NORMAL", DETAILS = "DETAILS", ADDING = "ADDING", MAKING_DONATION = "MAKING_DONATION"
@@ -33,9 +31,9 @@ function DonorsList(props) {
         setFilter(event.target.value);
     }
 
-    function setViewTo(view, id) {
+    function setViewTo(view, username) {
 
-        let index = donorsList.findIndex((element)=>element.donorId === id)
+        let index = donorsList.findIndex((element)=>element.username === username)
 
         switch (view) {
             case DETAILS:
@@ -73,19 +71,19 @@ function DonorsList(props) {
                             <td>{donor.familyName}</td>
                             <td>{donor.bloodType}</td>
                             <td>{donor.ableToDonate ? "Može" : "Ne može"}</td>
-                            <td><button onClick={() => setViewTo(DETAILS, donor.donorId)}>Details</button></td>
-                            <td><button hidden={donor.ableToDonate === false} onClick={() => setViewTo(MAKING_DONATION, donor.donorId)}>Obavi donaciju</button></td>
+                            <td><button onClick={() => setViewTo(DETAILS, donor.username)}>Details</button></td>
+                            <td><button hidden={donor.ableToDonate === false} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
                         </tr>
                     )}
                     </table>
                 </div>
             </div>
             <div hidden={view !== DETAILS}>
-                <DonorData mode="EMPLOYEE_ACCESING_DATA" donorData={editedDonor}/>
+                <DonorData mode="EMPLOYEE_ACCESING_DATA" username={editedDonor.username}/>
                 <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button>
             </div>
             <div hidden={view !== ADDING}>  
-                <DonorData mode="EMPLOYEE_ACCESING_DATA" donorData={emptyDonor}/>    
+                <DonorData mode="EMPLOYEE_ADDING_DONOR" username={undefined}/>    
                 <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
             </div>
             <div hidden={view !== MAKING_DONATION}>  

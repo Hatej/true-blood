@@ -1,18 +1,69 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
+import axios from "axios"
+import AuthHandler from '../AuthHandler';
 
 function DonorData(props) {
 
-    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "DONOR_ACCESSING_DATA"    ; trebalo mi mozda dodati i mogucnost "DONOR_SIGNIN" da nemamo posebnu sign in formu
-    //props.donorData
-    const [donorDataForm, setDonorDataForm] = React.useState(props.donorData);
+    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "DONOR_ACCESSING_DATA" ili "EMPLOYEE_ADDING_DONOR"   ; trebalo mi mozda dodati i mogucnost "DONOR_SIGNIN" da nemamo posebnu sign in formu
+    //props.username => preko njega se šalje username, ako employee pregledava donora
+
+    let targetUsername;
+
+    switch(props.mode){
+        case "DONOR_ACCESSING_DATA":
+            targetUsername = "konrad" /*zapravo ovo: AuthHandler.getLoggedInUserName()*/;
+            break;
+        case "EMPLOYEE_ACCESSING_DATA":
+            targetUsername = props.username;
+            break;
+    }
+
+    const [donorDataForm, setDonorDataForm] = React.useState({givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
+    workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+", ableToDonate:false});
+    
     
     React.useEffect( () => {
-        setDonorDataForm(props.donorData)
-    }, [props.donorData])  //Valentin je rekao da je ovo nepreproruciljivo rjesenje, ali radi
+        if (props.mode === "EMPLOYEE_ACCESSING_DATA") {
+            targetUsername = props.username;
+            getDonorData();
+        }
+    }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
+    
+    const [oldDonorDataForm, setOldDonorDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldDonorDataForm;
+    
 
-    const [oldDonorDataForm, setOldDonorDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
+    async function getDonorData() {
+        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
+            headers: {
+                'username': targetUsername
+            }
+        }).then(res => res.data);
+        var time = Date.parse(data.birthdate);
+        console.log(time);
+        var date = new Date(time);
+        var dateFormat =    date.getFullYear() + '-'
+                            + ('0' + (date.getMonth()+1)).slice(-2) + '-'
+                            + ('0' + date.getDate()).slice(-2);
+        let newForm = {givenName: data.name, familyName: data.surname, 
+                        OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
+                        residenceAdress: data.address, workplaceName: data.workplace,
+                        privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName)};
+        setDonorDataForm(newForm);
+    }
+
+    useEffect(() => {
+        if (!(props.mode === "EMPLOYEE_ADDING_DONOR")) {
+            getDonorData();
+        } else {
+            setDonorDataForm({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
+            workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:"", donorID: undefined,  ableToDonate:false})
+        }      
+    }, []);
+
+
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
     const history = useHistory(); 
@@ -25,35 +76,33 @@ function DonorData(props) {
             name: donorDataForm.givenName,
             surname: donorDataForm.familyName,
             birthplace: donorDataForm.birthPlace,
-            oib: donorDataForm.OIB,
             address: donorDataForm.residenceAdress,
             workplace: donorDataForm.workplaceName,
-            email: donorDataForm.email,
             mobilePrivate: donorDataForm.privatePhoneNumber,
             mobileBusiness: donorDataForm.workPhoneNumber,
             birthdate: donorDataForm.dateOfBirth,
-            bloodTypeName: donorDataForm.bloodType,
         };
 
-        console.log(data);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        const headers = {
+            'username': targetUsername
         };
-        setError("");
-        return fetch('http://localhost:8080/user/add', options)
-            .then(response => {
-                if(response.ok){
-                    history.push('/home');
-                }
-                if(response.status === 400){
-                    setError("Error on signup!");
-                    history.push('/signin');
-                }
+
+        return axios.post('http://localhost:8080/user/editUserInfo',
+                data, {
+                    headers:headers
+                })
+                .then(res => {
+                    console.log(res);
+                    if(res.status == 200){
+                        setError("Changes saved!");
+                        getDonorData();
+                        setOldDonorDataForm({ ... donorDataForm});
+                        setEditingMode(false);
+                    } 
+                    if(res.status === 400){
+                        setError("Error on signup!");
+                        history.push('/donor');
+                    }
             });
     }
 
@@ -69,6 +118,29 @@ function DonorData(props) {
 
     }
 
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB+"
+            case "B_MINUS":
+                return "B+"
+            case "ZERO_MINUS":
+                return "O+"       
+            default:
+                break;
+        }
+    }
+
     function enterEditingMode() {
         setEditingMode(true)
         setOldDonorDataForm({ ... donorDataForm})  //ovako se kopira objekt
@@ -79,6 +151,7 @@ function DonorData(props) {
         setEditingMode(false)
         setDonorDataForm(oldDonorDataForm);
     }
+
     
     return (
         <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
@@ -115,6 +188,7 @@ function DonorData(props) {
                             type="text"
                             name="OIB"
                             value={donorDataForm.OIB}
+                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
                             onChange={onChange}
                             minLength="11"
                             maxLength="11"
@@ -197,7 +271,6 @@ function DonorData(props) {
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
                         <Form.Control 
-                            required
                             type="email"
                             name="email"
                             value={donorDataForm.email}
@@ -242,17 +315,19 @@ function DonorData(props) {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
+                    <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
                         </Button>
                         <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
                             Edit
                         </Button>
+                        <span>{error}</span>
+                    </Form.Group>
+                    <Form.Group as={Col} md="2">
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
                             Poništi izmjene
                         </Button>
-                        <div>{error}</div>
                     </Form.Group>
                 </Row>
             </Form>

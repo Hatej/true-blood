@@ -84,7 +84,7 @@ function SignInForm(props) {
             .then(response => {
                 if(response.ok){
                     history.push('/home');
-                }
+                }   
                 if(response.status === 400){
                     setError("Error on signup!");
                     history.push('/signin');

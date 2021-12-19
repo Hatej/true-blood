@@ -4,13 +4,27 @@ import {useHistory} from "react-router-dom";
 
 function EmployeeData(props) {
 
-    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA"  //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
-    //props.employeeData
-    const [employeeDataForm, setEmployeeDataForm] = React.useState(props.employeeData);
+    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA" ili "ADMIN_ADDING_EMPLOYEE" //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
+    //props.username
+    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"Jasmin", familyName:"Stavros", OIB:"12312321", dateOfBirth:"fdfdf", birthPlace:"sdsdsd",  residenceAdress:"fdfdf", privatePhoneNumber:"dfvd", workPhoneNumber:"dfdfd", email:"sdfdf"});
     
+    let targetUsername;
+
+    switch(props.mode){
+        case "EMPLOYEE_ACCESSING_DATA":
+            targetUsername = "konrad" /*zapravo ovo: AuthHandler.getLoggedInUserName()*/;
+            break;
+        case "ADMIN_ACCESSING_DATA":
+            targetUsername = props.username;
+            break;
+    }
+
     React.useEffect( () => {
-        setEmployeeDataForm(props.employeeData)
-    }, [props.employeeData])  //Valentin je rekao da je ovo nepreproruciljivo rjesenje, ali radi
+        if (props.mode === "ADMIN_ACCESSING_DATA") {
+            targetUsername = props.username;
+            getEmployeeData();
+        }
+    }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
 
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
@@ -19,6 +33,10 @@ function EmployeeData(props) {
 
     function onSubmit() {
     
+    }
+
+    async function getEmployeeData(){
+
     }
 
     function onChange(event) {
@@ -78,6 +96,7 @@ function EmployeeData(props) {
                             required
                             type="text"
                             name="OIB"
+                            disabled={props.mode === "EMPLOYEE_ACCESING_DATA"}
                             value={employeeDataForm.OIB}
                             onChange={onChange}
                             minLength="11"
@@ -161,17 +180,19 @@ function EmployeeData(props) {
                 </Row>
                 
                 <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
+                    <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
                         </Button>
                         <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
                             Edit
                         </Button>
+                        <span>{error}</span>
+                    </Form.Group>
+                    <Form.Group as={Col} md="2">
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
                             Poništi izmjene
                         </Button>
-                        <div>{error}</div>
                     </Form.Group>
                 </Row>
             </Form>

@@ -136,10 +136,11 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/getUserInfo")
-    public ResponseEntity<UserInfoDTO> getUserInfo(@RequestHeader String username) {
+    public ResponseEntity<CreateUserDTO> getUserInfo(@RequestHeader String username) {
         User usr = userService.findByUsername(username).get();
 
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        CreateUserDTO userInfoDTO = new CreateUserDTO();
+
         userInfoDTO.setName(usr.getName());
         userInfoDTO.setSurname(usr.getSurname());
         userInfoDTO.setBirthplace(usr.getBirthplace());
@@ -150,28 +151,18 @@ public class UserController {
         userInfoDTO.setMobilePrivate(usr.getMobilePrivate());
         userInfoDTO.setMobileBusiness(usr.getMobileBusiness());
         userInfoDTO.setBirthdate(usr.getBirthdate());
-        userInfoDTO.setBloodTypeName(usr.getBloodType().getName());
-        userInfoDTO.setRejected(usr.isRejected());
-        userInfoDTO.setRoleName(usr.getRole().getName());
+        userInfoDTO.setBloodTypeName(usr.getBloodType().getName().toString());
 
         return ResponseEntity.ok(userInfoDTO);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/getEditUserInfo")
-    public ResponseEntity<EditUserInfoDTO> getEditUserInfo(@RequestHeader String username) {
-        User usr = userService.findByUsername(username).get();
-
-        EditUserInfoDTO editUserInfoDTO = new EditUserInfoDTO();
-        editUserInfoDTO.setName(usr.getName());
-        editUserInfoDTO.setSurname(usr.getSurname());
-        editUserInfoDTO.setAddress(usr.getAddress());
-        editUserInfoDTO.setWorkplace(usr.getWorkplace());
-        editUserInfoDTO.setEmail(usr.getEmail());
-        editUserInfoDTO.setMobilePrivate(usr.getMobilePrivate());
-        editUserInfoDTO.setMobileBusiness(usr.getMobileBusiness());
-
-        return ResponseEntity.ok(editUserInfoDTO);
+    @PostMapping("/editUserInfo")
+    public ResponseEntity<String> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
+        if (userService.updateUserInfo(username, newUserInfo)) {
+            return ResponseEntity.ok("User updated!");
+        }
+        return ResponseEntity.ok("Could not update user!");
     }
 
 }
