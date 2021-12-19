@@ -32,7 +32,7 @@ function BloodData(props){
             case "AB_MINUS":
                 return "AB+"
             case "B_MINUS":
-                return "B+"
+                return "B-"
             case "ZERO_MINUS":
                 return "O+"       
             default:
@@ -40,19 +40,23 @@ function BloodData(props){
         }
     }
 
+    let maximumKrvi = 1500;
     function bloodHeight(amount, upper, lower){
         console.log(amount + " " + upper + " " + lower);
-        if(amount < lower){
-            return "50px";
-        } else if(amount == lower){
-            return "100px";
-        } else if(amount == upper){
-            return "200px";
-        } else if(amount > lower && amount < upper){
-            return "150px";
+        if(amount > maximumKrvi){
+            return "300px";
         } else {
-            return "280px";
+
+            return amount/maximumKrvi*300+"px";
         }
+    }
+    function izracunajgranicu(granica){
+        if(granica > maximumKrvi){
+            return "300px";
+        }else{
+            return granica/maximumKrvi*300+"px";
+        }
+
     }
 
     return(
@@ -62,13 +66,13 @@ function BloodData(props){
                     {bloodData.map(blood => {
                         return (
                             <div className="cijela" key={blood.id}>
-                                <div className="imeGrupe">{bloodName(blood.name)}</div>
-                                <div className="gornjaGranica" style={{ bottom: "200px" }}></div>
-                                <div className="donjaGranica" style={{ bottom: "100px" }}></div>
-                                <div className="epruveta"></div>
-                                <div className="fix"></div>
-                                <div className="kolicKrvi" style={{ height: bloodHeight(blood.supply, blood.upperbound, blood.lowerbound) }}></div>
-                            </div>
+                            <div className="imeGrupe">{bloodName(blood.name)}</div>
+                            <div className="gornjaGranica" style={{ bottom: izracunajgranicu(blood.upperbound)}}></div>
+                            <div className="donjaGranica" style={{ bottom: izracunajgranicu(blood.lowerbound)}}></div>
+                            <div className="epruveta"></div>
+                            <div className="fix"></div>
+                            <div className="kolicKrvi" style={{ height: bloodHeight(blood.supply, blood.upperbound, blood.lowerbound) }}></div>
+                        </div>
                         )
                     })}
                 </div>
