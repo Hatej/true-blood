@@ -26,4 +26,6 @@ public interface UserService {
     boolean updateUserActivated(User user);
 
     boolean updateUserInfo(String username, UserInfoDTO userDTO);
+
+    void deleteByUsername(String username);
 }
