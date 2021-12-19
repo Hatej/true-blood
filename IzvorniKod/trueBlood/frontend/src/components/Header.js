@@ -11,6 +11,10 @@ function Header(props) {
     let isLoggedIn = AuthHandler.isUserLoggedIn();
     let loggedInUserName = AuthHandler.getLoggedInUserName();
 
+    role = "DJELATNIK";
+    isLoggedIn = true;
+    loggedInUserName = "kONRADIOUS";
+
     var roleLink, roleText;
     if (role === "ADMIN") {
         roleLink = "/admin";

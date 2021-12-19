@@ -4,7 +4,7 @@ import AuthHandler from "./AuthHandler";
 import EmployeesList from "./AdminComponents/EmployeesList";
 import Limits from "./AdminComponents/Limits";
 import DonorsList from "./CommonComponents/DonorsList";
-import MyData from "./CommonComponents/MyData";
+import DonorData from "./CommonComponents/DonorData";
 
 function Admin(props) {
 

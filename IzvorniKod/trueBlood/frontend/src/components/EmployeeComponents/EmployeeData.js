@@ -5,91 +5,51 @@ import {useHistory} from "react-router-dom";
 import axios from "axios"
 import AuthHandler from '../AuthHandler';
 
-function MyData(props) {
-    
-    const [myDataForm, setMyDataForm] = React.useState(
-        {givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
-        workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:""}
-    );
+function EmployeeData(props) {
 
-    async function getMyData() {
-        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
-            headers: {
-                'username':AuthHandler.getLoggedInUserName()
-            }
-        }).then(res => res.data);
-        var time = Date.parse(data.birthdate);
-        console.log(time);
-        var date = new Date(time);
-        var dateFormat =    date.getFullYear() + '-'
-                            + ('0' + (date.getMonth()+1)).slice(-2) + '-'
-                            + ('0' + date.getDate()).slice(-2);
-        let newForm = {givenName: data.name, familyName: data.surname, 
-                        OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
-                        residenceAdress: data.address, workplaceName: data.workplace,
-                        privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName)};
-        setMyDataForm(newForm);
+    //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA" ili "ADMIN_ADDING_EMPLOYEE" //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
+    //props.username
+    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"Jasmin", familyName:"Stavros", OIB:"12312321", dateOfBirth:"fdfdf", birthPlace:"sdsdsd",  residenceAdress:"fdfdf", privatePhoneNumber:"dfvd", workPhoneNumber:"dfdfd", email:"sdfdf"});
+    
+    let targetUsername;
+
+    switch(props.mode){
+        case "EMPLOYEE_ACCESSING_DATA":
+            targetUsername = "konrad" /*zapravo ovo: AuthHandler.getLoggedInUserName()*/;
+            break;
+        case "ADMIN_ACCESSING_DATA":
+            targetUsername = props.username;
+            break;
     }
 
-    useEffect(() => {
-        getMyData();
-    }, []);
+    React.useEffect( () => {
+        if (props.mode === "ADMIN_ACCESSING_DATA") {
+            targetUsername = props.username;
+            getEmployeeData();
+        }
+    }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
 
-
-    const [oldMyDataForm, setOldMyDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
+    const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
     const history = useHistory(); 
 
-    function onSubmit(e) {
-        e.preventDefault();
-        setError("")
-      
-        const data = {
-            name: myDataForm.givenName,
-            surname: myDataForm.familyName,
-            birthplace: myDataForm.birthPlace,
-            address: myDataForm.residenceAdress,
-            workplace: myDataForm.workplaceName,
-            mobilePrivate: myDataForm.privatePhoneNumber,
-            mobileBusiness: myDataForm.workPhoneNumber,
-            birthdate: myDataForm.dateOfBirth,
-        };
+    function onSubmit() {
+    
+    }
 
-        const headers = {
-            'username':AuthHandler.getLoggedInUserName()
-        };
+    async function getEmployeeData(){
 
-        return axios.post('http://localhost:8080/user/editUserInfo',
-                data, {
-                    headers:headers
-                })
-                .then(res => {
-                    console.log(res);
-                    if(res.status == 200){
-                        setError("Changes saved!");
-                        getMyData();
-                        setOldMyDataForm({ ... myDataForm});
-                        setEditingMode(false);
-                    } 
-                    if(res.status === 400){
-                        setError("Error on signup!");
-                        history.push('/donor');
-                    }
-            });
     }
 
     function onChange(event) {
 
         if (editingMode) {
             const {name, value} = event.target;
-            let newForm = {givenName: myDataForm.givenName, familyName: myDataForm.familyName, 
-                        OIB: myDataForm.OIB, dateOfBirth: myDataForm.dateOfBirth, birthPlace: myDataForm.birthPlace,
-                        residenceAdress: myDataForm.residenceAdress, workplaceName: myDataForm.workplaceName,
-                        privatePhoneNumber: myDataForm.privatePhoneNumber, workPhoneNumber: myDataForm.workPhoneNumber, email: myDataForm.email, bloodType: myDataForm.bloodType};
+            let newForm = { ... employeeDataForm };
             newForm[name] = value;
             
-            setMyDataForm(newForm);
+            setEmployeeDataForm(newForm);
         }
 
     }
@@ -119,12 +79,13 @@ function MyData(props) {
 
     function enterEditingMode() {
         setEditingMode(true)
-        setOldMyDataForm({ ... myDataForm})  //ovako se kopira objekt
+        setOldEmployeeDataForm({ ... employeeDataForm})  //ovako se kopira objekt
+
     }
 
     function returnToOld() {
         setEditingMode(false)
-        setMyDataForm(oldMyDataForm);
+        setEmployeeDataForm(oldEmployeeDataForm);
     }
     
     return (
@@ -137,7 +98,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="givenName"
-                            value={myDataForm.givenName}
+                            value={employeeDataForm.givenName}
                             onChange={onChange}
                             placeholder="First name"  
                         />
@@ -148,7 +109,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="familyName"
-                            value={myDataForm.familyName}
+                            value={employeeDataForm.familyName}
                             onChange={onChange}
                             placeholder="Last name"  
                         />
@@ -161,7 +122,8 @@ function MyData(props) {
                             readonly="true"
                             type="text"
                             name="OIB"
-                            value={myDataForm.OIB}
+                            disabled={props.mode === "EMPLOYEE_ACCESING_DATA"}
+                            value={employeeDataForm.OIB}
                             onChange={onChange}
                             minLength="11"
                             maxLength="11"
@@ -174,7 +136,7 @@ function MyData(props) {
                             required
                             type="date"
                             name="dateOfBirth"
-                            value={myDataForm.dateOfBirth}
+                            value={employeeDataForm.dateOfBirth}
                             onChange={onChange}  
                         />
                     </Form.Group>
@@ -186,7 +148,7 @@ function MyData(props) {
                             required
                             type="text"
                             name="birthPlace"
-                            value={myDataForm.birthPlace}
+                            value={employeeDataForm.birthPlace}
                             onChange={onChange}  
                             placeholder="Birth place"
                         />
@@ -197,24 +159,13 @@ function MyData(props) {
                             required
                             type="text"
                             name="residenceAdress"
-                            value={myDataForm.residenceAdress}
+                            value={employeeDataForm.residenceAdress}
                             onChange={onChange} 
                             placeholder="Residence adress"
                         />
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="12">
-                        <Form.Label>Place of employment</Form.Label>
-                        <Form.Control 
-                            type="text"
-                            name="workplaceName"
-                            value={myDataForm.workplaceName}
-                            onChange={onChange}  
-                            placeholder="Place of employment"
-                        />
-                    </Form.Group>
-                </Row>
+                
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Form.Label>Private phone number</Form.Label>
@@ -223,7 +174,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="privatePhoneNumber"
-                            value={myDataForm.privatePhoneNumber}
+                            value={employeeDataForm.privatePhoneNumber}
                             onChange={onChange}  
                             placeholder="0123456789"
                         />
@@ -234,7 +185,7 @@ function MyData(props) {
                             type="tel"
                             pattern="[0-9]{10}"
                             name="workPhoneNumber"
-                            value={myDataForm.workPhoneNumber}
+                            value={employeeDataForm.workPhoneNumber}
                             onChange={onChange} 
                             placeholder="0123456789"
                         />
@@ -247,17 +198,13 @@ function MyData(props) {
                             readonly="true"
                             type="email"
                             name="email"
-                            value={myDataForm.email}
+                            value={employeeDataForm.email}
                             onChange={onChange}  
-                            placeholder="Place of employment"
+                            placeholder="email"
                         />
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
-                        <Form.Label>Blood type: <b>{myDataForm.bloodType}</b></Form.Label>
-                    </Form.Group>
-                </Row>
+                
                 <Row className="mb-3">
                     <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
@@ -280,4 +227,4 @@ function MyData(props) {
     
 }
 
-export default MyData;
+export default EmployeeData;

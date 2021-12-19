@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 import AuthHandler from "./AuthHandler";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Donor.css';
-import MyData from "./CommonComponents/MyData";
+import DonorData from "./CommonComponents/DonorData";
 import DonationHistory from "./DonorComponents/DonationHistory";
 import Messages from "./DonorComponents/Messages";
 import { Tab, Row, Col, Nav, Sonnet } from 'react-bootstrap';
@@ -30,7 +30,7 @@ function Donor(props) {
                     <Col className="col-10">
                         <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                    <MyData/>
+                                    <DonorData mode="DONOR_ACCESSING_DATA" username=""/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <DonationHistory/>
@@ -57,8 +57,8 @@ function Donor(props) {
                 Kratki info
             </div>
 
-            <div hidden={!(view==="myData")}>
-                <MyData/>
+            <div hidden={!(view==="DonorData")}>
+                <DonorData mode="DONOR_ACCESSING_DATA" donorData={donorData} />
 
             </div>
 
