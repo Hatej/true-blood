@@ -1,7 +1,9 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Donation;
 import fer.progi.illidimusdigitus.trueblood.model.User;
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
 import lombok.AllArgsConstructor;
 
@@ -24,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -133,6 +136,7 @@ public class EmailSender implements EmailService {
     }
 
 	@Override
+	@Async
 	public void sendgeneratedPDF(Donation donation, User user)  {
 		ByteArrayOutputStream outputStream = null;
 		try {
@@ -181,7 +185,7 @@ public class EmailSender implements EmailService {
 	private String buildForPDF(User user) {
 		 return 
 		 "Poštovani/a " + user.getName() +" " + user.getSurname() + ",\n" +
-		 "Hvala Vam na doniranju krvi, u privitku se nalazi potvrda o doniranju krvi.\n\n" +
+		 "hvala Vam na doniranju krvi, u privitku se nalazi potvrda o doniranju krvi.\n\n" +
 		 "Vaš TrueBlood tim!";
 		
 	}
@@ -246,6 +250,79 @@ public class EmailSender implements EmailService {
 	    document.add(paragraph1);
 	    document.add(paragraph2);
 	    document.close();
+	}
+	
+	@Override
+	@Async
+	public void notificationLower(Blood blood, List<User> users) {
+		try {
+            for(User user : users) {
+            	
+            	MimeMessage mimeMessage = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+                helper.setTo(user.getEmail());
+                
+                if(user.getRole().getName().equals(RoleName.DONOR)) {
+                	helper.setSubject("Poziv na doniranje krvi");
+                    helper.setText(buildPoziv(user), true);
+                    System.out.println(buildPoziv(user));
+                }else {
+                	helper.setSubject("Notifikacija o granicama");
+                    helper.setText(buildNotifLower(user, blood), true);
+                    System.out.println(buildNotifLower(user, blood));
+                }
+                
+                helper.setFrom("noreply.trueblood@gmail.com");
+                mailSender.send(mimeMessage);
+            }
+			
+
+        } catch (MessagingException exc){
+            //exception wrapping
+            throw new IllegalStateException("failed to send email");
+        }
+	}
+
+	@Override
+	@Async
+	public void notificationUpper(Blood blood, List<User> users) {
+		try {
+			for(User user : users) {
+            	MimeMessage mimeMessage = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+                helper.setTo(user.getEmail());
+                helper.setSubject("Notifikacija o granicama");
+                helper.setText(buildNotifUpper(user, blood), true);
+                helper.setFrom("noreply.trueblood@gmail.com");
+                mailSender.send(mimeMessage);
+                System.out.println(buildNotifUpper(user, blood));
+            }
+        } catch (MessagingException exc){
+            //exception wrapping
+            throw new IllegalStateException("failed to send email");
+        }
+	}
+	
+	private String buildNotifLower(User user, Blood blood) {
+		 return 
+				 "Poštovani/a " + user.getName() +" " + user.getSurname() + ",\n" +
+           		 "zalihe krvne grupe " + blood.getName() + " pale su ispod optimalne granice.\n\n" +
+        		 "Vaš TrueBlood tim!";
+		
+	}
+	private String buildNotifUpper(User user, Blood blood) {
+		 return 
+				 "Poštovani/a " + user.getName() +" " + user.getSurname() + ",\n" +
+           		 "zalihe krvne grupe " + blood.getName().toString() + " porasle su iznad optimalne granice.\n\n" +
+        		 "Vaš TrueBlood tim!";
+		
+	}
+	private String buildPoziv(User user) {
+		 return 
+				 "Poštovani/a " + user.getName() +" " + user.getSurname() + ",\n" +
+           		 "zalihe Vaše krvi pale su ispod optimalne granice pa Vas pozivamo na doniranje krvi. \n\n" +
+        		 "Vaš TrueBlood tim!";
+		
 	}
 }
 

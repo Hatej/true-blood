@@ -125,7 +125,8 @@ public class UserController {
                 dto.getName(),
                 dto.getSurname(),
                 dto.getOib(),
-                userRole
+                userRole,
+                dto.getEmail()
                 );
 
         userService.createUser(newUser);

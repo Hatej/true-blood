@@ -43,6 +43,17 @@ public class BloodController {
             default -> BloodType.A_PLUS;
         };
         bloodService.updateBounds(type, dto);
+        
+
+        Blood blood = bloodService.findByName(type).get();
+        
+        if(blood.getSupply() < blood.getLowerbound()) {
+        	bloodService.sendNotifLower(blood);
+        }
+        if(blood.getSupply() > blood.getUpperbound()) {
+        	bloodService.sendNotifUpper(blood);
+        }
+        
         return ResponseEntity.ok().build();
     }
 }

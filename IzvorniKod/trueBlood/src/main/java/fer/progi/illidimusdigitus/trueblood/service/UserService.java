@@ -1,5 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.service;
 
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
 
@@ -26,4 +28,8 @@ public interface UserService {
     boolean updateUserActivated(User user);
 
     boolean updateUserInfo(String username, UserInfoDTO userDTO);
+
+	List<User> findByBloodType(Blood blood);
+	
+	List<User> findByRole(Role role);
 }

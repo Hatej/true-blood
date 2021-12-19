@@ -1,5 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
@@ -147,6 +149,16 @@ public class UserServiceJpa implements UserService, UserDetailsService {
         userRepo.save(user);
         return true;
     }
+
+	@Override
+	public List<User> findByBloodType(Blood blood) {
+		return userRepo.findByBloodType(blood);
+	}
+
+	@Override
+	public List<User> findByRole(Role role) {
+		return userRepo.findByRole(role);
+	}
 
 }
 
