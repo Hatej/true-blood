@@ -69,22 +69,20 @@ public class DonationController {
 	
 	@Scheduled(cron = "@daily")
 	//@Scheduled(cron = "0 * * * * ?")
-	public void donationSixMonths() throws Exception {
+	public void donationMonths() throws Exception {
 		Date threeMonthsAgo = new Date();
 		
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(threeMonthsAgo);
-		cal.add(Calendar.DATE, -1051);
+		cal.add(Calendar.DATE, -90);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		List<Donation> donationsMen = donationService.findByDate(cal.getTime());
 		
-		
-		
 		donationsMen.stream()
-		 .filter((e) -> e.getSuccess() == true /*&& e.getSex().equals("MALE")*/)
+		 .filter((e) -> e.getSuccess() == true && e.getDonor().isMale())
 		 .collect(Collectors.toList());
 		
 		Date fourMonthsAgo = new Date();
@@ -99,7 +97,7 @@ public class DonationController {
 		List<Donation> donationsWomen = donationService.findByDate(calWomen.getTime());
 		
 		donationsWomen.stream()
-				 .filter((e) -> e.getSuccess() == true /*&& e.getSex().equals("FEMALE")*/)
+				 .filter((e) -> e.getSuccess() == true && !e.getDonor().isMale())
 				 .collect(Collectors.toList());
 		
 		Set<User> allUsers = new HashSet<>();

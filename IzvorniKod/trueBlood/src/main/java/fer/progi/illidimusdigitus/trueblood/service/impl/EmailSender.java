@@ -39,9 +39,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 
-
-
-
 @AllArgsConstructor
 @Service
 @EnableAsync
@@ -329,6 +326,7 @@ public class EmailSender implements EmailService {
 	}
 
 	@Override
+	@Async
 	public void sendPoziv(Set<User> allUsers) {
 		 try {
 			 for(User user : allUsers) {
