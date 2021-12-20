@@ -74,7 +74,7 @@ public class DonationController {
 		
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(threeMonthsAgo);
-		cal.add(Calendar.DATE, -1051);
+		cal.add(Calendar.DATE, -90);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);

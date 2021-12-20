@@ -38,9 +38,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 
-
-
-
 @AllArgsConstructor
 @Service
 public class EmailSender implements EmailService {
