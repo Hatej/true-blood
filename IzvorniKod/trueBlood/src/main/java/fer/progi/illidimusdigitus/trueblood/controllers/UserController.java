@@ -70,6 +70,7 @@ public class UserController {
                 passwordEncoder.encode(nPass),
                 dto.getName(),
                 dto.getSurname(),
+                dto.isGenderMale(),
                 dto.getBirthplace(),
                 dto.getOib(),
                 dto.getAddress(),
@@ -187,6 +188,7 @@ public class UserController {
 
         userInfoDTO.setName(usr.getName());
         userInfoDTO.setSurname(usr.getSurname());
+        userInfoDTO.setGenderMale(usr.isMale());
         userInfoDTO.setBirthplace(usr.getBirthplace());
         userInfoDTO.setOib(usr.getOib());
         userInfoDTO.setAddress(usr.getAddress());
@@ -196,6 +198,7 @@ public class UserController {
         userInfoDTO.setMobileBusiness(usr.getMobileBusiness());
         userInfoDTO.setBirthdate(usr.getBirthdate());
         userInfoDTO.setBloodTypeName(usr.getBloodType().getName().toString());
+        userInfoDTO.setRejected(usr.isRejected());
 
         return ResponseEntity.ok(userInfoDTO);
     }

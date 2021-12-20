@@ -1,6 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
-import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+import  fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 
 import javax.persistence.EnumType;
@@ -23,6 +23,14 @@ public class UserInfoDTO {
     public String mobileBusiness;
 
     public Date birthdate;
+
+    public boolean rejected;
+
+    public boolean getRejected(){return rejected;}
+
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
+    }
 
     public String getName() {
         return name;

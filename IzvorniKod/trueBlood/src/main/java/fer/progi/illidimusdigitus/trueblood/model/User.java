@@ -103,6 +103,12 @@ public class User {
     @Column(name = "aktivacijskiKljuc")
     public String activation;
 
+	/**
+	 * User gender
+	 */
+	@Column(name="spol")
+	public boolean gender;
+
     /**
      * Blood Type
      */
@@ -122,10 +128,12 @@ public class User {
     }
     
     
-    public User(String username, String password, String name, String surname,
+    public User(String username, String password, String name, String surname, boolean male,
                     String birthplace, String oib, String address, String workplace,
                     String email, String mobilePrivate, String mobileBusiness, Date birthdate,
                     Role role, Blood bloodType) {
+
+		this.gender = male;
         this.username = username;
 		this.password = password;
         this.name = name;
@@ -308,5 +316,9 @@ public class User {
 		return oib;
 	}
 
+	public boolean isMale() {return gender;}
 
+	public void setGender(boolean male){
+		this.gender = male;
+	}
 }

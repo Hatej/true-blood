@@ -119,4 +119,6 @@ public class DonationController {
 		donationService.sendPoziv(allUsers);
 		
 	}
+
+
 }
