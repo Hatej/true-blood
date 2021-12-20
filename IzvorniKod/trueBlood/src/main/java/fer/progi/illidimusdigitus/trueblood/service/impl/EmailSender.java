@@ -327,6 +327,7 @@ public class EmailSender implements EmailService {
 	}
 
 	@Override
+	@Async
 	public void sendPoziv(Set<User> allUsers) {
 		 try {
 			 for(User user : allUsers) {
