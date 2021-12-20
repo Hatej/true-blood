@@ -22,8 +22,8 @@ function DonorData(props) {
     }
 
     const [donorDataForm, setDonorDataForm] = React.useState({
-        givenName: "Josip", familyName: "Pardon", OIB: "232332", dateOfBirth: "2021-01-02", birthPlace: "sdsd", residenceAdress: "dfdfd",
-        workplaceName: "ffgfg", privatePhoneNumber: "dfdf", workPhoneNumber: "dfdf", email: "dfdf", bloodType: "A+", isRejected: false
+        givenName: "", familyName: "", OIB: "", dateOfBirth: "", gender: "true", birthPlace: "", residenceAdress: "",
+        workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", bloodType: "A+", isRejected: false
     });
 
 
@@ -53,7 +53,7 @@ function DonorData(props) {
             givenName: data.name, familyName: data.surname,
             OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
             residenceAdress: data.address, workplaceName: data.workplace,
-            privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName), isRejected: data.rejected,gender: data.genderMale,
+            privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName), isRejected: data.rejected, gender: data.genderMale,
         };
         setDonorDataForm(newForm);
     }
@@ -304,7 +304,7 @@ function DonorData(props) {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                <Form.Group as={Col} md="6">
+                    <Form.Group as={Col} md="6">
                         <Form.Label>Gender: </Form.Label>
                         <Form.Control
                             required
