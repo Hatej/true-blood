@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +17,7 @@ public interface DonationRepository extends JpaRepository<Donation,Long>{
 	List<Donation> findByDonor(User donor);
 	
 	Optional<Donation> findById(Long id);
+	
+	List<Donation> findByDate(Date date);
 	
 }

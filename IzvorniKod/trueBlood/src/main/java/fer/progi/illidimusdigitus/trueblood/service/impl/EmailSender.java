@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -194,7 +195,7 @@ public class EmailSender implements EmailService {
 		Document document = new Document();
 		PdfWriter.getInstance(document, ost);
 	    document.open();
-	    document.addTitle("Potvrda o darivanju krvi");
+	    document.addTitle("Potvrda o doniranju krvi");
 	    
 	    Font font1 = FontFactory.getFont(FontFactory.COURIER, 27, Font.BOLD);
 	    Font font2 = FontFactory.getFont(FontFactory.COURIER, 18);
@@ -203,7 +204,7 @@ public class EmailSender implements EmailService {
 
 	    Paragraph paragraph1 = new Paragraph();
 	    paragraph1.setAlignment(com.lowagie.text.Element.ALIGN_CENTER);
-	    Chunk chunk1 = new Chunk("Potvrda o darivanju krvi\n\n\n\n\n\n\n\n", font1);
+	    Chunk chunk1 = new Chunk("Potvrda o doniranju krvi\n\n\n\n\n\n\n\n", font1);
 	    
 	    String rawString = "Potvrdjujemo da je ";
 	    ByteBuffer buffer = StandardCharsets.UTF_8.encode(rawString); 
@@ -215,7 +216,7 @@ public class EmailSender implements EmailService {
 	    encoded = StandardCharsets.UTF_8.decode(buffer).toString();
 	    Chunk chunk3 = new Chunk(encoded, font3);
 	    
-	    rawString = " uspješno \n\n obavio darivanje krvi ";
+	    rawString = " uspješno \n\n obavio doniranje krvi ";
 	    buffer = StandardCharsets.UTF_8.encode(rawString); 
 	    encoded = StandardCharsets.UTF_8.decode(buffer).toString();
 	    Chunk chunk4 = new Chunk(encoded, font2);
@@ -323,6 +324,34 @@ public class EmailSender implements EmailService {
            		 "zalihe Vaše krvi pale su ispod optimalne granice pa Vas pozivamo na doniranje krvi. \n\n" +
         		 "Vaš TrueBlood tim!";
 		
+	}
+
+	@Override
+	public void sendPoziv(Set<User> allUsers) {
+		 try {
+			 for(User user : allUsers) {
+	         	MimeMessage mimeMessage = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+	            helper.setTo(user.getEmail());
+	            helper.setSubject("Poziv na doniranje");
+	            helper.setText(buildPozivNakon(user), true);
+	            helper.setFrom("noreply.trueblood@gmail.com");
+	            mailSender.send(mimeMessage);
+	          
+			 	}
+		 	
+	        } catch (MessagingException exc){
+	            //exception wrapping
+	            throw new IllegalStateException("failed to send email");
+	        }
+		
+	}
+
+	private String buildPozivNakon(User user) {
+		return 
+				 "Poštovani/a " + user.getName() +" " + user.getSurname() + ",\n" +
+          		 "prošao je period od zadnje donacije nakon kojeg možete ponovno donirati, stoga Vas pozivamo na doniranje krvi. \n\n" +
+          		 "Vaš TrueBlood tim!";
 	}
 }
 

@@ -1,7 +1,9 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -37,6 +39,17 @@ public class DonationServiceJpa implements DonationService {
     @Async
 	public void sendPDF(Donation donation, User usr) {
 		emailService.sendgeneratedPDF(donation, usr);
+	}
+
+	@Override
+	public List<Donation> findByDate(Date date) {
+		return donationRepo.findByDate(date);
+	}
+
+	@Override
+	public void sendPoziv(Set<User> allUsers) {
+		emailService.sendPoziv(allUsers);
+		
 	}
 
 }
