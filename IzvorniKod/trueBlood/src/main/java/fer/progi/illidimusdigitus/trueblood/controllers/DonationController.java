@@ -69,7 +69,7 @@ public class DonationController {
 	
 	@Scheduled(cron = "@daily")
 	//@Scheduled(cron = "0 * * * * ?")
-	public void donationSixMonths() throws Exception {
+	public void donationMonths() throws Exception {
 		Date threeMonthsAgo = new Date();
 		
 		GregorianCalendar cal = new GregorianCalendar();
@@ -80,8 +80,6 @@ public class DonationController {
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		List<Donation> donationsMen = donationService.findByDate(cal.getTime());
-		
-		
 		
 		donationsMen.stream()
 		 .filter((e) -> e.getSuccess() == true && e.getDonor().isMale())
