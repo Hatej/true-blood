@@ -30,11 +30,11 @@ function BloodData(props){
             case "A_MINUS":
                 return "A-"
             case "AB_MINUS":
-                return "AB+"
+                return "AB-"
             case "B_MINUS":
                 return "B-"
             case "ZERO_MINUS":
-                return "O+"       
+                return "O-"       
             default:
                 break;
         }
