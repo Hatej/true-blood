@@ -84,7 +84,7 @@ public class DonationController {
 		
 		
 		donationsMen.stream()
-		 .filter((e) -> e.getSuccess() == true /*&& e.getSex().equals("MALE")*/)
+		 .filter((e) -> e.getSuccess() == true && e.getDonor().isMale())
 		 .collect(Collectors.toList());
 		
 		Date fourMonthsAgo = new Date();
@@ -99,7 +99,7 @@ public class DonationController {
 		List<Donation> donationsWomen = donationService.findByDate(calWomen.getTime());
 		
 		donationsWomen.stream()
-				 .filter((e) -> e.getSuccess() == true /*&& e.getSex().equals("FEMALE")*/)
+				 .filter((e) -> e.getSuccess() == true && !e.getDonor().isMale())
 				 .collect(Collectors.toList());
 		
 		Set<User> allUsers = new HashSet<>();
