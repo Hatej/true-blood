@@ -31,7 +31,7 @@ public class HealthData {
      * healthData criterion
      */
     @Column(name = "tezinaKriterija", nullable = false)
-    public String criterion;
+    public boolean criterion;
 
     public String getName() {
         return name;
@@ -50,17 +50,17 @@ public class HealthData {
         this.idHealth = idHealth;
     }
 
-    public HealthData(Long idHealth,String name,String criterion) {
+    public HealthData(Long idHealth,String name,boolean criterion) {
         this.name = name;
         this.criterion = criterion;
         this.idHealth = idHealth;
     }
 
-    public String getCriterion() {
+    public boolean getCriterion() {
         return criterion;
     }
 
-    public void setCriterion(String criterion) {
+    public void setCriterion(boolean criterion) {
         this.criterion = criterion;
     }
 

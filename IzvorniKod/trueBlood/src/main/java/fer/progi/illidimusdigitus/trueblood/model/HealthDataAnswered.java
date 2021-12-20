@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "doniranjeZdravljeOdgovori")
+@IdClass(HealthDataAnsweredId.class)
 public class HealthDataAnswered implements Serializable{
 
 
