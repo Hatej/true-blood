@@ -47,7 +47,7 @@ function SignInForm(props) {
 
 
     const [signinForm, setSignInForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
-                                                        workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:"A+"});
+                                                        workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"",gender:"true", bloodType:"A+"});
     const [error, setError] = React.useState("");
     const [passwordType, setPasswordType] = React.useState("password")
     const history = useHistory();
@@ -59,6 +59,7 @@ function SignInForm(props) {
         const data = {
             name: signinForm.givenName,
             surname: signinForm.familyName,
+            gender: signinForm.gender,
             birthplace: signinForm.birthPlace,
             oib: signinForm.OIB,
             address: signinForm.residenceAdress,
@@ -68,6 +69,7 @@ function SignInForm(props) {
             mobileBusiness: signinForm.workPhoneNumber,
             birthdate: signinForm.dateOfBirth,
             bloodTypeName: signinForm.bloodType,
+            
         };
 
         console.log(data);
@@ -97,7 +99,7 @@ function SignInForm(props) {
         let newForm = {givenName: signinForm.givenName, familyName: signinForm.familyName, 
                        OIB: signinForm.OIB, dateOfBirth: signinForm.dateOfBirth, birthPlace: signinForm.birthPlace,
                        residenceAdress: signinForm.residenceAdress, workplaceName: signinForm.workplaceName,
-                       privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, bloodType: signinForm.bloodType};
+                       privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, gender:signinForm.gernder, bloodType: signinForm.bloodType};
         newForm[name] = value;
         
         setSignInForm(newForm);
@@ -232,6 +234,18 @@ function SignInForm(props) {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>spol</Form.Label>
+                        <Form.Select
+                            name="gender"
+                            onChange={onChange}
+                            value={signinForm.gender}
+                            required
+                        >
+                            <option value='true'>M</option>
+                            <option value='false'>Ž</option>
+                        </Form.Select>
+                    </Form.Group>
                     <Form.Group as={Col} md="6">
                         <Form.Label>Blood type</Form.Label>
                         <Form.Select
