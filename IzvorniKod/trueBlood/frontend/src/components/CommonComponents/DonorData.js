@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios"
 import AuthHandler from '../AuthHandler';
 
@@ -12,7 +12,7 @@ function DonorData(props) {
 
     let targetUsername;
 
-    switch(props.mode){
+    switch (props.mode) {
         case "DONOR_ACCESSING_DATA":
             targetUsername = AuthHandler.getLoggedInUserName();
             break;
@@ -21,19 +21,21 @@ function DonorData(props) {
             break;
     }
 
-    const [donorDataForm, setDonorDataForm] = React.useState({givenName:"Josip", familyName:"Pardon", OIB:"232332", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd",
-    workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"A+", ableToDonate:false});
-    
-    
-    React.useEffect( () => {
+    const [donorDataForm, setDonorDataForm] = React.useState({
+        givenName: "Josip", familyName: "Pardon", OIB: "232332", dateOfBirth: "2021-01-02", birthPlace: "sdsd", residenceAdress: "dfdfd",
+        workplaceName: "ffgfg", privatePhoneNumber: "dfdf", workPhoneNumber: "dfdf", email: "dfdf", bloodType: "A+", isRejected: false
+    });
+
+
+    React.useEffect(() => {
         if (props.mode === "EMPLOYEE_ACCESSING_DATA") {
             targetUsername = props.username;
             getDonorData();
         }
     }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
-    
+
     const [oldDonorDataForm, setOldDonorDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldDonorDataForm;
-    
+
 
     async function getDonorData() {
         let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
@@ -44,13 +46,15 @@ function DonorData(props) {
         var time = Date.parse(data.birthdate);
         console.log(time);
         var date = new Date(time);
-        var dateFormat =    date.getFullYear() + '-'
-                            + ('0' + (date.getMonth()+1)).slice(-2) + '-'
-                            + ('0' + date.getDate()).slice(-2);
-        let newForm = {givenName: data.name, familyName: data.surname, 
-                        OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
-                        residenceAdress: data.address, workplaceName: data.workplace,
-                        privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName)};
+        var dateFormat = date.getFullYear() + '-'
+            + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+            + ('0' + date.getDate()).slice(-2);
+        let newForm = {
+            givenName: data.name, familyName: data.surname,
+            OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
+            residenceAdress: data.address, workplaceName: data.workplace,
+            privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName), isRejected: data.rejected,gender: data.genderMale,
+        };
         setDonorDataForm(newForm);
     }
 
@@ -58,29 +62,33 @@ function DonorData(props) {
         if (!(props.mode === "EMPLOYEE_ADDING_DONOR")) {
             getDonorData();
         } else {
-            setDonorDataForm({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"", residenceAdress:"", 
-            workplaceName:"", privatePhoneNumber:"", workPhoneNumber:"", email:"", bloodType:"", donorID: undefined,  ableToDonate:false})
-        }      
+            setDonorDataForm({
+                givenName: "", familyName: "", OIB: "", dateOfBirth: "", birthPlace: "", residenceAdress: "",
+                workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", bloodType: "", donorID: undefined, isRejected: false
+            })
+        }
     }, []);
 
 
     const [error, setError] = React.useState("");
-    const [editingMode, setEditingMode]= React.useState(false)
-    const history = useHistory(); 
+    const [editingMode, setEditingMode] = React.useState(false)
+    const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
         setError("")
-      
+
         const data = {
             name: donorDataForm.givenName,
             surname: donorDataForm.familyName,
+            genderMale: donorDataForm.gender,
             birthplace: donorDataForm.birthPlace,
             address: donorDataForm.residenceAdress,
             workplace: donorDataForm.workplaceName,
             mobilePrivate: donorDataForm.privatePhoneNumber,
             mobileBusiness: donorDataForm.workPhoneNumber,
             birthdate: donorDataForm.dateOfBirth,
+            rejected: donorDataForm.isRejected,
         };
 
         const headers = {
@@ -88,38 +96,38 @@ function DonorData(props) {
         };
 
         return axios.post('http://localhost:8080/user/editUserInfo',
-                data, {
-                    headers:headers
-                })
-                .then(res => {
-                    console.log(res);
-                    if(res.status == 200){
-                        setError("Changes saved!");
-                        getDonorData();
-                        setOldDonorDataForm({ ... donorDataForm});
-                        setEditingMode(false);
-                    } 
-                    if(res.status === 400){
-                        setError("Error on signup!");
-                        history.push('/donor');
-                    }
+            data, {
+            headers: headers
+        })
+            .then(res => {
+                console.log(res);
+                if (res.status == 200) {
+                    setError("Changes saved!");
+                    getDonorData();
+                    setOldDonorDataForm({ ...donorDataForm });
+                    setEditingMode(false);
+                }
+                if (res.status === 400) {
+                    setError("Error on signup!");
+                    history.push('/donor');
+                }
             });
     }
 
     function onChange(event) {
 
         if (editingMode) {
-            const {name, value} = event.target;
-            let newForm = { ... donorDataForm };
+            const { name, value } = event.target;
+            let newForm = { ...donorDataForm };
             newForm[name] = value;
-            
+
             setDonorDataForm(newForm);
         }
 
     }
 
-    function bloodName(name){
-        switch(name){
+    function bloodName(name) {
+        switch (name) {
             case "A_PLUS":
                 return "A+"
             case "AB_PLUS":
@@ -135,15 +143,16 @@ function DonorData(props) {
             case "B_MINUS":
                 return "B+"
             case "ZERO_MINUS":
-                return "O+"       
+                return "O+"
             default:
                 break;
         }
     }
 
     function enterEditingMode() {
+
         setEditingMode(true)
-        setOldDonorDataForm({ ... donorDataForm})  //ovako se kopira objekt
+        setOldDonorDataForm({ ...donorDataForm })  //ovako se kopira objekt
 
     }
 
@@ -152,38 +161,53 @@ function DonorData(props) {
         setDonorDataForm(oldDonorDataForm);
     }
 
-    
+    function returnDonateValue() {
+        if (donorDataForm.isRejected) {
+            return "Ne može"
+        } else {
+            return "Može"
+        }
+    }
+
+    function returnGenderValue() {
+        if (donorDataForm.gender) {
+            return "M"
+        } else {
+            return "Ž"
+        }
+    }
+
     return (
         <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
             <Form className="mt-3 mb-3" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">
                         <Form.Label>First name</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="text"
                             name="givenName"
                             value={donorDataForm.givenName}
                             onChange={onChange}
-                            placeholder="First name"  
+                            placeholder="First name"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
                         <Form.Label>Last name</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="text"
                             name="familyName"
                             value={donorDataForm.familyName}
                             onChange={onChange}
-                            placeholder="Last name"  
+                            placeholder="Last name"
                         />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Form.Label>OIB</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="text"
                             name="OIB"
@@ -192,40 +216,40 @@ function DonorData(props) {
                             onChange={onChange}
                             minLength="11"
                             maxLength="11"
-                            placeholder="OIB"  
+                            placeholder="OIB"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
                         <Form.Label>Date of birth</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="date"
                             name="dateOfBirth"
                             value={donorDataForm.dateOfBirth}
-                            onChange={onChange}  
+                            onChange={onChange}
                         />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Form.Label>Birth place</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="text"
                             name="birthPlace"
                             value={donorDataForm.birthPlace}
-                            onChange={onChange}  
+                            onChange={onChange}
                             placeholder="Birth place"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
                         <Form.Label>Residence address</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="text"
                             name="residenceAdress"
                             value={donorDataForm.residenceAdress}
-                            onChange={onChange} 
+                            onChange={onChange}
                             placeholder="Residence adress"
                         />
                     </Form.Group>
@@ -233,11 +257,11 @@ function DonorData(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="12">
                         <Form.Label>Place of employment</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             type="text"
                             name="workplaceName"
                             value={donorDataForm.workplaceName}
-                            onChange={onChange}  
+                            onChange={onChange}
                             placeholder="Place of employment"
                         />
                     </Form.Group>
@@ -245,24 +269,24 @@ function DonorData(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Form.Label>Private phone number</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             required
                             type="tel"
                             pattern="[0-9]{10}"
                             name="privatePhoneNumber"
                             value={donorDataForm.privatePhoneNumber}
-                            onChange={onChange}  
+                            onChange={onChange}
                             placeholder="0123456789"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
                         <Form.Label>Official phone number</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             type="tel"
                             pattern="[0-9]{10}"
                             name="workPhoneNumber"
                             value={donorDataForm.workPhoneNumber}
-                            onChange={onChange} 
+                            onChange={onChange}
                             placeholder="0123456789"
                         />
                     </Form.Group>
@@ -270,48 +294,53 @@ function DonorData(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control 
+                        <Form.Control
                             type="email"
                             name="email"
                             value={donorDataForm.email}
-                            onChange={onChange}  
-                            placeholder="Place of employment"
+                            onChange={onChange}
+                            placeholder="Email Address"
+                        />
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                <Form.Group as={Col} md="6">
+                        <Form.Label>Gender: </Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            name="gender"
+                            value={returnGenderValue()}
+                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
+                            onChange={onChange}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Blood type: </Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            name="bloodType"
+                            value={donorDataForm.bloodType}
+                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
+                            onChange={onChange}
+                            placeholder="Blood Type"
                         />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Blood type: </Form.Label>
-                        <Form.Select
-                            name="bloodType"
-                            onChange={onChange}
-                            value={donorDataForm.bloodType}
-                            disabled={props.mode === "DONOR_ACCESSING_DATA"}
-                        >
-                            <option value='A+'>A+</option>
-                            <option value='A-'>A-</option>
-                            <option value='B+'>B+</option>
-                            <option value='B-'>B-</option>
-                            <option value='O+'>O+</option>
-                            <option value='O-'>O-</option>
-                            <option value='AB+'>AB+</option>
-                            <option value='AB-'>AB-</option>
-                        </Form.Select>
-                    </Form.Group>
-                </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
                         <Form.Label>Mogućnost doniranja: </Form.Label>
-                        <Form.Select
-                            name="ableToDonate"
-                            onChange={onChange}
-                            value={donorDataForm.ableToDonate}
+
+                        <Form.Control
+                            required
+                            type="text"
+                            name="isRejected"
+                            value={returnDonateValue()}
                             disabled={props.mode === "DONOR_ACCESSING_DATA"}
-                        >
-                            <option value='able'>Može</option>
-                            <option value='unable'>Ne može</option>
-                        
-                        </Form.Select>
+                            onChange={onChange}
+                            placeholder="Donate Status"
+                        />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
@@ -333,7 +362,7 @@ function DonorData(props) {
             </Form>
         </div>
     )
-    
+
 }
 
 export default DonorData;

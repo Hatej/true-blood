@@ -59,7 +59,7 @@ function SignInForm(props) {
         const data = {
             name: signinForm.givenName,
             surname: signinForm.familyName,
-            gender: signinForm.gender,
+            genderMale: signinForm.gender,
             birthplace: signinForm.birthPlace,
             oib: signinForm.OIB,
             address: signinForm.residenceAdress,
@@ -99,7 +99,7 @@ function SignInForm(props) {
         let newForm = {givenName: signinForm.givenName, familyName: signinForm.familyName, 
                        OIB: signinForm.OIB, dateOfBirth: signinForm.dateOfBirth, birthPlace: signinForm.birthPlace,
                        residenceAdress: signinForm.residenceAdress, workplaceName: signinForm.workplaceName,
-                       privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, gender:signinForm.gernder, bloodType: signinForm.bloodType};
+                       privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, gender:signinForm.gender, bloodType: signinForm.bloodType};
         newForm[name] = value;
         
         setSignInForm(newForm);
@@ -108,6 +108,7 @@ function SignInForm(props) {
     }
     
     return (
+        
         <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
             <Form className="mt-3 mb-3" onSubmit={onSubmit}>
                 <Row className="mb-2">
@@ -229,7 +230,7 @@ function SignInForm(props) {
                             name="email"
                             value={signinForm.email}
                             onChange={onChange}  
-                            placeholder="Place of employment"
+                            placeholder="E-mail"
                         />
                     </Form.Group>
                 </Row>
