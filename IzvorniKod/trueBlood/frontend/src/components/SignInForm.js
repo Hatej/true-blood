@@ -48,7 +48,7 @@ function SignInForm(props) {
 
     const [signinForm, setSignInForm] = React.useState({
         givenName: "", familyName: "", OIB: "", dateOfBirth: "", birthPlace: "", residenceAdress: "",
-        workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", gender: "true", bloodType: "A+"
+        workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", gender: "true", bloodTypeName: "A+"
     });
     const [error, setError] = React.useState("");
     const [passwordType, setPasswordType] = React.useState("password")
@@ -70,7 +70,7 @@ function SignInForm(props) {
             mobilePrivate: signinForm.privatePhoneNumber,
             mobileBusiness: signinForm.workPhoneNumber,
             birthdate: signinForm.dateOfBirth,
-            bloodTypeName: signinForm.bloodType,
+            bloodTypeName: signinForm.bloodTypeName,
 
         };
 
@@ -102,7 +102,7 @@ function SignInForm(props) {
             givenName: signinForm.givenName, familyName: signinForm.familyName,
             OIB: signinForm.OIB, dateOfBirth: signinForm.dateOfBirth, birthPlace: signinForm.birthPlace,
             residenceAdress: signinForm.residenceAdress, workplaceName: signinForm.workplaceName,
-            privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, gender: signinForm.gender, bloodType: signinForm.bloodType
+            privatePhoneNumber: signinForm.privatePhoneNumber, workPhoneNumber: signinForm.workPhoneNumber, email: signinForm.email, gender: signinForm.gender, bloodTypeName: signinForm.bloodTypeName
         };
         newForm[name] = value;
 
@@ -254,17 +254,17 @@ function SignInForm(props) {
                     <Form.Group as={Col} md="6">
                         <Form.Label>Blood type</Form.Label>
                         <Form.Select
-                            name="bloodType"
+                            name="bloodTypeName"
                             onChange={onChange}
-                            value={signinForm.bloodType}
+                            value={signinForm.bloodTypeName}
                             required
                         >
                             <option value='A+'>A+</option>
                             <option value='A-'>A-</option>
                             <option value='B+'>B+</option>
                             <option value='B-'>B-</option>
-                            <option value='O+'>O+</option>
-                            <option value='O-'>O-</option>
+                            <option value='0+'>0+</option>
+                            <option value='0-'>0-</option>
                             <option value='AB+'>AB+</option>
                             <option value='AB-'>AB-</option>
                         </Form.Select>
