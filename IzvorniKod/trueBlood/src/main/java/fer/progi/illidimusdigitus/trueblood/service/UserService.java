@@ -36,4 +36,5 @@ public interface UserService {
 
     void deleteByUsername(String username);
 
+    void save(User user);
 }

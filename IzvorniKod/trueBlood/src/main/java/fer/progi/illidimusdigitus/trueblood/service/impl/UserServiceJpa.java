@@ -166,7 +166,10 @@ public class UserServiceJpa implements UserService, UserDetailsService {
         userRepo.deleteByUsername(username);
     }
 
-
+    @Override
+    public void save(User user) {
+        userRepo.save(user);
+    }
 
 }
 

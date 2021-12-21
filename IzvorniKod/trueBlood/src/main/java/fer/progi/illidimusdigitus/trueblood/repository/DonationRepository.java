@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,5 @@ public interface DonationRepository extends JpaRepository<Donation,Long>{
 	Optional<Donation> findById(Long id);
 	
 	List<Donation> findByDate(Date date);
-	
+
 }

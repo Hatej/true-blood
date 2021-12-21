@@ -1,20 +1,15 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
-import fer.progi.illidimusdigitus.trueblood.model.Donation;
-import fer.progi.illidimusdigitus.trueblood.model.HealthData;
-import fer.progi.illidimusdigitus.trueblood.model.HealthDataAnswered;
-import fer.progi.illidimusdigitus.trueblood.model.HealthDataAnsweredId;
+import fer.progi.illidimusdigitus.trueblood.model.*;
 import fer.progi.illidimusdigitus.trueblood.service.DonationService;
 import fer.progi.illidimusdigitus.trueblood.service.HealthDataAnsweredService;
 import fer.progi.illidimusdigitus.trueblood.service.HealthDataService;
+import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class HealthDataController {
@@ -28,28 +23,103 @@ public class HealthDataController {
     @Autowired
     private DonationService donationService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/healthData")
     public List<HealthData> getHealthData() {
         return healthDataService.getAllHealthData();
     }
 
    @PostMapping("/healthDataAnswered")
-    public ResponseEntity answerHealthData(@RequestBody HealthAnswersDTO healthAnswers) {
+    public ResponseEntity answerHealthData(@RequestBody HealthAnswersDTO healthAnswers,@RequestHeader String authorization) {
+
+       authorization = authorization.substring(6);
+       String decodedString = new String(Base64.getDecoder().decode(authorization));
+       String[] userPass = decodedString.split(":");
+
+       if (userService.findByUsername(userPass[0]).isEmpty()) {
+           return ResponseEntity.badRequest().build();
+       }
+
+       User usr = userService.findByUsername(userPass[0]).get();
+       String username = usr.getUsername();
+       System.out.println(username);
+
+       String id_donora = healthAnswers.getId_donora();
+       System.out.println(id_donora);
+
+       String mjesto_darivanja = healthAnswers.getMjesto_darivanja();
+       System.out.println(mjesto_darivanja);
+
+       Date date = new Date();
+
+       GregorianCalendar cal = new GregorianCalendar();
+       cal.setTime(date);
+       cal.add(Calendar.DATE, 0);
+       cal.set(Calendar.HOUR_OF_DAY, 0);
+       cal.set(Calendar.MINUTE, 0);
+       cal.set(Calendar.SECOND, 0);
+       cal.set(Calendar.MILLISECOND, 0);
+       date = cal.getTime();
 
 
 
-        for(int i = 0; i < healthAnswers.getId_zdravstvenihOdgovor_donora().size(); i++) {
+       System.out.println(date);
 
-            if(donationService.findById(healthAnswers.getBr_doniranja()).isEmpty() || healthDataService.findById(i +1).isEmpty())
+        if(userService.findByUsername(id_donora).isEmpty())
+            return  ResponseEntity.badRequest().build();
+        if(userService.findByUsername(username).isEmpty())
+            return  ResponseEntity.badRequest().build();
+
+        User donor = userService.findByUsername(id_donora).get();
+        User empl = userService.findByUsername(username).get();
+
+        Donation donation = new Donation(date,mjesto_darivanja,true,donor,empl);
+
+        donationService.save(donation);
+
+        long br_doniranja = donation.getId();
+
+       System.out.println(br_doniranja);
+
+       boolean notDone = true;
+
+       int broj_kljuceva = healthAnswers.getUpitnik().keySet().size();
+
+        if(broj_kljuceva != 20)
+            return ResponseEntity.badRequest().build();
+
+        for(int i = 0; i < healthAnswers.getUpitnik().keySet().size(); i++) {
+
+            if( healthDataService.findById(i +1).isEmpty())
                 return ResponseEntity.badRequest().build();
 
-            Donation donation = donationService.findById(healthAnswers.getBr_doniranja()).get();
-            HealthData healthData = healthDataService.findById(i+1).get();
 
-            HealthDataAnswered healthDataAnswered = new HealthDataAnswered(donation,healthData,healthAnswers.getId_zdravstvenihOdgovor_donora().get((long)(i + 1)));
-            System.out.println(healthDataAnswered.getDonation().getId());
 
-            healthDataAnsweredService.save(healthDataAnswered);
+            HealthData healthData = healthDataService.findById(i + 1).get();
+
+            HealthDataAnsweredId healthDataAnsweredId = new HealthDataAnsweredId(donation,healthData);
+
+            if(healthDataAnsweredService.findById(healthDataAnsweredId).isPresent())
+                return ResponseEntity.badRequest().build();
+
+
+            long id_zdravstvenih = i + 1;
+            boolean odgovor = healthAnswers.getUpitnik().get((long)(i + 1));
+
+            if(odgovor && notDone) {
+                donation.setSuccess(false);
+                donationService.save(donation);
+
+                if(healthData.getCriterion() == false) {
+                    donor.setRejected(true);
+                    userService.save(donor);
+                }
+                notDone = false;
+            }
+
+            healthDataAnsweredService.save(br_doniranja,id_zdravstvenih,odgovor);
 
         }
 
