@@ -36,20 +36,29 @@ public class HealthDataController {
    @PostMapping("/healthDataAnswered")
     public ResponseEntity answerHealthData(@RequestBody HealthAnswersDTO healthAnswers) {
 
+        int broj_kljuceva = healthAnswers.getId_zdravstvenihOdgovor_donora().keySet().size();
 
+        if(broj_kljuceva != 20)
+            return ResponseEntity.badRequest().build();
 
-        for(int i = 0; i < healthAnswers.getId_zdravstvenihOdgovor_donora().size(); i++) {
+        for(int i = 0; i < healthAnswers.getId_zdravstvenihOdgovor_donora().keySet().size(); i++) {
 
             if(donationService.findById(healthAnswers.getBr_doniranja()).isEmpty() || healthDataService.findById(i +1).isEmpty())
                 return ResponseEntity.badRequest().build();
 
             Donation donation = donationService.findById(healthAnswers.getBr_doniranja()).get();
-            HealthData healthData = healthDataService.findById(i+1).get();
+            HealthData healthData = healthDataService.findById(i + 1).get();
 
-            HealthDataAnswered healthDataAnswered = new HealthDataAnswered(donation,healthData,healthAnswers.getId_zdravstvenihOdgovor_donora().get((long)(i + 1)));
-            System.out.println(healthDataAnswered.getDonation().getId());
+            HealthDataAnsweredId healthDataAnsweredId = new HealthDataAnsweredId(donation,healthData);
 
-            healthDataAnsweredService.save(healthDataAnswered);
+            if(healthDataAnsweredService.findById(healthDataAnsweredId).isPresent())
+                return ResponseEntity.badRequest().build();
+
+            long br_donation = healthAnswers.getBr_doniranja();
+            long id_zdravstvenih = i + 1;
+            boolean odgovor = healthAnswers.getId_zdravstvenihOdgovor_donora().get((long)(i + 1));
+
+            healthDataAnsweredService.save(br_donation,id_zdravstvenih,odgovor);
 
         }
 
