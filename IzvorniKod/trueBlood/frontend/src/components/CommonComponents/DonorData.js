@@ -25,15 +25,14 @@ function DonorData(props) {
         givenName: "", familyName: "", OIB: "", dateOfBirth: "", gender: "true", birthPlace: "", residenceAdress: "",
         workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", bloodType: "A+", isRejected: false
     });
-
-
+/*
     React.useEffect(() => {
         if (props.mode === "EMPLOYEE_ACCESSING_DATA") {
             targetUsername = props.username;
             getDonorData();
         }
     }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
-
+*/
     const [oldDonorDataForm, setOldDonorDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldDonorDataForm;
 
 
@@ -98,8 +97,7 @@ function DonorData(props) {
         return axios.post('http://localhost:8080/user/editUserInfo',
             data, {
             headers: headers
-        })
-            .then(res => {
+        }).then(res => {
                 console.log(res);
                 if (res.status == 200) {
                     setError("Changes saved!");
@@ -126,8 +124,8 @@ function DonorData(props) {
 
     }
 
-    function bloodName(name) {
-        switch (name) {
+    function bloodName(name){
+        switch(name){
             case "A_PLUS":
                 return "A+"
             case "AB_PLUS":
@@ -139,11 +137,11 @@ function DonorData(props) {
             case "A_MINUS":
                 return "A-"
             case "AB_MINUS":
-                return "AB+"
+                return "AB-"
             case "B_MINUS":
-                return "B+"
+                return "B-"
             case "ZERO_MINUS":
-                return "O+"
+                return "O-"       
             default:
                 break;
         }
@@ -343,7 +341,7 @@ function DonorData(props) {
                         />
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
+                <Row className="mb-4">
                     <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
@@ -358,6 +356,17 @@ function DonorData(props) {
                             Poništi izmjene
                         </Button>
                     </Form.Group>
+                    {(() => {
+                        if(props.mode === "EMPLOYEE_ACCESSING_DATA"){
+                            return (
+                                <Form.Group as={Col} md="4">
+                                    <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
+                                        Vrati se nazad
+                                    </Button>
+                                </Form.Group>
+                            );
+                        }
+                    })()}
                 </Row>
             </Form>
         </div>

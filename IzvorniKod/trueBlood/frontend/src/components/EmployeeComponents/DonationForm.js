@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
+import axios from "axios"
 
 function DonationForm(props) {
 
@@ -32,23 +33,50 @@ function DonationForm(props) {
         indexes.push(i)
     }
 
+    const [donorDataForm, setDonorDataForm] = useState({
+        name: "",
+        surname: "",
+        role: {
+            id: 0,
+            name: ""
+        },
+        blood: {
+            id: 0,
+            name: "",
+            upperbound: 0,
+            lowerbound: 0,
+            supply: 0
+        },
+        username: "",
+        rejected: false,
+        birthplace: "",
+        address: "",
+        workplace: "",
+        mobilePrivate: "",
+        mobileBusiness: "",
+        birthdate: ""
+    });
 
-    const [donorDataForm, setDonorDataForm] = React.useState(props.donorData);
-
-    const [questionsForm, setQuestionsForm] = React.useState(() => {
+    const [mjestoDarivanja, setMjestoDarivanja] = useState("");
+    const [error, setError] = useState("");
+    const [questionsForm, setQuestionsForm] = useState(() => {
         let temp = []; 
-        for(let i = 0; i < questionsList.length; i++) {
-            temp.push('Ne')
+        for(let j= 0; j < questionsList.length; j++) {
+            temp.push('false')
         }
-
         return temp;
     });
-    
-
-    
+/*
     React.useEffect( () => {
-        setDonorDataForm(props.donorData)
+        console.log(props.donorData);
+        setDonorDataForm(props.donorData);
     }, [props.donorData])  //Valentin je rekao da je ovo nepreproruciljivo rjesenje, ali radi
+*/
+
+    useEffect(() => {
+        console.log(props.donorData);
+        setDonorDataForm(props.donorData);
+    });
 
     const [donationDetails, setDonationDetails] = React.useState("");
 
@@ -57,37 +85,92 @@ function DonationForm(props) {
     }
 
     function onChange(event) {
-
-        
-        const {name, value} = event.target;
-        let newForm = { ... donorDataForm };
-        newForm[name] = value;
-        
-        setDonorDataForm(newForm);
-        
-
+        console.log(event.target.value);
+        setMjestoDarivanja(event.target.value);
     }
 
-    function onChangeQuestionsForm(event) {
-        
+    function onChangeQuestionsForm(event) { 
         let newQuestionsForm = [... questionsForm]
         newQuestionsForm[event.target.name] = event.target.value;
         setQuestionsForm(newQuestionsForm);
-        console.log(newQuestionsForm)
-      
     }
 
-    function onSubmit() {
+    function onSubmit(e) {
+        e.preventDefault();
+        setError("");
 
+        let upitnikData = {
+            1: questionsForm[0],
+            2: questionsForm[1],
+            3: questionsForm[2],
+            4: questionsForm[3],
+            5: questionsForm[4],
+            6: questionsForm[5],
+            7: questionsForm[6],
+            8: questionsForm[7],
+            9: questionsForm[8],
+            10: questionsForm[9],
+            11: questionsForm[10],
+            12: questionsForm[11],
+            13: questionsForm[12],
+            14: questionsForm[13],
+            15: questionsForm[14],
+            16: questionsForm[15],
+            17: questionsForm[16],
+            18: questionsForm[17],
+            19: questionsForm[18],
+            20: questionsForm[19]
+        };
+
+        const data = {
+            id_donora: donorDataForm.username,
+            mjesto_darivanja: mjestoDarivanja,
+            upitnik: upitnikData
+        };
+
+        return axios.post('http://localhost:8080/donation',
+            data).then(res => {
+                console.log(res);
+                if (res.status == 200) {
+                    setError("Changes saved!");
+                    
+                }
+                if (res.status === 400) {
+                    setError("Error on signup!");
+                    
+                }
+            });
+    }
+
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB-"
+            case "B_MINUS":
+                return "B-"
+            case "ZERO_MINUS":
+                return "O-"       
+            default:
+                break;
+        }
     }
 
     return (
         <div>
             <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
-                <Form className="mt-3 mb-3" onSubmit={onSubmit}>
-                    
+                <Form className="mt-3 mb-3" onSubmit={onSubmit}> 
                         {indexes.map(index =>
-                            <Row className="mb-3"> 
+                            <Row key={index} className="mb-3"> 
                                 <Form.Group as={Col} md="6">
                                     <Form.Label>{questionsList[index]}</Form.Label>
                                 </Form.Group>
@@ -96,77 +179,51 @@ function DonationForm(props) {
                                             name={index}
                                             onChange={onChangeQuestionsForm}
                                             value={questionsForm[index]}
-                                            
                                         >
-                                            <option value='Da'>Da</option>
-                                            <option value='Ne'>Ne</option>
-                                            
+                                            <option value='true'>Da</option>
+                                            <option value='false'>Ne</option>  
                                         </Form.Select>
                                 </Form.Group>
                             </Row>
                         )}
-                        
-                    
                     <Row className="mb-2">
                         <Form.Group as={Col} md="6">
                             <Form.Label>First name</Form.Label>
                             <Form.Control 
-                
                                 type="text"
                                 name="givenName"
-                                value={donorDataForm.givenName}
+                                value={donorDataForm.name}
                                 disabled
-                                
-
                             />
                         </Form.Group>
                         <Form.Group as={Col} md="6">
                             <Form.Label>Last name</Form.Label>
                             <Form.Control 
-                                
                                 type="text"
                                 name="familyName"
-                                value={donorDataForm.familyName}
+                                value={donorDataForm.surname}
                                 disabled
-                            
-                       
                             />
                         </Form.Group>
                     </Row>
                     <Row className="mb-2">
                         <Form.Group as={Col} md="6">
-                            <Form.Label>OIB: </Form.Label>
-                            <Form.Control 
-                
-                                type="text"
-                                name="OIB"
-                                value={donorDataForm.OIB}
-                                disabled
-                                
-
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} md="6">
                             <Form.Label>Krvna grupa: </Form.Label>
                             <Form.Control 
-                                
                                 disabled
                                 type="text"
                                 name="bloodType"
-                                value={donorDataForm.bloodType}
-                       
+                                value={bloodName(donorDataForm.blood.name)}
                             />
                         </Form.Group>
-                    </Row>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} md="12">
-                            <Form.Label>Detalji: </Form.Label>
+                        <Form.Group as={Col} md="6">
+                            <Form.Label>Mjesto doniranja: </Form.Label>
                             <Form.Control 
+                                required
                                 type="text"
-                                name="details"
-                                value={donationDetails}
-                                onChange={onChangeDonationDetails}  
-                                placeholder="Upiši neke dodatne detalje"
+                                name="mjestoDarivanja"
+                                onChange={onChange}
+                                value={mjestoDarivanja}
                             />
                         </Form.Group>
                     </Row>

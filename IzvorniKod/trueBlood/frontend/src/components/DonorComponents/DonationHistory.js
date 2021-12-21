@@ -10,7 +10,6 @@ function DonationHistory(props) {
 
     function generatePDF(id) {
         console.log(id)
-        //tu se sad salje zahtjev backendu
     } 
     
 

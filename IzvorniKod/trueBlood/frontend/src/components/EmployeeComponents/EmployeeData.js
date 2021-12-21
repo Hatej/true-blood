@@ -9,25 +9,21 @@ function EmployeeData(props) {
 
     //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA" ili "ADMIN_ADDING_EMPLOYEE" //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
     //props.username
-    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"Jasmin", familyName:"Stavros", OIB:"12312321", dateOfBirth:"fdfdf", birthPlace:"sdsdsd",  residenceAdress:"fdfdf", privatePhoneNumber:"dfvd", workPhoneNumber:"dfdfd", email:"sdfdf"});
+    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"",  residenceAdress:"f", privatePhoneNumber:"", workPhoneNumber:"", email:""});
     
     let targetUsername;
 
-    switch(props.mode){
-        case "EMPLOYEE_ACCESSING_DATA":
-            targetUsername = AuthHandler.getLoggedInUserName();
-            break;
-        case "ADMIN_ACCESSING_DATA":
-            targetUsername = props.username;
-            break;
-    }
-
-    React.useEffect( () => {
-        if (props.mode === "ADMIN_ACCESSING_DATA") {
-            targetUsername = props.username;
-            getEmployeeData();
+    useEffect( () => {
+        switch(props.mode){
+            case "EMPLOYEE_ACCESSING_DATA":
+                targetUsername = AuthHandler.getLoggedInUserName();
+                break;
+            case "ADMIN_ACCESSING_DATA":
+                targetUsername = props.username;
+                break;
         }
-    }, [props.username])  //Valentin je rekao da je ovo nepreporuciljivo rjesenje, ali radi
+        getEmployeeData();    
+    }, []);
 
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
@@ -39,7 +35,24 @@ function EmployeeData(props) {
     }
 
     async function getEmployeeData(){
-
+        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
+            headers: {
+                'username': targetUsername
+            }
+        }).then(res => res.data);
+        var time = Date.parse(data.birthdate);
+        console.log(time);
+        var date = new Date(time);
+        var dateFormat = date.getFullYear() + '-'
+            + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+            + ('0' + date.getDate()).slice(-2);
+        let newForm = {
+            givenName: data.name, familyName: data.surname,
+            OIB: data.oib, dateOfBirth: dateFormat, birthPlace: data.birthplace,
+            residenceAdress: data.address, workplaceName: data.workplace,
+            privatePhoneNumber: data.mobilePrivate, workPhoneNumber: data.mobileBusiness, email: data.email, bloodType: bloodName(data.bloodTypeName), isRejected: data.rejected, gender: data.genderMale,
+        };
+        setEmployeeDataForm(newForm);
     }
 
     function onChange(event) {
@@ -48,7 +61,6 @@ function EmployeeData(props) {
             const {name, value} = event.target;
             let newForm = { ... employeeDataForm };
             newForm[name] = value;
-            
             setEmployeeDataForm(newForm);
         }
 
@@ -119,10 +131,10 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="6">
                         <Form.Label>OIB</Form.Label>
                         <Form.Control 
-                            readonly="true"
+                            readOnly={true}
                             type="text"
                             name="OIB"
-                            disabled={props.mode === "EMPLOYEE_ACCESING_DATA"}
+                            disabled={props.mode === "EMPLOYEE_ACCESSING_DATA"}
                             value={employeeDataForm.OIB}
                             onChange={onChange}
                             minLength="11"
@@ -195,7 +207,7 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
                         <Form.Control 
-                            readonly="true"
+                            readOnly={true}
                             type="email"
                             name="email"
                             value={employeeDataForm.email}

@@ -1,40 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios"
 import DonorData from "./DonorData";
 import DonationForm from "../EmployeeComponents/DonationForm";
+import {Table} from 'react-bootstrap';
 
 function DonorsList(props) {
 
-    const [donorsList, setDonorsList] = React.useState(
-        [
-            {givenName:"Darko", familyName:"Pardon", OIB:"2323453432", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", username: "jp2131", ableToDonate:true},
+    const [donorsList, setDonorsList] = useState([]);
 
-            {givenName:"Jorko", familyName:"Pardon", OIB:"112", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"B+", username: "kr12345", ableToDonate:false},
+    async function getDonorsData() {
+        let data = await axios.get(`http://localhost:8080/donorList`).then(res => res.data);
+        setDonorsList(data);
+    }
 
-            {givenName:"Stjepan", familyName:"Pardon", OIB:"232", dateOfBirth:"2021-01-02", birthPlace:"sdsd", residenceAdress:"dfdfd", 
-            workplaceName:"ffgfg", privatePhoneNumber:"dfdf", workPhoneNumber:"dfdf", email:"dfdf", bloodType:"0", username: "ku14867", ableToDonate:true}
-        ]
-    )
-
+    useEffect(() => {
+        getDonorsData();
+    }, []);
 
     const NORMAL = "NORMAL", DETAILS = "DETAILS", ADDING = "ADDING", MAKING_DONATION = "MAKING_DONATION"
-    const [view, setView] = React.useState(NORMAL);
+    const [view, setView] = useState(NORMAL);
 
-    const [editedDonor, setEditedDonor] = React.useState(donorsList[0]);
+    const [editedDonor, setEditedDonor] = useState({username: "", name:"", surname:"", role:"", blood:{}, rejected:"", birthplace: "", address: "", workplace: "", mobilePrivate: "", mobileBusiness: "", birthdate: ""});
 
-    const [donorMakingDonation, setDonorMakingDonation] = React.useState(donorsList[0])
+    const [donorMakingDonation, setDonorMakingDonation] = useState({username: "", name:"", surname:"", role:"", blood:{}, rejected:"", birthplace: "", address: "", workplace: "", mobilePrivate: "", mobileBusiness: "", birthdate: ""});
   
-    const [filter, setFilter] = React.useState("");
+    const [filter, setFilter] = useState("");
 
     function filterFunction(event) {
         setFilter(event.target.value);
     }
 
     function setViewTo(view, username) {
-
         let index = donorsList.findIndex((element)=>element.username === username)
-
         switch (view) {
             case DETAILS:
                 setEditedDonor(donorsList[index]);
@@ -42,55 +39,117 @@ function DonorsList(props) {
             case MAKING_DONATION:
                 setDonorMakingDonation(donorsList[index]);
                 break;
-
-
         }
-        
+        if(view === NORMAL){
+            getDonorsData();
+        }
         setView(view)
+    }
+
+    function deleteDonor(id){
+        console.log("Brisem " + id);
+        const data = {
+            donorid: id
+        };
+        axios.delete('http://localhost:8080/deactivateDonor', {data : data}
+            ).then(res => {
+                console.log(res);
+                if (res.status == 200) {
+                    console.log("User deleated!")
+                    getDonorsData();
+                }
+                if (res.status === 400) {
+                    console.log("Error!");
+                }
+            });
+    }
+
+    function bloodName(name){
+        switch(name){
+            case "A_PLUS":
+                return "A+"
+            case "AB_PLUS":
+                return "AB+"
+            case "B_PLUS":
+                return "B+"
+            case "ZERO_PLUS":
+                return "O+"
+            case "A_MINUS":
+                return "A-"
+            case "AB_MINUS":
+                return "AB-"
+            case "B_MINUS":
+                return "B-"
+            case "ZERO_MINUS":
+                return "O-"       
+            default:
+                break;
+        }
     }
 
     return(
         <div>
-          
-            <div hidden={view !== NORMAL}>
-                <div>
-                    <input type="text" name="filter" onChange={filterFunction} placeholder="Pretraži..."/>
-                    <button  onClick={() => setViewTo(ADDING)}>Dodaj donora</button>
-                </div>
-                <div>
-                    <table>
-                    <tr>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                        <th>Krvna grupa</th>
-                        <th>Mogućnost Doniranja</th>
-                    </tr>
-                    {donorsList.map(donor => 
-                        <tr key={donor.donorId} hidden={!(donor.givenName.includes(filter) || donor.familyName.includes(filter) || donor.bloodType.includes(filter))}>
-                            <td>{donor.givenName}</td>
-                            <td>{donor.familyName}</td>
-                            <td>{donor.bloodType}</td>
-                            <td>{donor.ableToDonate ? "Može" : "Ne može"}</td>
-                            <td><button onClick={() => setViewTo(DETAILS, donor.username)}>Details</button></td>
-                            <td><button hidden={donor.ableToDonate === false} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
-                        </tr>
-                    )}
-                    </table>
-                </div>
-            </div>
-            <div hidden={view !== DETAILS}>
-                <DonorData mode="EMPLOYEE_ACCESING_DATA" username={editedDonor.username}/>
-                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button>
-            </div>
-            <div hidden={view !== ADDING}>  
-                <DonorData mode="EMPLOYEE_ADDING_DONOR" username={undefined}/>    
-                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
-            </div>
-            <div hidden={view !== MAKING_DONATION}>  
-                <DonationForm donorData={donorMakingDonation}/>
-                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
-            </div>
-            
+            {(() => {
+                console.log(view);
+                switch(view){
+                    case NORMAL:
+                        return(
+                            <div className="container">
+                                <div>
+                                    <input type="text" name="filter" onChange={filterFunction} placeholder="Pretraži..."/>
+                                    <a className="btn btn-danger ms-1" href="/signin">Dodaj donora</a>
+                                </div>
+                                <div>
+                                    <Table hover>
+                                        <thead>
+                                            <tr>
+                                                <th>Ime</th>
+                                                <th>Prezime</th>
+                                                <th>Krvna grupa</th>
+                                                <th>Mogućnost Doniranja</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {donorsList.map(donor =>
+                                                <tr key={donor.username} hidden={!(donor.name.includes(filter) || donor.surname.includes(filter) || bloodName(donor.blood.name).includes(filter))}>
+                                                    <td>{donor.name}</td>
+                                                    <td>{donor.surname}</td>
+                                                    <td>{bloodName(donor.blood.name)}</td>
+                                                    <td>{!donor.rejected ? "Može" : "Ne može"}</td>
+                                                    <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
+                                                    <td><button className="btn btn-outline-danger" hidden={donor.rejected === true} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
+                                                    <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)}>Izbriši donor-a</button></td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </div>
+                        )
+                    case DETAILS:
+                        return(
+                            <div>
+                                <DonorData mode="EMPLOYEE_ACCESSING_DATA" username={editedDonor.username} setView={setViewTo}/>
+                            </div>
+                        )
+                    case ADDING:
+                        return(
+                            <div>  
+                                <DonorData mode="EMPLOYEE_ADDING_DONOR" username={undefined}/>    
+                                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
+                            </div>
+                        )
+                    case MAKING_DONATION:
+                        return(
+                            <div>  
+                                <DonationForm donorData={donorMakingDonation}/>
+                                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
+                            </div>
+                        )
+                    default:
+                        break;
+                }
+            })()}
        </div>
        
     )

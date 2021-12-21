@@ -54,7 +54,6 @@ function BloodChange(props) {
                             <Form.Group as={Col} md="6">
                             <Form.Label><b>{bloodList[index_i*2 + index_j].bloodType}</b> - količina: {bloodList[index_i*2  + index_j].amount}, nakon slanja: {bloodList[index_i*2  + index_j].amountAfterSending} <span hidden={bloodList[index_i*2  + index_j].amountAfterSending >= 0}>OPREZ!!</span> </Form.Label>
                             <Form.Control 
-                                bloodType="text"
                                 name={bloodList[index_i*2  + index_j].bloodType}
                                 value={bloodList[index_i*2  + index_j].amountToSend === 0 ? "" : bloodList[index_i*2  + index_j].amountToSend }
                                 onChange={onChange}
@@ -63,10 +62,6 @@ function BloodChange(props) {
                             </Form.Group>
                         )}
                     </Row>
-                    
-                    
-                    
-
                 )}
 
                     <Row className="mb-3">

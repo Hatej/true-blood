@@ -9,10 +9,6 @@ import { Tab, Row, Col, Nav, Sonnet } from 'react-bootstrap';
 
 function Employee(props) {
 
-    const [employeeData, setEmployeeData] = React.useState(
-        {givenName:"Jasmin", familyName:"Stavros", OIB:"12312321", dateOfBirth:"fdfdf", birthPlace:"sdsdsd",  residenceAdress:"fdfdf", privatePhoneNumber:"dfvd", workPhoneNumber:"dfdfd", email:"sdfdf"}
-    )
-    
     return(
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -33,7 +29,7 @@ function Employee(props) {
                     <Col className="col-10">
                         <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                    <EmployeeData mode="EMPLOYEE_ACCESING_DATA" username={"dk23145"}/>
+                                    <EmployeeData mode="EMPLOYEE_ACCESSING_DATA"/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <DonorsList/>
