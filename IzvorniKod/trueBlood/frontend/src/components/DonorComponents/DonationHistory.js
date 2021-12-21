@@ -18,7 +18,10 @@ function DonationHistory(props) {
     }, []);
 
     function generatePDF(id){
-        axios.post('http://localhost:8080/donations', {headers: { id: id}})
+        const header = {
+            id: id
+        };
+        axios.post('http://localhost:8080/generatePDF',{}, {headers: header})
                 .then(res => console.log(res))
                 .catch(err => console.log(err));
     }
@@ -50,7 +53,7 @@ function DonationHistory(props) {
                                 <td>{donacija.location}</td>
                                 <td>{formatTime(donacija.donationDate)}</td>
                                 <td>{donacija.success ? "Uspješna" : "Neuspješna"}</td>
-                                <td><button className="btn btn-danger" onClick={generatePDF(donacija.id)}>Generiraj PDF</button></td>
+                                <td><button className="btn btn-danger" onClick={()=>generatePDF(donacija.id)}>Generiraj PDF</button></td>
                             </tr>
                         ); 
                     }) : <span>Loading</span>}
