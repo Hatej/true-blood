@@ -52,4 +52,9 @@ public class DonationServiceJpa implements DonationService {
 		
 	}
 
+	@Override
+	public void save(Donation donation) {
+		donationRepo.save(donation);
+	}
+
 }

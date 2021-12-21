@@ -19,4 +19,6 @@ public interface DonationService {
 	List<Donation> findByDate(Date date);
 
 	void sendPoziv(Set<User> allUsers);
+
+	void save(Donation donation);
 }
