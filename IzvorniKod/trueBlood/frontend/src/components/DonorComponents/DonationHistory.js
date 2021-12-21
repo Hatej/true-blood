@@ -1,40 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
+import AuthHandler from '../AuthHandler';
+import axios from "axios";
+import { Table } from 'react-bootstrap';
 
 function DonationHistory(props) {
 
-    const [listOfDonations, setListOfDonations] = React.useState([
-        {date: "123.1", place: "Zagreb", status: "succesful", donationID: 1}, 
-        {date: "323.1", place: "sdd", status: "unsuccesful", donationID: 2}, 
-        {date: "23", place: "Zagrsdsdeb", status: "succesful", donationID: 3}
-    ]);
+    const [donationData, setDonationData] = useState();
 
-    function generatePDF(id) {
-        console.log(id)
-    } 
-    
+    useEffect(() => {
+        async function getDonationData() {
+            let data = await axios.get('http://localhost:8080/donations', { headers: { username: AuthHandler.getLoggedInUserName()}})
+                .then(res => res.data)
+                .catch(err => console.log(err));
+            setDonationData(data);
+        }
+        getDonationData();
+    }, []);
+
+    function generatePDF(id){
+        axios.post('http://localhost:8080/donations', {headers: { id: id}})
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+    }
+
+    function formatTime(timeToFormat){
+        var time = Date.parse(timeToFormat);
+        console.log(time);
+        var date = new Date(time);
+        var dateFormat = date.getFullYear() + '-'
+            + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+            + ('0' + date.getDate()).slice(-2);
+        return dateFormat;
+    }
 
     return(
         <div>
-            <table>
-                <tr>
-                    <th>Mjesto</th>
-                    <th>Vrijeme</th>
-                    <th>Status</th>
-                </tr>
-                {listOfDonations.map(donation => 
+            <Table>
+                <thead>
                     <tr>
-                        <td>{donation.date}</td>
-                        <td>{donation.place}</td>
-                        <td>{donation.status}</td>
-                        <td><button onClick={() => generatePDF(donation.donationID)} hidden={donation.status === "unsuccesful"}>Preuzmi PDF</button></td>
+                        <th>Lokacija</th>
+                        <th>Datum</th>
+                        <th>Uspješnost</th>
                     </tr>
-                    
-                )}
-                
-            </table>
+                </thead>
+                <tbody>
+                    {donationData ? donationData.map((donacija) => {
+                        return(
+                            <tr key={donacija.id}>
+                                <td>{donacija.location}</td>
+                                <td>{formatTime(donacija.donationDate)}</td>
+                                <td>{donacija.success ? "Uspješna" : "Neuspješna"}</td>
+                                <td><button className="btn btn-danger" onClick={generatePDF(donacija.id)}>Generiraj PDF</button></td>
+                            </tr>
+                        ); 
+                    }) : <span>Loading</span>}
+                </tbody>            
+            </Table>
         </div> 
-       
-       
     )
 }
 

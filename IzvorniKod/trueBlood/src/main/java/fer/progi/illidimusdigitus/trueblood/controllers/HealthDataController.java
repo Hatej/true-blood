@@ -31,6 +31,7 @@ public class HealthDataController {
         return healthDataService.getAllHealthData();
     }
 
+    @CrossOrigin("*")
    @PostMapping("/healthDataAnswered")
     public ResponseEntity answerHealthData(@RequestBody HealthAnswersDTO healthAnswers,@RequestHeader String authorization) {
 

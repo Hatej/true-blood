@@ -58,7 +58,7 @@ function DonationForm(props) {
     });
 
     const [mjestoDarivanja, setMjestoDarivanja] = useState("");
-    const [error, setError] = useState("");
+    const [donationResponse, setDonationResponse] = useState("");
     const [questionsForm, setQuestionsForm] = useState(() => {
         let temp = []; 
         for(let j= 0; j < questionsList.length; j++) {
@@ -79,6 +79,7 @@ function DonationForm(props) {
     });
 
     const [donationDetails, setDonationDetails] = React.useState("");
+    const history = useHistory();
 
     function onChangeDonationDetails(event) {
         setDonationDetails(event.target.value)
@@ -97,7 +98,7 @@ function DonationForm(props) {
 
     function onSubmit(e) {
         e.preventDefault();
-        setError("");
+        setDonationResponse("");
 
         let upitnikData = {
             1: questionsForm[0],
@@ -128,16 +129,15 @@ function DonationForm(props) {
             upitnik: upitnikData
         };
 
-        return axios.post('http://localhost:8080/donation',
+        return axios.post('http://localhost:8080/healthDataAnswered',
             data).then(res => {
                 console.log(res);
                 if (res.status == 200) {
-                    setError("Changes saved!");
-                    
+                    console.log("Uspješna donacija.");
+                    setDonationResponse("Uspješna donacija!");
                 }
                 if (res.status === 400) {
-                    setError("Error on signup!");
-                    
+                    console.log("There was an error!");  
                 }
             });
     }
@@ -228,13 +228,15 @@ function DonationForm(props) {
                         </Form.Group>
                     </Row>
                     <Row className="mb-3">
-                    <Form.Group as={Col} md="6">
-                        <Button className="btn-danger" type="submit">
-                            Evidentiraj donaciju
-                        </Button>
-                    </Form.Group>
-                </Row>
-                  
+                        <Form.Group as={Col} md="6">
+                            <Button className="btn-danger" type="submit">
+                                Evidentiraj donaciju
+                            </Button>
+                        </Form.Group>
+                        <div>
+                            {donationResponse}
+                        </div>
+                    </Row>
                 </Form>
             </div>
         </div>
