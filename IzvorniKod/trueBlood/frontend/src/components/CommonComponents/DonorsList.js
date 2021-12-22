@@ -3,6 +3,7 @@ import axios from "axios"
 import DonorData from "./DonorData";
 import DonationForm from "../EmployeeComponents/DonationForm";
 import {Table} from 'react-bootstrap';
+import SignInForm from '../SignInForm';
 
 function DonorsList(props) {
 
@@ -97,7 +98,7 @@ function DonorsList(props) {
                             <div className="container">
                                 <div>
                                     <input type="text" name="filter" onChange={filterFunction} placeholder="Pretraži..."/>
-                                    <a className="btn btn-danger ms-1" href="/signin">Dodaj donora</a>
+                                    <button className="btn btn-danger ms-1" onClick={() => setViewTo(ADDING)}>Dodaj donora</button>
                                 </div>
                                 <div>
                                     <Table hover>
@@ -135,15 +136,13 @@ function DonorsList(props) {
                     case ADDING:
                         return(
                             <div>  
-                                <DonorData mode="EMPLOYEE_ADDING_DONOR" username={undefined}/>    
-                                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
+                                 <SignInForm mode="EMPLOYEE_ADDING_DONOR" setView={setViewTo}/>
                             </div>
                         )
                     case MAKING_DONATION:
                         return(
                             <div>  
-                                <DonationForm donorData={donorMakingDonation}/>
-                                <button onClick={() => setViewTo(NORMAL)}> Vrati se nazad </button> 
+                                <DonationForm donorData={donorMakingDonation} setView={setViewTo}/>
                             </div>
                         )
                     default:

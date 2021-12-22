@@ -87,11 +87,17 @@ function SignInForm(props) {
         return fetch('http://localhost:8080/user/add', options)
             .then(response => {
                 if (response.ok) {
-                    history.push('/home');
+                    {(() => {
+                        if(props.mode === "EMPLOYEE_ADDING_DONOR"){
+                            setError("Donor dodan!");
+                        } else {
+                            history.push('/home');
+                        }
+                    })()}
+
                 }
                 if (response.status === 400) {
                     setError("Error on signup!");
-                    history.push('/signin');
                 }
             });
     }
@@ -277,6 +283,17 @@ function SignInForm(props) {
                         </Button>
                         <div>{error}</div>
                     </Form.Group>
+                    {(() => {
+                        if(props.mode === "EMPLOYEE_ADDING_DONOR"){
+                            return (
+                                <Form.Group as={Col} md="4">
+                                    <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
+                                        Vrati se nazad
+                                    </Button>
+                                </Form.Group>
+                            );
+                        }
+                    })()}
                 </Row>
             </Form>
         </div>

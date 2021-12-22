@@ -357,7 +357,7 @@ function DonorData(props) {
                         </Button>
                     </Form.Group>
                     {(() => {
-                        if(props.mode === "EMPLOYEE_ACCESSING_DATA"){
+                        if(props.mode === "EMPLOYEE_ACCESSING_DATA" || props.mode === "EMPLOYEE_ADDING_DONOR"){
                             return (
                                 <Form.Group as={Col} md="4">
                                     <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>

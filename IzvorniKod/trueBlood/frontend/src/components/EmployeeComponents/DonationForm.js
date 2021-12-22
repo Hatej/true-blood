@@ -233,6 +233,11 @@ function DonationForm(props) {
                                 Evidentiraj donaciju
                             </Button>
                         </Form.Group>
+                        <Form.Group as={Col} md="4">
+                            <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
+                                Vrati se nazad
+                            </Button>
+                        </Form.Group>
                         <div>
                             {donationResponse}
                         </div>
