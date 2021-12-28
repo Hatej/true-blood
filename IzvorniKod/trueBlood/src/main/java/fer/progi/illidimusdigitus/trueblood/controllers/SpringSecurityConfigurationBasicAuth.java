@@ -40,13 +40,13 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/bloodGroups").permitAll()
-                .and()
-                .csrf().disable()
+                .and().httpBasic();
+                /*.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic();*/
     }
 
     @Override

@@ -1,25 +1,36 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.Donation;
 import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
+import fer.progi.illidimusdigitus.trueblood.service.DonationService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 //import javax.ws.rs.Consumes;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -33,6 +44,9 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+    
+    @Autowired
+    private DonationService donationService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -85,11 +99,10 @@ public class UserController {
 
         userService.createUser(newUser);
         userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
-
         return ResponseEntity.ok().build();
     }
     
-    /*@CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*")
     @PostMapping("/addAdmin")
     public ResponseEntity<User> createAdmin(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
 
@@ -104,7 +117,8 @@ public class UserController {
                 dto.getName(),
                 dto.getSurname(),
                 dto.getOib(),
-                userRole
+                userRole,
+                dto.getEmail()
                 );
 
         userService.createUser(newUser);
@@ -126,13 +140,14 @@ public class UserController {
                 dto.getName(),
                 dto.getSurname(),
                 dto.getOib(),
-                userRole
+                userRole,
+                dto.getEmail()
                 );
 
         userService.createUser(newUser);
         return ResponseEntity.ok().build();
     }
-	*/
+	
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
     public ResponseEntity<Map<String, String>> loginAttempt(@RequestHeader String authorization) {
@@ -211,7 +226,81 @@ public class UserController {
         }
         return ResponseEntity.ok("Could not update user!");
     }
-
+    
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/getMessages",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MessageDTO> getMess(@RequestHeader String username) {
+   	
+       User usr = userService.findByUsername(username).get();
+       MessageDTO messages = new MessageDTO();
+       
+       if(usr.isRejected()) {
+       	messages.setBelowLower(false);
+       	messages.setMonths(false);
+       	return ResponseEntity.ok(messages);
+       }
+       
+       Blood blood =  bloodService.findByName(usr.getBloodType().getName()).get();
+       if(blood.getSupply() < blood.getLowerbound()) messages.setBelowLower(true);
+       else messages.setBelowLower(false);
+       
+       List<Donation> donations = donationService.findByDonor(usr);
+       boolean gender = usr.isMale();
+       
+       donations.stream()
+       		 .filter((e) -> e.getSuccess() == true)
+       		 .collect(Collectors.toList());
+       
+       if(donations.isEmpty()) {
+       		messages.setMonths(true);
+       		
+       }
+       
+       else {
+    	   
+    	   Set<Donation> don = new TreeSet<>(new Comparator<Donation>() {
+               @Override
+   			   public int compare(Donation o1, Donation o2) {
+            	   if( o1.getDate().before(o2.getDate())) return 1;
+            	   else return 0;
+   			  }
+           });
+           don.addAll(donations);
+           Donation last = don.iterator().next();
+           
+           
+           if(gender == true) {
+           	Date threeMonthsAgo = new Date();
+        		GregorianCalendar cal = new GregorianCalendar();
+        		cal.setTime(threeMonthsAgo);
+        		cal.add(Calendar.DATE, -90);
+        		cal.set(Calendar.HOUR_OF_DAY, 0);
+        		cal.set(Calendar.MINUTE, 0);
+        		cal.set(Calendar.SECOND, 0);
+        		cal.set(Calendar.MILLISECOND, 0);
+        		
+        		if(cal.getTime().after(last.getDate())) {
+        			messages.setMonths(true);
+        			System.out.println("UNUTRA");
+        		}
+        		else messages.setMonths(false);
+        	}
+           else {
+           	Date fourMonthsAgo = new Date();
+        		GregorianCalendar cal = new GregorianCalendar();
+        		cal.setTime(fourMonthsAgo);
+        		cal.add(Calendar.DATE, -120);
+        		cal.set(Calendar.HOUR_OF_DAY, 0);
+        		cal.set(Calendar.MINUTE, 0);
+        		cal.set(Calendar.SECOND, 0);
+        		cal.set(Calendar.MILLISECOND, 0);
+        		if(cal.getTime().before(last.getDate())) messages.setMonths(true);
+        		else messages.setMonths(false);
+           }
+       }
+       return ResponseEntity.ok(messages);
+       
+   }
 
 
 }
