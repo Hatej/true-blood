@@ -123,7 +123,7 @@
 	
 							\item Neregistriran/neprijavljen korisnik/djelatnik banke odabire opciju za registraciju novog donora
 							\item Sustav otvara obrazac za registraciju
-							\item Neregistriran/neprijavljen korisnik/djelatnik banke unosi potrebne podatke i odabire akciju "Kreiraj račun" 
+							\item Neregistriran/neprijavljen korisnik/djelatnik banke unosi potrebne podatke i odabire gumb za završetak registracije
 							\item Sustav validira unesene podatke i sprema ih u bazu podataka
 							\item Sustav generira email poruku s podacima o korisničkom računu i aktivacijskim linkom i šalje na mail adresu korisnika
 							
@@ -155,9 +155,9 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor/djelatnik/administrator unosi e-mail i lozinku u login formu te odabire akciju "Login"
+							\item Donor/djelatnik/administrator unosi e-mail i lozinku u login formu te odabire akciju "Prijava"
 							\item Sustav validira unesene podatke, provodi autentikaciju i autorizaciju korisnika
-							\item Sustav otvara početni ekran aplikacije te korisniku ispisuje obavijest da pogleda pretinac svojih poruka
+							\item Sustav otvara početni ekran aplikacije te korisniku 
 							\item Pregledavanje ispisane obavijesti na ekranu da pogleda u pretinac svojih poruka ako su prijeđene optimalne granice ili ako dobiva poziv na doniranje
 							
 						\end{packed_enum}
@@ -168,24 +168,27 @@
 							\item[2.a] Neispravan e-mail i/ili lozinka
 							\item[] \begin{packed_enum}
 								
-								\item  Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga u korak 1 osnovnog tijeka
-
+								\item  Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga u korak 1. osnovnog tijeka
+								\end{packed_enum}
+							\item[3.a] Prijeđena je donja optimalna granica ili je prošlo dovoljno vremena od prijašnje donacije
+							\item[] \begin{packed_enum}
 								
+								\item  Sustav prikazuje oznaku iznad izbornika "Donor" što znači da ima novih poruka u pretincu
 							\end{packed_enum}
 					\end{packed_item}
 					\end{packed_item}
 \noindent \underbar{\textbf{UC4 - Pregledaj osobne podatke}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Donor
-						\item \textbf{Cilj:} Prikazati osobne podatke prijavljenog donora
+						\item \textbf{Glavni sudionik: }Donor, Djelatnik
+						\item \textbf{Cilj:} Prikazati osobne podatke donora
 						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Donor je prijavljen
+						\item \textbf{Preduvjet:} Donor/Djelatnik je prijavljen
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Osobni podaci"
+							\item Donor odabire opciju "Moji podaci" ili Djelatnik odabere prikaz podataka donora
 							\item Sustav dohvaća osobne podatke donora iz baze podataka te ih prikazuje
 							
 						\end{packed_enum}
@@ -195,17 +198,17 @@
 \noindent \underbar{\textbf{UC5 - Promjeni osobne podatke}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Donor
-						\item \textbf{Cilj:} Promjeniti matične i/ili kotakt podatke
+						\item \textbf{Glavni sudionik: }Donor, Djelatnik
+						\item \textbf{Cilj:} Promjeniti matične i/ili kontakt podatke
 						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Donor je prijavljen
+						\item \textbf{Preduvjet:} Donor/Djelatnik je prijavljen
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Promijeni osobne podatke"
+							\item Donor/Djelatnik odabire opciju "Promijeni" kod prikaza osobnih podataka donora ili Djelatnik odabire opciju "Promjeni" kod prikaza svojih podataka
 							\item Sustav otvara obrazac za promjenu osobnih podataka
-							\item Donor mijenja svoje podatke i odabire opciju "Spremi promjene"
+							\item Donor/Djelatnik mijenja podatke i odabire opciju "Spremi promjene"
 							
 							\item Sustav ažurira bazu podataka
 							
@@ -255,8 +258,8 @@
 						\item[] \begin{packed_enum}
 	
 							\item Donor odabire opciju "Povijest darivanja"
-							\item Sustav dohvaća povijest darivanja s baze podataka te ju prikazuje
-							\item Donor odabire opciju "Želim PDF potvrdu" koja se nalazi uz svaki zapis darivanja krvi
+							\item Sustav dohvaća povijest darivanja iz baze podataka te ju prikazuje
+							\item Donor odabire opciju "PDF potvrda" koja se nalazi uz svaki zapis doniranja krvi
 							\item Sustav donoru šalje potvrdu na mail
 							
 						\end{packed_enum}
@@ -274,7 +277,7 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Pretinac"
+							\item Donor odabire opciju "Pretinac poruka"
 							\item Sustav dohvaća poruke iz baze podataka i prikazuje ih
 							\item Donor pregledava prikazane poruke
 							
@@ -296,7 +299,7 @@
 	
 							\item Djelatnik odabire krvnu grupu čiju zalihu želi smanjiti
 							\item Djelatnik upisuje količinu i naziv institucije u koju je potrebno poslati krv
-							\item Djelatnik odabire akciju "Smanji zalihu"
+							\item Djelatnik odabire akciju "Evidentiraj"
 							\item Sustav provjerava je li moguće provesti smanjivanje
 							\item Sustav provodi smanjivanje u bazi podataka
 						\end{packed_enum}
@@ -355,7 +358,6 @@
 	\item[] \begin{packed_enum}
 		
 		\item {Neregistrirani/neprijavljeni korisnik ili  djelatnik banke nakon klika na link u mailu vodi u aplikaciju}
-		\item {Neregistrirani/neprijavljeni korisnik ili  djelatnik banke se prijavljuje dodijeljenom lozinkom}
 		\item {Sustav ponovno renderira login stranicu gdje se traži da se unese nova proizvoljna lozinka} 
 		\item {Neregistrirani/neprijavljeni korisnik ili  djelatnik banke se prijavljuje odabranom lozinkom}
 	\end{packed_enum}
@@ -368,51 +370,76 @@
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Djelatnik banke}
-	\item  \textbf{Cilj:} {Evidentirati pokušaj doniranja i osvježiti podatke po potrebi}
+	\item  \textbf{Cilj:} {Evidentirati pokušaj doniranja}
 	\item  \textbf{Sudionici:}{Baza podataka} 
 	\item  \textbf{Preduvjet:}{Djelatnik banke je prijavljen i donor je registriran}
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Djelatnik odabere opciju za evidentiranje pokušaja doniranja određenog donora}
-		\item {Sustav prikazuje podatke o donoru koje može mijenjati po potrebi}
-		\item {Sustav ispod osobnih podataka prikazuje upitnik kojeg ispunjava djelatnik banke}
-		\item {Djelatnik evidentira s uspješan ili neuspješan pokušaj}
+		\item {Djelatnik odabere opciju "Obavi donaciju" u prikazu popisa donira}
+		\item {Sustav  prikazuje upitnik kojeg ispunjava djelatnik banke}
+		\item {Djelatnik unosi mjesto doniranja}
 		\item {Djelatnik banke sprema promjene}
-		\item {Baza podataka se ažurira, povećava se razina određene vrste krvi i zapisuje se pokušaj doniranja krvi}
-		\item {Sustav šalje email poruku s PDF potvrdom}
-		\item {Ako su se prešle gornje granice šalje se notifikacija na mail djelatniku banke}
+		\item {Baza podataka se ažurira}
+		\item {Sustav vraća uspješnost doniranja}
+		\item {Sustav šalje email poruku s PDF potvrdom na mail donora}
+		
 	\end{packed_enum}
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
-		\item[4.a] {Donor je bolovao ili boluje od teških kroničnih bolesti dišnog i probavnog sustava ili donor boluje od belosti srca i krvnih žila, zloćunih bolesti, bolesti jestre AIDS-a, šećerne bolesti ili je osoba osvisnik o alkoholu ili drogama ili donor ima spolne odnose s drugim muškarcima ili donor često mijenja seksualne partnere ili je donor uzimao drogu intravenskim putem ili je donor liječen zbog spolno prenosivih bolesti ili je donor HIV pozitivan ili su donori seksualni partneri gore navedenih osoba ili je dob iznad 65 godina ili je dob iznad 60 godina ako prvi put daje krv}
+		\item[5.a] {Donacija je uspješna}
 		\item[] \begin{packed_enum}
 			
-			\item Donor se trajno odbija
-			\item Sustav vraća na home stranicu
-			\item U bazu se zapisuje trajno odbijanje za određenog donora
+			\item povećava se količina određene vrste krvi
+			
 		\end{packed_enum}
-\eject
-		\item[4.b] {Tjelesna težina je ispod 55kg ili Tjelesna temperatura je iznad 37°C ili krvi tlak sistolički je ispod 100, a dijastolički ispod 60 ili je puls ispod 50 ili iznak 100 otkucaja u minuti ili je hemoglobin muškaraca ispod 135g/L, a žena ispod 125g/L ili donor trenutno uzima antibitike ili druge lijekove ili je donor konzumirao alkohol unutar 8 sati  ili donor ima akutno bolesnos stanje ili je žena za vrijeme menstruacije ili trudnoće ili je donor obavljao opasne poslove tog dana ili je dob ispod 18 godina ili je muškarac već u tekućoj godini darivao 4 puta(ili nije prošlo 3 mjeseca od zadnjeg) ili je žena koja je već darivala 3 puta (ili nije prošlo 4 mjeseca od zadnjeg)}
-		\item[] \begin{packed_enum}
-			
-			\item Donor se privremeno odbija
-			\item Sustav vraća na home stranicu
-			\item U bazu se zapisuje privremeno odbijanje za određenog donora
-			\end{packed_enum}
-		\item[5.a] {Djelatnik promijeni podatke o donoru i ne spremni promjene}
-		\item[] \begin{packed_enum}
-			
-			\item Sustav obavještava djelatnika banke da nije spremnio podatke i vraća ga na korak 5.
-			\end{packed_enum}
-		\item[8.a] {Prešle su se gornje optimalne granice}
+		\item[5.b] {Prešle su se gornje optimalne granice}
 		\item[] \begin{packed_enum}
 			
 			\item šalju se notifikacije na mail djelatnika
 			
 		\end{packed_enum}
+		
+		\item[6.a] {\item[]\begin{packed_item}
+		\item[•]Donor je bolovao ili boluje od teških kroničnih bolesti dišnog i probavnog sustava
+		\item[•]Donor boluje od bolesti srca i krvnih žila, zloćudnih bolesti, bolesti jetre, AIDS-a, šećerne bolesti 
+		\item[•]Donor je ovisnik o alkoholu ili drogama 
+		\item[•]Donor ima spolne odnose s drugim muškarcima 
+		\item[•]Donor često mijenja seksualne partnere
+		\item[•]Donor je uzimao drogu intravenskim putem
+		\item[•]Donor je liječen zbog spolno prenosivih bolesti 
+		\item[•]Donor je HIV pozitivan
+		\item[•]Donor je seksualni partner gore navedenih osoba
+		\item[•]Dob je iznad 65 godina ili je dob iznad 60 godina ako prvi put daje krv\end{packed_item}}
+		\item[] \begin{packed_enum}
+			
+			\item Donor se trajno odbija
+			\item U bazu se zapisuje trajno odbijanje za određenog donora
+		\end{packed_enum}
+\eject
+		\item[6.b] {\item[]\begin{packed_item}
+		\item[•]Tjelesna težina je ispod 55kg
+		\item[•]Tjelesna temperatura je iznad 37°C 
+		\item[•]Krvni tlak sistolički je ispod 100, a dijastolički ispod 60 
+		\item[•]Puls je ispod 50 ili iznad 100 otkucaja u minuti 
+		\item[•]Hemoglobin muškaraca ispod 135g/L, a žena ispod 125g/L
+		\item[•]Donor trenutno uzima antibiotike ili druge lijekove      
+		\item[•]Donor je konzumirao alkohol unutar 8 sati 
+		\item[•]Donor ima akutno bolesno stanje
+		\item[•]Donor je žena za vrijeme menstruacije ili trudnoće 
+	    \item[•]Donor je obavljao opasne poslove tog dana
+	    \item[•]Dob je ispod 18 godina
+	    \item[•]Donor je muškarac i već je u tekućoj godini darivao 4 puta (ili nije prošlo 3 mjeseca od zadnjeg
+	    \item[•]Donor je žena koja je već darivala 3 puta (ili nije prošlo 4 mjeseca od zadnjeg)\end{packed_item}}
+		\item[] \begin{packed_enum}
+			
+			\item Donor se privremeno odbija
+			\item U bazu se zapisuje privremeno odbijanje za određenog donora
+			\end{packed_enum}
+		
+		
 	\end{packed_item}
 	
 \end{packed_item}
@@ -422,7 +449,7 @@
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: }{Administrator}
-	\item  \textbf{Cilj:} {izbrisati kor. račun donora}
+	\item  \textbf{Cilj:} {deaktivirati kor. račun donora}
 	\item  \textbf{Sudionici:}{Baza podataka}
 	\item  \textbf{Preduvjet:}{Administrator prijavljen}
 	\item  \textbf{Opis osnovnog tijeka:}
@@ -431,8 +458,8 @@
 		
 		\item {Administrator odabire opciju "Prikaz donora"}
 		\item {Sustav prikazuje popis registriranih donora} 
-		\item {Administrator odabire opciju "Obriši donora"}
-		\item {Sustav briše donora}
+		\item {Administrator odabire opciju "Deaktiviraj račun"}
+		\item {Sustav deaktivira račun donora}
 		\item {Baza se ažurira}
 	\end{packed_enum}
 	
@@ -495,7 +522,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item {Administrator odabire opciju "Prikaz popisa djelatnika banke"}
-		\item {Sustav prikazuje popis svih djelatnika banke po abecednom redu}
+		\item {Sustav prikazuje popis svih djelatnika banke}
 		\end{packed_enum}
 \end{packed_item}
 
@@ -504,7 +531,7 @@
 
 \begin{packed_item}
 	\item \textbf{Glavni sudionik: }{Administrator}
-	\item  \textbf{Cilj:} {Izbrisati kor. račun djelatnika banke}
+	\item  \textbf{Cilj:} {Deaktivirati kor. račun djelatnika banke}
 	\item  \textbf{Sudionici:}{Baza podataka}
 	\item  \textbf{Preduvjet:}{Administrator prijavljen}
 	\item  \textbf{Opis osnovnog tijeka:}
@@ -513,7 +540,7 @@
 		
 		\item {Administrator odabire opciju "Prikaz djelatnika banke"}
 		\item {Sustav vraća popis djelatnika banke}
-		\item {Administrator odabire opciju "Obriši djelatnika banke"}
+		\item {Administrator odabire opciju "Deaktiviraj račun"}
 		\item {Sustav briše djelatnika}
 		\item {Baza se ažurira}
 	\end{packed_enum}
@@ -533,9 +560,9 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju "Kreiraj korisnički račun djelatnika banke"}
-		\item {Sustav prikazuje formu za kreiranje računa koju popunjava djelatnik} 
-		\item {Odabire gumb "Kreiraj račun"}
+		\item {Administrator odabire opciju "Dodaj djelatnika"}
+		\item {Sustav prikazuje formu za kreiranje računa koju popunjava administrator} 
+		\item {Odabire gumb "Registriraj"}
 		\item {Baza podataka se ažurira}
 		\item {Sustav šalje aktivacijski link na email djelatnika banke}
 	\end{packed_enum}
@@ -560,14 +587,14 @@
 	\item \textbf{Glavni sudionik: }{Sustav za automatske poslove}
 	\item  \textbf{Cilj:} {Poslati notifikaciju donoru}
 	\item  \textbf{Sudionici:}{Baza podataka}
-	\item  \textbf{Preduvjet:}{Prošlo 3 mjeseca od uspješnog darivanja}
+	\item  \textbf{Preduvjet:}{Prošlo 3 ili 4 mjeseca od uspješnog darivanja}
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
 		\item {Sustav svakodnevno provjerava uspješna doniranja od prije 3 mjeseca za muškarce i od prije 4 mjeseca za žene}
-		\item {Svima koji zadovoljavaju uvjet šalju se email notifikacije da mogu doći ponovno donirati krv}
-		\item {Svima koji zadovoljavaju uvjet šalju se poruke u njihov pretinac poruka da mogu doći ponovno donirati krv}
+		\item {Sustav svima koji zadovoljavaju uvjet šalje email notifikacije da mogu doći ponovno donirati krv}
+		\item {Sustav svima koji zadovoljavaju uvjet šalje poruke u njihov pretinac poruka da mogu doći ponovno donirati krv}
 		
 	\end{packed_enum}
 	

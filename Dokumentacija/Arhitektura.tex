@@ -22,8 +22,9 @@
 	\underbar{ \textit{Baza podataka}}{ je zbirka zapisa pohranjenih u računalu na sustavan način, tako da joj se računalni program može obratiti prilikom odgovaranja na problem. Web poslužitelj komunicira s bazom podataka te povlači potrebne zapise iz nje.}
 	
 	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol.Korisnik i aplikacija razmjenjuju HTTP zahtjeve (eng. HTTP request) i HTTP odgovore (HTTP response). Radi jednostavnosti, baza podataka je također smještena na poslužitelju.}\\
-	Korisnik kroz grafičko sučelje, odnosno frontend, šalje zahtjeve na REST pristupne točke backenda. Tada stražnji kraj procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, stražnji kraj šalje odgovor prednjem kraju u obliku JSON objekta, a prednji kraj procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
-	Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
+	Korisnik kroz grafičko sučelje, odnosno frontend, šalje zahtjeve na REST pristupne točke backenda. Tada backend procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, backend šalje odgovor frontendu u obliku JSON objekta, a frontend procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
+\eject
+	Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Java zajedno s Spring radnim okvirom te programski jezik JavaScript u sklopu React-a. Odabrana razvojna okruženja su Eclipse i IntelliJ IDEA. Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
 	\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.9]{slike/arhitektura2.png}
@@ -31,14 +32,14 @@
 			\label{fig:slojevi}
 		\end{figure}
 	\begin{itemize}
-\eject
 		\item 	\textit{sloj korisničke strane} - korisničko sučelje
 		\item 	\textit{sloj nadglednika} - REST nadglednici
 		\item 	\textit{sloj domene}	- model podataka iz domene primjene
 		\item 	\textit{sloj za pristup podacima} - posrednik između sloja domene i baze podataka
 		\item 	\textit{sloj baze podataka} - pohrana podataka	
 		\end{itemize}
-	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija prednjeg i stražnjeg kraja ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i prednji i stražnji kraj neovisno o jeziku implementacije, što potiče ponovnu uporabu. }
+
+\eject	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija frontenda i backenda ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i frontend i backend neovisni o jeziku implementacije, što potiče ponovnu uporabu. }
 	
 	 {Model-View-Controller se sastoji od:}
 	\begin{itemize}
