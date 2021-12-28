@@ -91,7 +91,7 @@ public class UserServiceJpa implements UserService, UserDetailsService {
 
         String  verifyURL = siteURL + "?code=" + user.getActivation();
         emailService.send(user.getEmail(), user.getName(),user.getUsername() ,verifyURL);
-
+        
     }
 
     @Override

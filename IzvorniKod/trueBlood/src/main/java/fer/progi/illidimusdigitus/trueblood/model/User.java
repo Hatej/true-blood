@@ -154,7 +154,7 @@ public class User {
     
     
     public User(String username,String password, String name, String surname,
-            String oib, Role role, String email) {
+            String oib, Role role, String email,boolean male,  String workplace, String mobilePrivate, String mobileBusiness, Date birthdate) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -162,6 +162,12 @@ public class User {
 		this.oib = oib;
 		this.role = role;
 		this.email = email;
+		this.gender = male;
+		this.workplace = workplace;
+        this.mobilePrivate = mobilePrivate;
+        this.mobileBusiness = mobileBusiness;
+        this.birthdate = birthdate;
+        this.activation = oib.substring(1);
     }
 
 	public String getUsername() {

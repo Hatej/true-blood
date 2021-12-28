@@ -102,7 +102,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
-    @CrossOrigin(origins = "*")
+    /*@CrossOrigin(origins = "*")
     @PostMapping("/addAdmin")
     public ResponseEntity<User> createAdmin(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
 
@@ -123,7 +123,7 @@ public class UserController {
 
         userService.createUser(newUser);
         return ResponseEntity.ok().build();
-    }
+    }*/
     
     @CrossOrigin(origins = "*")
     @PostMapping("/addDjelatnik")
@@ -141,10 +141,18 @@ public class UserController {
                 dto.getSurname(),
                 dto.getOib(),
                 userRole,
-                dto.getEmail()
+                dto.getEmail(), 
+                dto.isGenderMale(),
+                dto.getWorkplace(),
+                dto.getMobilePrivate(),
+                dto.getMobileBusiness(),
+                dto.getBirthdate()
                 );
 
         userService.createUser(newUser);
+       
+        userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
+        
         return ResponseEntity.ok().build();
     }
 	

@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +9,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +29,8 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    
+    
 
     //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
     @Secured("ROLE_ADMIN")
@@ -132,5 +142,7 @@ public class AdminController {
 
         return  ResponseEntity.ok().build();
     }
+    
+    
 
 }
