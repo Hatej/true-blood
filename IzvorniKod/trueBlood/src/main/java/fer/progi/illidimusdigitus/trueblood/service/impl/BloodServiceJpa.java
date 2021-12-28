@@ -99,4 +99,16 @@ public class BloodServiceJpa implements BloodService {
 		
 		emailService.notificationUpper(blood, users);
 	}
+
+	
+
+	@Override
+	public void incrementSupply(Blood blood, int size) {
+		Optional<Blood> bloodSupply = findByName(blood.getName());
+
+        Blood currBlood = bloodSupply.get();
+        currBlood.setSupply(currBlood.getSupply() + size);
+        bloodRepo.save(currBlood);
+		
+	}
 }

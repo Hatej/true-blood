@@ -18,5 +18,6 @@ public interface BloodService {
     boolean consume(BloodType type, ConsumptionDTO dto);
 	void sendNotifLower(Blood blood);
 	void sendNotifUpper(Blood blood);
+	void incrementSupply(Blood blood, int size);
 	
 }

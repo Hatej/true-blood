@@ -1,6 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
 import fer.progi.illidimusdigitus.trueblood.model.*;
+import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.DonationService;
 import fer.progi.illidimusdigitus.trueblood.service.HealthDataAnsweredService;
 import fer.progi.illidimusdigitus.trueblood.service.HealthDataService;
@@ -25,6 +26,9 @@ public class HealthDataController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private BloodService bloodService;
 
     @GetMapping("/healthData")
     public List<HealthData> getHealthData() {
@@ -68,35 +72,32 @@ public class HealthDataController {
 
        System.out.println(date);
 
-        if(userService.findByUsername(id_donora).isEmpty())
+       if(userService.findByUsername(id_donora).isEmpty())
             return  ResponseEntity.badRequest().build();
-        if(userService.findByUsername(username).isEmpty())
+       if(userService.findByUsername(username).isEmpty())
             return  ResponseEntity.badRequest().build();
 
-        User donor = userService.findByUsername(id_donora).get();
-        User empl = userService.findByUsername(username).get();
+       User donor = userService.findByUsername(id_donora).get();
+       User empl = userService.findByUsername(username).get();
 
-        Donation donation = new Donation(date,mjesto_darivanja,true,donor,empl);
+       Donation donation = new Donation(date,mjesto_darivanja,true,donor,empl);
+       boolean success = true;
+       donationService.save(donation);
 
-        donationService.save(donation);
-
-        long br_doniranja = donation.getId();
-
+       long br_doniranja = donation.getId();
        System.out.println(br_doniranja);
 
        boolean notDone = true;
 
        int broj_kljuceva = healthAnswers.getUpitnik().keySet().size();
 
-        if(broj_kljuceva != 20)
+       if(broj_kljuceva != 20)
             return ResponseEntity.badRequest().build();
 
-        for(int i = 0; i < healthAnswers.getUpitnik().keySet().size(); i++) {
+       for(int i = 0; i < healthAnswers.getUpitnik().keySet().size(); i++) {
 
-            if( healthDataService.findById(i +1).isEmpty())
+            if(healthDataService.findById(i+1).isEmpty())
                 return ResponseEntity.badRequest().build();
-
-
 
             HealthData healthData = healthDataService.findById(i + 1).get();
 
@@ -105,25 +106,32 @@ public class HealthDataController {
             if(healthDataAnsweredService.findById(healthDataAnsweredId).isPresent())
                 return ResponseEntity.badRequest().build();
 
-
             long id_zdravstvenih = i + 1;
             boolean odgovor = healthAnswers.getUpitnik().get((long)(i + 1));
 
             if(odgovor && notDone) {
                 donation.setSuccess(false);
                 donationService.save(donation);
-
+                success = false;
                 if(healthData.getCriterion() == false) {
                     donor.setRejected(true);
                     userService.save(donor);
                 }
                 notDone = false;
             }
-
             healthDataAnsweredService.save(br_doniranja,id_zdravstvenih,odgovor);
 
         }
-
+       
+       	if(success == true) {
+       		bloodService.incrementSupply(usr.getBloodType(), 5);
+       		
+	       	Blood blood = bloodService.findByName(usr.getBloodType().getName()).get();
+	        
+	        if(blood.getSupply() > blood.getUpperbound()){
+	        	bloodService.sendNotifUpper(blood);
+	        }
+       	}
 
         return ResponseEntity.ok().build();
     }
