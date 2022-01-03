@@ -127,6 +127,11 @@ public class AdminController {
     @DeleteMapping("/deactivateDonor")
     public ResponseEntity deleteDonor(@RequestBody String donorid) {
 
+        String[] donoridpodaci = donorid.split("\"");
+
+        donorid = donoridpodaci[3];
+
+
         Optional<User> donoroptional = userService.findByUsername(donorid);
 
         if(donoroptional.isEmpty())
