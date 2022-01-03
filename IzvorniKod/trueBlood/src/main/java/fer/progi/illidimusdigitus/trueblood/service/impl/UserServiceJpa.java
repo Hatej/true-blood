@@ -163,7 +163,7 @@ public class UserServiceJpa implements UserService, UserDetailsService {
 
     @Override
     public void deleteByUsername(String username) {
-        userRepo.deleteByUsername(username);
+        userRepo.deleteUserByUsername(username);
     }
 
     @Override
