@@ -4,13 +4,14 @@ import DonorData from "./DonorData";
 import DonationForm from "../EmployeeComponents/DonationForm";
 import {Table} from 'react-bootstrap';
 import SignInForm from '../SignInForm';
+import { SPRING_URL } from '../Constants';
 
 function DonorsList(props) {
 
     const [donorsList, setDonorsList] = useState([]);
 
     async function getDonorsData() {
-        let data = await axios.get(`http://localhost:8080/donorList`).then(res => res.data);
+        let data = await axios.get(SPRING_URL.concat('/donorList')).then(res => res.data);
         setDonorsList(data);
     }
 
@@ -52,7 +53,7 @@ function DonorsList(props) {
         const data = {
             donorid: id
         };
-        axios.delete('http://localhost:8080/deactivateDonor', {data : data}
+        axios.delete(SPRING_URL.concat('/deactivateDonor'), {data : data}
             ).then(res => {
                 console.log(res);
                 if (res.status == 200) {

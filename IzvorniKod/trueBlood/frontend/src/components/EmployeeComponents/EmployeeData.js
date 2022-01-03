@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
 import axios from "axios"
 import AuthHandler from '../AuthHandler';
+import {SPRING_URL} from '../Constants';
 
 function EmployeeData(props) {
 
@@ -35,7 +36,7 @@ function EmployeeData(props) {
     }
 
     async function getEmployeeData(){
-        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
+        let data = await axios.get(SPRING_URL.concat('/user/getUserInfo'), {
             headers: {
                 'username': targetUsername
             }

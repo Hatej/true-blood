@@ -3,6 +3,7 @@ import axios from "axios"
 import "../Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Accordion } from 'react-bootstrap';
+import {SPRING_URL} from '../Constants';
 
 function BloodData(props){
 
@@ -10,7 +11,7 @@ function BloodData(props){
 
     useEffect(() => {
         async function getBloodData() {
-            let data = await axios.get(`http://localhost:8080/bloodGroups`).then(res => res.data);
+            let data = await axios.get(SPRING_URL.concat('/bloodGroups')).then(res => res.data);
             setBloodData(data);
         }
 

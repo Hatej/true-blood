@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import AuthHandler from '../AuthHandler';
 import axios from "axios";
 import { Table } from 'react-bootstrap';
+import {SPRING_URL} from '../Constants';
 
 function DonationHistory(props) {
 
@@ -9,7 +10,7 @@ function DonationHistory(props) {
 
     useEffect(() => {
         async function getDonationData() {
-            let data = await axios.get('http://localhost:8080/donations', { headers: { username: AuthHandler.getLoggedInUserName()}})
+            let data = await axios.get(SPRING_URL.concat('/donations'), { headers: { username: AuthHandler.getLoggedInUserName()}})
                 .then(res => res.data)
                 .catch(err => console.log(err));
             setDonationData(data);
@@ -21,7 +22,7 @@ function DonationHistory(props) {
         const header = {
             id: id
         };
-        axios.post('http://localhost:8080/generatePDF',{}, {headers: header})
+        axios.post(SPRING_URL.concat('/generatePDF'),{}, {headers: header})
                 .then(res => console.log(res))
                 .catch(err => console.log(err));
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
+import {SPRING_URL} from './Constants';
 
 function SignInForm(props) {
 
@@ -84,7 +85,7 @@ function SignInForm(props) {
             body: JSON.stringify(data)
         };
         setError("");
-        return fetch('http://localhost:8080/user/add', options)
+        return fetch(SPRING_URL.concat('/user/add'), options)
             .then(response => {
                 if (response.ok) {
                     {(() => {
@@ -279,7 +280,7 @@ function SignInForm(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Button className="btn-danger" type="submit">
-                            Signup
+                            Registriraj
                         </Button>
                         <div>{error}</div>
                     </Form.Group>

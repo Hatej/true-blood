@@ -4,6 +4,7 @@ import {useHistory} from "react-router-dom";
 import "./SignInForm.css";
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
+import { SPRING_URL } from './Constants';
 
 function Confirm(props) {
 
@@ -22,7 +23,7 @@ function Confirm(props) {
             e.stopPropagation();
         } else {
             axios
-                .get(`http://localhost:8080/user/add/confirm`,
+                .get(SPRING_URL.concat('/user/add/confirm'),
                     { headers: { code: code, password: passwordForm.password } })
                 .then(() => {
                     history.push('/login');
