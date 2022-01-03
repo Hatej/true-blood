@@ -57,4 +57,15 @@ public class DonationServiceJpa implements DonationService {
 		donationRepo.save(donation);
 	}
 
+	@Override
+	public void deleteWhereUsername(User user) {
+		donationRepo.deleteByDonor(user);
+
+	}
+
+	@Override
+	public void delete(Donation donation) {
+		donationRepo.delete(donation);
+	}
+
 }

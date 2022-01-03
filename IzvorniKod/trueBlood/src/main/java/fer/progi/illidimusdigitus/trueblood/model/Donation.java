@@ -1,5 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,6 +23,7 @@ public class Donation {
     @Id
     @GeneratedValue
     @Column(name = "brDoniranja")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Long id;
 
     /**
@@ -37,6 +41,7 @@ public class Donation {
      * User donor
      */
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnikId")
     public User donor;
 

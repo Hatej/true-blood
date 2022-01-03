@@ -1,5 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 /**
@@ -20,6 +23,7 @@ public class HealthDataAnswered implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "brDoniranja")
     @Id
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Donation donation;
 
 
@@ -29,6 +33,7 @@ public class HealthDataAnswered implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idZdravstvenih")
     @Id
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public HealthData healthData;
 
 

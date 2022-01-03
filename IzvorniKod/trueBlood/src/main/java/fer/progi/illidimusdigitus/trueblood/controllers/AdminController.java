@@ -1,5 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.model.Donation;
+import fer.progi.illidimusdigitus.trueblood.service.DonationService;
+import fer.progi.illidimusdigitus.trueblood.service.HealthDataAnsweredService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,11 @@ public class AdminController {
     @Autowired
     private UserService userService;
     
-    
+    @Autowired
+    private DonationService donationService;
+
+    @Autowired
+    private HealthDataAnsweredService healthDataAnsweredService;
 
     //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
     @Secured("ROLE_ADMIN")

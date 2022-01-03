@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
+import fer.progi.illidimusdigitus.trueblood.model.Donation;
 import fer.progi.illidimusdigitus.trueblood.model.HealthDataAnswered;
 import fer.progi.illidimusdigitus.trueblood.model.HealthDataAnsweredId;
 import fer.progi.illidimusdigitus.trueblood.repository.HealthDataAnsweredRepository;
@@ -22,5 +23,10 @@ public class HealthDataAnsweredServiceJpa implements HealthDataAnsweredService {
 
     public Optional<HealthDataAnswered> findById(HealthDataAnsweredId healthDataAnsweredId) {
         return healthDataAnsweredRepository.findById(healthDataAnsweredId);
+    }
+
+    @Override
+    public void deleteAllByDonation(Donation donation) {
+        healthDataAnsweredRepository.deleteAllByDonation(donation);
     }
 }

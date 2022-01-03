@@ -1,12 +1,17 @@
 package fer.progi.illidimusdigitus.trueblood.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class HealthDataAnsweredId implements Serializable {
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Donation donation;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private HealthData healthData;
 
     public HealthDataAnsweredId(Donation donation, HealthData healthData) {

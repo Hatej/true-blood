@@ -29,7 +29,7 @@ public class Consumption {
     /**
      * Blood Type
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "krvId")
     public Blood bloodType;
 
@@ -42,7 +42,7 @@ public class Consumption {
     /**
      * User employee
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "korisnikId")
     public User employee;
 

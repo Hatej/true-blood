@@ -112,7 +112,7 @@ public class User {
     /**
      * Blood Type
      */
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "krvId")
     public Blood bloodType;
     
@@ -120,7 +120,7 @@ public class User {
     /**
      * Role 
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "ulogaId")
     public Role role;
     

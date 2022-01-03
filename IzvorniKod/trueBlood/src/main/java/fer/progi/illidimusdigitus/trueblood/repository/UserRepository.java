@@ -34,6 +34,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     
     List<User> findByRole(Role role);
 
-    @Modifying
     void deleteUserByUsername(String username);
 }

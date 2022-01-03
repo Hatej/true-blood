@@ -21,4 +21,8 @@ public interface DonationService {
 	void sendPoziv(Set<User> allUsers);
 
 	void save(Donation donation);
+
+	void deleteWhereUsername(User user);
+
+	void  delete(Donation donation);
 }
