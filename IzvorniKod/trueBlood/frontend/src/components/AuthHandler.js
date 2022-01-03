@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-const SPRING_URL = 'http://localhost:8080'
+import { SPRING_URL } from './Constants'
 
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'username'
 export const USER_PASSWORD_SESSION_ATTRIBUTE_NAME = 'password'
@@ -9,7 +8,7 @@ export const USER_ROLE_SESSION_ATTRIBUTE_NAME = 'user'
 class AuthHandler {
 
     executeBasicAuthenticationService(username, password) {
-        return axios.get(`http://localhost:8080/user/login`,
+        return axios.get(SPRING_URL.concat('/user/login'),
             { headers: { authorization: this.createBasicAuthToken(username, password) } })
     }
 

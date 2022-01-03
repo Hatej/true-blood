@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
+import {SPRING_URL} from '../Constants';
 
 function DonationForm(props) {
 
@@ -129,7 +130,7 @@ function DonationForm(props) {
             upitnik: upitnikData
         };
 
-        return axios.post('http://localhost:8080/healthDataAnswered',
+        return axios.post(SPRING_URL.concat('/healthDataAnswered'),
             data).then(res => {
                 console.log(res);
                 if (res.status == 200) {

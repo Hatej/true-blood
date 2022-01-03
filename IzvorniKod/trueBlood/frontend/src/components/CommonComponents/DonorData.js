@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import axios from "axios"
 import AuthHandler from '../AuthHandler';
+import {SPRING_URL} from '../Constants';
 
 function DonorData(props) {
 
@@ -37,7 +38,7 @@ function DonorData(props) {
 
 
     async function getDonorData() {
-        let data = await axios.get(`http://localhost:8080/user/getUserInfo`, {
+        let data = await axios.get(SPRING_URL.concat('/user/getUserInfo'), {
             headers: {
                 'username': targetUsername
             }
@@ -94,7 +95,7 @@ function DonorData(props) {
             'username': targetUsername
         };
 
-        return axios.post('http://localhost:8080/user/editUserInfo',
+        return axios.post(SPRING_URL.concat('/user/editUserInfo'),
             data, {
             headers: headers
         }).then(res => {
@@ -329,7 +330,6 @@ function DonorData(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
                         <Form.Label>Mogućnost doniranja: </Form.Label>
-
                         <Form.Control
                             required
                             type="text"

@@ -1,38 +1,90 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios"
 import { Form, Row, Col, Button} from 'react-bootstrap';
+import AuthHandler from '../AuthHandler';
+import {SPRING_URL} from '../Constants';
 
 function BloodChange(props) {
 
     const [bloodData, setBloodData] = useState([]);
     const [error, setError] = useState("");
     const [bloodChange, setBloodChange] = useState({});
-    const [bloodToSend, setBloodToSend] = useState({bloodTypeName: "", amount: 0});
+    const [bloodConsumption, setBloodConsumption] = useState({bloodType:"", quantity:0, location:"", employee: AuthHandler.getLoggedInUserName()});
+
+    async function getBloodData() {
+        let data = await axios.get(SPRING_URL.concat('/bloodGroups')).then(res => res.data);
+        setBloodData(data);
+        setBloodChange(data[0]);
+        setBloodConsumption(values => ({
+            ...values, 
+            bloodType: bloodName(data[0].name)
+        }));
+    }
 
     useEffect(() => {
-        async function getBloodData() {
-            let data = await axios.get('http://localhost:8080/bloodGroups').then(res => res.data);
-            setBloodData(data);
-            setBloodChange(data[0]);
-        }
         getBloodData();
     }, []);
 
-    function onSubmit() {
+    function onSubmit(e) {
+        e.preventDefault();
+        setError("");
+        if(subtract(bloodChange.supply, bloodConsumption.quantity) < 0){
+            setError("Nema toliko krvi za poslati!");
+            return;
+        }
+        var d = new Date();
+        Number.prototype.padLeft = function(base,chr){
+            var  len = (String(base || 10).length - String(this).length)+1;
+            return len > 0? new Array(len).join(chr || '0')+this : this;
+        }
+        var timestamp = [d.getFullYear(),
+                (d.getMonth()+1).padLeft(),
+               d.getDate().padLeft()].join('-') +' ' +
+              [d.getHours().padLeft(),
+               d.getMinutes().padLeft(),
+               d.getSeconds().padLeft()].join(':');
 
+        var bloodConsumptionData = bloodConsumption;
+        bloodConsumptionData.timestamp = timestamp;
+
+        console.log(bloodConsumptionData);
+        
+        return axios.post(SPRING_URL.concat('/recordChange'), bloodConsumption)
+                .then(res => {
+                    console.log(res);
+                    getBloodData();
+                    setError("Krv poslana!");
+                    setBloodConsumption(values => ({
+                        ...values, 
+                        quantity: 0
+                    }));
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+                
     }
 
     function onChange(event) { 
-        const { name, value } = event.target;        
-        setBloodToSend({
-            [name]: value
-        });
+        const { name, value } = event.target; 
         if(name === "bloodTypeName"){
             var result = bloodData.find(blood => {
                 return bloodName(blood.name) === value; 
             })
+            console.log(result);
+            setError("");
+            setBloodConsumption(values => ({
+                ...values, 
+                bloodType: bloodName(result.name),
+                quantity: 0
+            }));
             setBloodChange(result);
-        } 
+        } else {
+            setBloodConsumption(values => ({
+                ...values, 
+                [name]: value
+            }));
+        }
     }
 
     function bloodName(name){
@@ -73,7 +125,7 @@ function BloodChange(props) {
                                 <Form.Select
                                     name="bloodTypeName"
                                     onChange={onChange}
-                                    value={bloodChange.bloodTypeName}
+                                    value={bloodName(bloodChange.name)}
                                     required
                                 >
                                     <option value='A+'>A+</option>
@@ -93,10 +145,21 @@ function BloodChange(props) {
                                 <Form.Control
                                     required
                                     type="text"
-                                    name="amount"
-                                    value={bloodChange.amount}
+                                    name="quantity"
+                                    value={bloodConsumption.quantity}
                                     onChange={onChange}
                                     placeholder="Količina"
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label>Lokacija</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    name="location"
+                                    value={bloodConsumption.location}
+                                    onChange={onChange}
+                                    placeholder="Lokacija"
                                 />
                             </Form.Group>
                         </Row>  
@@ -113,7 +176,7 @@ function BloodChange(props) {
                 <div className="col">
                     <p>Krv: {bloodName(bloodChange.name)}</p>
                     <p>Trenutna zaliha: {bloodChange.supply}</p>
-                    <p>Nakon slanja: {}</p>
+                    <p>Nakon slanja: {subtract(bloodChange.supply, bloodConsumption.quantity)}</p>
                 </div>
             </div>
         </div>
