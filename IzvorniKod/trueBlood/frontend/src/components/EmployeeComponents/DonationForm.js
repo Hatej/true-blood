@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import {useHistory} from "react-router-dom";
 import axios from "axios";
 import {SPRING_URL} from '../Constants';
 
@@ -79,20 +78,13 @@ function DonationForm(props) {
         setDonorDataForm(props.donorData);
     });
 
-    const [donationDetails, setDonationDetails] = React.useState("");
-    const history = useHistory();
-
-    function onChangeDonationDetails(event) {
-        setDonationDetails(event.target.value)
-    }
-
     function onChange(event) {
         console.log(event.target.value);
         setMjestoDarivanja(event.target.value);
     }
 
     function onChangeQuestionsForm(event) { 
-        let newQuestionsForm = [... questionsForm]
+        let newQuestionsForm = [...questionsForm]
         newQuestionsForm[event.target.name] = event.target.value;
         setQuestionsForm(newQuestionsForm);
     }
@@ -133,7 +125,7 @@ function DonationForm(props) {
         return axios.post(SPRING_URL.concat('/healthDataAnswered'),
             data).then(res => {
                 console.log(res);
-                if (res.status == 200) {
+                if (res.status === 200) {
                     console.log("Uspješna donacija.");
                     setDonationResponse("Uspješna donacija!");
                 }

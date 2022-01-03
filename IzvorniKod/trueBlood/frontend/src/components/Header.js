@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import logo from './logo.png';
 import "./Header.css";
 import AuthHandler from "./AuthHandler";
@@ -23,9 +23,8 @@ function Header(props) {
         roleText = "Donor";
     }
 
-    let homeText, chooseLanguageText, signupText, loginText, logoutText;
+    let chooseLanguageText, signupText, loginText, logoutText;
     if (props.language === "croatian") {
-        homeText = "Početna"
         chooseLanguageText = "Odabir jezika"
         signupText = "Registriraj se"
         loginText = "Prijavi se"
@@ -33,7 +32,6 @@ function Header(props) {
     }
 
     if (props.language === "english") {
-        homeText = "Home"
         chooseLanguageText = "Choose language"
         signupText = "Signup"
         loginText = "Login"

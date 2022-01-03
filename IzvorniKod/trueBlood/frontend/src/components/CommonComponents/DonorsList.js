@@ -41,6 +41,8 @@ function DonorsList(props) {
             case MAKING_DONATION:
                 setDonorMakingDonation(donorsList[index]);
                 break;
+            default:
+                break;
         }
         if(view === NORMAL){
             getDonorsData();
@@ -56,7 +58,7 @@ function DonorsList(props) {
         axios.delete(SPRING_URL.concat('/deactivateDonor'), {data : data}
             ).then(res => {
                 console.log(res);
-                if (res.status == 200) {
+                if (res.status === 200) {
                     console.log("User deleated!")
                     getDonorsData();
                 }

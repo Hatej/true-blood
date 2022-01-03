@@ -1,7 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import {useHistory} from "react-router-dom";
 import axios from "axios"
 import AuthHandler from '../AuthHandler';
 import {SPRING_URL} from '../Constants';
@@ -22,6 +21,8 @@ function EmployeeData(props) {
             case "ADMIN_ACCESSING_DATA":
                 targetUsername = props.username;
                 break;
+            default:
+                break;
         }
         getEmployeeData();    
     }, []);
@@ -29,7 +30,6 @@ function EmployeeData(props) {
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
-    const history = useHistory(); 
 
     function onSubmit() {
     
@@ -60,7 +60,7 @@ function EmployeeData(props) {
 
         if (editingMode) {
             const {name, value} = event.target;
-            let newForm = { ... employeeDataForm };
+            let newForm = { ...employeeDataForm };
             newForm[name] = value;
             setEmployeeDataForm(newForm);
         }
@@ -92,7 +92,7 @@ function EmployeeData(props) {
 
     function enterEditingMode() {
         setEditingMode(true)
-        setOldEmployeeDataForm({ ... employeeDataForm})  //ovako se kopira objekt
+        setOldEmployeeDataForm({ ...employeeDataForm})  //ovako se kopira objekt
 
     }
 
@@ -102,7 +102,7 @@ function EmployeeData(props) {
     }
     
     return (
-        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+        <div className="container col-md-6 col-md-offset-2 border border-danger rounded">
             <Form className="mt-3 mb-3" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">

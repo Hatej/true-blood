@@ -45,7 +45,7 @@ function Confirm(props) {
 
     function validatePassword(){
         var password1 = document.getElementById("password"), password2 = document.getElementById("confirm_password");
-        if(password1.value != password2.value) {
+        if(password1.value !== password2.value) {
             password2.setCustomValidity("Passwords Don't Match");
             return false;
         } else {

@@ -6,23 +6,6 @@ import { Form, Button } from 'react-bootstrap';
 
 function LoginForm(props) {
 
-    let usernameText, passwordText, loginText, showPasswordText;
-    if (props.language === "croatian") {
-        usernameText = "Korisničko ime"
-        passwordText = "Lozinka"
-        loginText = "Prijavi se"
-        showPasswordText = "Prikaži lozinku"
-    
-    }
-
-    if (props.language === "english") {
-        usernameText = "Username"
-        passwordText = "Password"
-        loginText = "Log in"
-        showPasswordText = "Show password"
-    
-    }
-
     const [loginForm, setLoginForm] = useState({ username: '', password: ''});
     const [error, setError] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);

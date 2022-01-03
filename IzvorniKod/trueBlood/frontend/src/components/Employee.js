@@ -1,20 +1,19 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
-import AuthHandler from "./AuthHandler";
 import DonorsList from "./CommonComponents/DonorsList";
 import BloodChange from "./EmployeeComponents/BloodChange";
 import EmployeeData from "./EmployeeComponents/EmployeeData";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tab, Row, Col, Nav, Sonnet } from 'react-bootstrap';
+import './Pills.css';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
 function Employee(props) {
 
     return(
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
-                    <Col className="col-1">
-                        <Nav variant="pills" className="flex-column">
+                <Row className="flex-column flex-md-row">
+                    <Col className="col-md-2 mb-1">
+                        <Nav variant="pills" className="flex-column red">
                             <Nav.Item className="red" >
                                 <Nav.Link eventKey="first">Moji podaci</Nav.Link>
                             </Nav.Item>
@@ -26,7 +25,7 @@ function Employee(props) {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col className="col-10">
+                    <Col className="col-md-10">
                         <Tab.Content>
                                 <Tab.Pane eventKey="first">
                                     <EmployeeData mode="EMPLOYEE_ACCESSING_DATA"/>

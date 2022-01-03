@@ -1,20 +1,17 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
-import AuthHandler from "./AuthHandler";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Donor.css';
 import DonorData from "./CommonComponents/DonorData";
 import DonationHistory from "./DonorComponents/DonationHistory";
 import Messages from "./DonorComponents/Messages";
-import { Tab, Row, Col, Nav, Sonnet } from 'react-bootstrap';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 
 function Donor(props) {
 
     return(
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
-                    <Col className="col-1">
+                <Row className="flex-column flex-md-row">
+                    <Col className="col-md-2 mb-1">
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item className="red" >
                                 <Nav.Link eventKey="first">Moji podaci</Nav.Link>

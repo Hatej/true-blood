@@ -20,6 +20,8 @@ function DonorData(props) {
         case "EMPLOYEE_ACCESSING_DATA":
             targetUsername = props.username;
             break;
+        default:
+            break;
     }
 
     const [donorDataForm, setDonorDataForm] = React.useState({
@@ -100,7 +102,7 @@ function DonorData(props) {
             headers: headers
         }).then(res => {
                 console.log(res);
-                if (res.status == 200) {
+                if (res.status === 200) {
                     setError("Changes saved!");
                     getDonorData();
                     setOldDonorDataForm({ ...donorDataForm });
@@ -177,7 +179,7 @@ function DonorData(props) {
     }
 
     return (
-        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+        <div className="container col-md-6 col-md-offset-2 border border-danger rounded">
             <Form className="mt-3 mb-3" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">

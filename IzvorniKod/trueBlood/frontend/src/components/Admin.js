@@ -1,26 +1,19 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
-import AuthHandler from "./AuthHandler";
 import EmployeesList from "./AdminComponents/EmployeesList";
 import Limits from "./AdminComponents/Limits";
 import DonorsList from "./CommonComponents/DonorsList";
-import DonorData from "./CommonComponents/DonorData";
-import { Tab, Row, Col, Nav, Sonnet } from 'react-bootstrap';
+import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Donor.css';
 
 function Admin(props) {
-
-    const [view, setView] = React.useState("myData");
-
-        
+   
     return(
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
+                <Row className="d-flex flex-row-md">
                     <Col className="col-1">
-                        <Nav variant="pills" className="flex-column">
-                            <Nav.Item className="red" >
+                        <Nav variant="pills" className="">
+                            <Nav.Item>
                                 <Nav.Link eventKey="first">Djelatnici</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>

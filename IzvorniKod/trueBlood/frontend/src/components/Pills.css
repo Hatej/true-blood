@@ -1,0 +1,9 @@
+.red .active a,
+.red .active a:hover,
+.red .active a:focus {
+    background-color: red !important;
+}
+
+.nav-pills > li > a.active {
+    background-color: #ff0000 !important;
+}

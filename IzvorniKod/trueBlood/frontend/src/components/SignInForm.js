@@ -5,54 +5,11 @@ import {SPRING_URL} from './Constants';
 
 function SignInForm(props) {
 
-    let givenNameText, familyNameText, oibText, dateOfBirthText, birthPlaceText, residencePlaceText, phoneNumberText, emailText, passwordText, passwordRepeatedText, signinText, passwordsNotSameText, showPasswordText, placeOfEmploymentText, privatePhoneNumberText, officialPhoneNumberText, bloodTypeText;
-    if (props.language === "croatian") {
-        givenNameText = "Ime"
-        familyNameText = "Prezime"
-        oibText = "OIB"
-        dateOfBirthText = "Datum rođenja"
-        birthPlaceText = "Mjesto rođenja"
-        residencePlaceText = "Adresa stanovanja"
-        phoneNumberText = "Broj mobitela"
-        emailText = "Elektronička pošta"
-        passwordText = "Lozinka"
-        passwordRepeatedText = "Ponovi lozinku"
-        signinText = "Registriraj se"
-        passwordsNotSameText = "Lozinke se ne poklapaju"
-        showPasswordText = "Prikaži lozinke"
-        placeOfEmploymentText = "Mjesto zaposlenja (naziv firme)"
-        privatePhoneNumberText = "Privatni telefonski broj"
-        officialPhoneNumberText = "Službeni telefonski broj"
-        bloodTypeText = "Tip krvi"
-
-    }
-    if (props.language === "english") {
-        givenNameText = "Name"
-        familyNameText = "Family name"
-        oibText = "OIB"
-        dateOfBirthText = "Date of birth"
-        birthPlaceText = "Birth place"
-        residencePlaceText = "Residence adress"
-        phoneNumberText = "Phone number"
-        emailText = "email"
-        passwordText = "Password"
-        passwordRepeatedText = "Repeat password"
-        passwordsNotSameText = "Passwords do not match"
-        signinText = "Sign in"
-        showPasswordText = "Show passwords"
-        placeOfEmploymentText = "Place of employment"
-        privatePhoneNumberText = "Private phone number"
-        officialPhoneNumberText = "Official phone number"
-        bloodTypeText = "Blood type"
-    }
-
-
     const [signinForm, setSignInForm] = React.useState({
         givenName: "", familyName: "", OIB: "", dateOfBirth: "", birthPlace: "", residenceAdress: "",
         workplaceName: "", privatePhoneNumber: "", workPhoneNumber: "", email: "", gender: "true", bloodTypeName: "A+"
     });
     const [error, setError] = React.useState("");
-    const [passwordType, setPasswordType] = React.useState("password")
     const history = useHistory();
 
     function onSubmit(e) {
@@ -88,14 +45,13 @@ function SignInForm(props) {
         return fetch(SPRING_URL.concat('/user/add'), options)
             .then(response => {
                 if (response.ok) {
-                    {(() => {
+                    (() => {
                         if(props.mode === "EMPLOYEE_ADDING_DONOR"){
                             setError("Donor dodan!");
                         } else {
                             history.push('/home');
                         }
-                    })()}
-
+                    })()
                 }
                 if (response.status === 400) {
                     setError("Error on signup!");
