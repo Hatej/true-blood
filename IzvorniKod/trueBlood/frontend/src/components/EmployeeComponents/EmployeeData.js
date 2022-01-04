@@ -166,7 +166,7 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="6">
                         <Form.Label>OIB</Form.Label>
                         <Form.Control 
-                            readOnly={true}
+                            readOnly={props.mode === "EMPLOYEE_ACCESSING_DATA"}
                             type="text"
                             name="OIB"
                             disabled={props.mode === "EMPLOYEE_ACCESSING_DATA"}
@@ -242,7 +242,7 @@ function EmployeeData(props) {
                     <Form.Group as={Col} md="12">
                         <Form.Label>Email</Form.Label>
                         <Form.Control 
-                            readOnly={true}
+                            readOnly={props.mode === "EMPLOYEE_ACCESSING_DATA"}
                             type="email"
                             name="email"
                             value={employeeDataForm.email}
