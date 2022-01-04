@@ -103,14 +103,13 @@ function DonorData(props) {
         }).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    setError("Changes saved!");
+                    setError("Promijene spremljene!");
                     getDonorData();
                     setOldDonorDataForm({ ...donorDataForm });
                     setEditingMode(false);
                 }
                 if (res.status === 400) {
-                    setError("Error on signup!");
-                    history.push('/donor');
+                    setError("Došlo je do greške!");
                 }
             });
     }

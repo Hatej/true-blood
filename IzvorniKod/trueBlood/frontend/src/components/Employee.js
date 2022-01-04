@@ -13,8 +13,8 @@ function Employee(props) {
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row className="flex-column flex-md-row">
                     <Col className="col-md-2 mb-1">
-                        <Nav variant="pills" className="flex-column red">
-                            <Nav.Item className="red" >
+                        <Nav variant="pills" className="flex-column nav-justified">
+                            <Nav.Item>
                                 <Nav.Link eventKey="first">Moji podaci</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>

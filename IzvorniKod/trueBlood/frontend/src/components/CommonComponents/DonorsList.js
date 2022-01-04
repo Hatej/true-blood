@@ -101,7 +101,7 @@ function DonorsList(props) {
                             <div className="container">
                                 <div>
                                     <input type="text" name="filter" onChange={filterFunction} placeholder="Pretraži..."/>
-                                    <button className="btn btn-danger ms-1" onClick={() => setViewTo(ADDING)}>Dodaj donora</button>
+                                    <button hidden={props.mode === "ADMIN"} className="btn btn-danger ms-1" onClick={() => setViewTo(ADDING)}>Dodaj donora</button>
                                 </div>
                                 <div>
                                     <Table hover>
@@ -121,7 +121,7 @@ function DonorsList(props) {
                                                     <td>{bloodName(donor.blood.name)}</td>
                                                     <td>{!donor.rejected ? "Može" : "Ne može"}</td>
                                                     <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
-                                                    <td><button className="btn btn-outline-danger" hidden={donor.rejected === true} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
+                                                    <td><button className="btn btn-outline-danger" hidden={donor.rejected === true || props.mode === "ADMIN"} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
                                                     <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)}>Izbriši donor-a</button></td>
                                                 </tr>
                                             )}

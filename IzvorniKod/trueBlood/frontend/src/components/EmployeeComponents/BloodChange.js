@@ -28,6 +28,10 @@ function BloodChange(props) {
     function onSubmit(e) {
         e.preventDefault();
         setError("");
+        if(bloodConsumption.quantity < 1){
+            setError("Količina krvi mora biti barem jedan!");
+            return;
+        }
         if(subtract(bloodChange.supply, bloodConsumption.quantity) < 0){
             setError("Nema toliko krvi za poslati!");
             return;

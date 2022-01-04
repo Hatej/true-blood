@@ -160,7 +160,7 @@ function DonationForm(props) {
 
     return (
         <div>
-            <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+            <div className="container col-md-6 col-md-offset-4 border border-danger rounded">
                 <Form className="mt-3 mb-3" onSubmit={onSubmit}> 
                         {indexes.map(index =>
                             <Row key={index} className="mb-3"> 

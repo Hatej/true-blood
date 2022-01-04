@@ -10,9 +10,9 @@ function Admin(props) {
     return(
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row className="d-flex flex-row-md">
-                    <Col className="col-1">
-                        <Nav variant="pills" className="">
+                <Row className="flex-column flex-md-row">
+                    <Col className="col-md-2 mb-1">
+                        <Nav variant="pills" className="flex-column nav-justified">
                             <Nav.Item>
                                 <Nav.Link eventKey="first">Djelatnici</Nav.Link>
                             </Nav.Item>
@@ -24,13 +24,13 @@ function Admin(props) {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col className="col-10">
+                    <Col className="col-12 col-md-10">
                         <Tab.Content>
                                 <Tab.Pane eventKey="first">
                                     <EmployeesList/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
-                                    <DonorsList/>
+                                    <DonorsList mode="ADMIN"/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
                                     <Limits/>

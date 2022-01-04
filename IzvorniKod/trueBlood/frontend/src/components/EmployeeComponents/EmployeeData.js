@@ -10,29 +10,21 @@ function EmployeeData(props) {
     //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA" ili "ADMIN_ADDING_EMPLOYEE" //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
     //props.username
     const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"",  residenceAdress:"f", privatePhoneNumber:"", workPhoneNumber:"", email:""});
-    
-    let targetUsername;
-
-    useEffect( () => {
-        switch(props.mode){
-            case "EMPLOYEE_ACCESSING_DATA":
-                targetUsername = AuthHandler.getLoggedInUserName();
-                break;
-            case "ADMIN_ACCESSING_DATA":
-                targetUsername = props.username;
-                break;
-            default:
-                break;
-        }
-        getEmployeeData();    
-    }, []);
-
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
 
-    function onSubmit() {
-    
+    let targetUsername;
+
+    switch(props.mode){
+        case "EMPLOYEE_ACCESSING_DATA":
+            targetUsername = AuthHandler.getLoggedInUserName();
+            break;
+        case "ADMIN_ACCESSING_DATA":
+            targetUsername = props.username;
+            break;
+        default:
+            break;
     }
 
     async function getEmployeeData(){
@@ -56,6 +48,10 @@ function EmployeeData(props) {
         setEmployeeDataForm(newForm);
     }
 
+    useEffect( () => {
+        getEmployeeData();    
+    }, []);
+
     function onChange(event) {
 
         if (editingMode) {
@@ -65,6 +61,44 @@ function EmployeeData(props) {
             setEmployeeDataForm(newForm);
         }
 
+    }
+
+    function onSubmit(e) {
+        e.preventDefault();
+        setError("")
+
+        const data = {
+            name: employeeDataForm.givenName,
+            surname: employeeDataForm.familyName,
+            genderMale: employeeDataForm.gender,
+            birthplace: employeeDataForm.birthPlace,
+            address: employeeDataForm.residenceAdress,
+            workplace: employeeDataForm.workplaceName,
+            mobilePrivate: employeeDataForm.privatePhoneNumber,
+            mobileBusiness: employeeDataForm.workPhoneNumber,
+            birthdate: employeeDataForm.dateOfBirth,
+            rejected: employeeDataForm.isRejected,
+        };
+
+        const headers = {
+            'username': targetUsername
+        };
+        return axios.post(SPRING_URL.concat('/user/editUserInfo'),
+            data, {
+            headers: headers
+        }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    setError("Promijene spremljene!");
+                    getEmployeeData();
+                    setOldEmployeeDataForm({ ...employeeDataForm });
+                    setEditingMode(false);
+                }
+                if (res.status === 400) {
+                    setError("Došlo je do greške!");
+                }
+            });
+    
     }
 
     function bloodName(name){
