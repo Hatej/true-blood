@@ -1,4 +1,6 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
+
 
 function Messages(props) {
     
@@ -25,12 +27,16 @@ function Messages(props) {
     return(
         <div>
             <div>
-                <table>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Pošiljatelj</th>
-                        
-                    </tr>
+                <Table>
+                
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Pošiljatelj</th>
+                        </tr>
+                    </thead>
+                    
+
 
                     {listOfMessages.map(message => 
 
@@ -40,12 +46,13 @@ function Messages(props) {
                                 <td>{message.opened ? "Opened" : "Unopened" }</td>
                             </tr>
                     )}
-                </table>
+
+                </Table>
             </div>
             <br/>
             {activeMessage === undefined ? "Nije odbranan niti jedna poruka" : ""}
             <div hidden={activeMessage === undefined}>
-                <p>Sender:{activeMessage === undefined ? "" : activeMessage.sender} Date:{activeMessage === undefined ? "" : activeMessage.date}</p>
+                <p><b>Sender:</b>{activeMessage === undefined ? "" : activeMessage.sender} <b>Date:</b>{activeMessage === undefined ? "" : activeMessage.date}</p>
                 <hr/>
                 <div>
                     {activeMessage === undefined ? "" : activeMessage.messageText}
