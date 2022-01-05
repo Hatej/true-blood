@@ -47,7 +47,7 @@ public class UserServiceJpa implements UserService, UserDetailsService {
         User user = usr.get();
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().getName().toString()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName().toString()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 

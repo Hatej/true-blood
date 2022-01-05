@@ -225,6 +225,12 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getUserInfo")
     public ResponseEntity<CreateUserDTO> getUserInfo(@RequestHeader String username) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        String currUsername = context.getAuthentication().getName();
+        if (!currUsername.equals(username)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         User usr = userService.findByUsername(username).get();
 
         CreateUserDTO userInfoDTO = new CreateUserDTO();
