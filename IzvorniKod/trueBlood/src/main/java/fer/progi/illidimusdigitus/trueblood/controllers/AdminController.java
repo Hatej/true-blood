@@ -8,6 +8,7 @@ import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,19 +41,18 @@ public class AdminController {
     private HealthDataAnsweredService healthDataAnsweredService;
 
     //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
-    @Secured("ROLE_ADMIN")
     @CrossOrigin("*")
     @GetMapping("/donorList")
+    @Secured("ROLE_ADMIN")
     public List<AdminListAllUserDTO> getDonorList() {
        List<User> allUsers =  userService.listAll();
 
-        //za sprobavanje
-        /*SecurityContext context = SecurityContextHolder.getContext();
+        SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
         List<?> authhshss = authentication.getAuthorities().stream().toList();
         Object principal = authentication.getPrincipal();
-        System.out.println(authhshss.size());*/
+        System.out.println(authhshss.get(0));
 
        return allUsers.stream()
                .filter((e) -> e.getRole().getName().toString().equals("DONOR"))
@@ -81,6 +81,7 @@ public class AdminController {
 
     @CrossOrigin("*")
     @GetMapping("/employees")
+    @Secured("ROLE_ADMIN")
     public List<AdminListAllUserDTO> getEmployees() {
         List<User> allUsers =  userService.listAll();
 
@@ -112,6 +113,7 @@ public class AdminController {
 
     @CrossOrigin("*")
     @DeleteMapping("/deactivateEmployee")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity deleteEmployee(@RequestBody String employeeid) {
        String[] employeeidpodaci = employeeid.split("\"");
        employeeid = employeeidpodaci[3];
@@ -131,6 +133,7 @@ public class AdminController {
 
     @CrossOrigin("*")
     @DeleteMapping("/deactivateDonor")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity deleteDonor(@RequestBody String donorid) {
         String[] donoridpodaci = donorid.split("\"");
         donorid = donoridpodaci[3];
@@ -147,7 +150,4 @@ public class AdminController {
         userService.deleteByUsername(donor.getUsername());
         return ResponseEntity.ok().build();
     }
-    
-    
-
 }

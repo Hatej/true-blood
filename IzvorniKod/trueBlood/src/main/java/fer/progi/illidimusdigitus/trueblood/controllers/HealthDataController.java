@@ -8,6 +8,7 @@ import fer.progi.illidimusdigitus.trueblood.service.HealthDataService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -31,12 +32,14 @@ public class HealthDataController {
     private BloodService bloodService;
 
     @GetMapping("/healthData")
+    @Secured({ "ROLE_ADMIN", "ROLE_DJELATNIK" })
     public List<HealthData> getHealthData() {
         return healthDataService.getAllHealthData();
     }
 
     @CrossOrigin("*")
-   @PostMapping("/healthDataAnswered")
+    @PostMapping("/healthDataAnswered")
+    @Secured("ROLE_DJELATNIK")
     public ResponseEntity answerHealthData(@RequestBody HealthAnswersDTO healthAnswers,@RequestHeader String authorization) {
 
        authorization = authorization.substring(6);

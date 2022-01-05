@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class ConsumptionController {
 	
 	@CrossOrigin(origins = "*")
     @PostMapping("/recordChange")
+    @Secured("ROLE_DJELATNIK")
     public ResponseEntity<Consumption> consumeBlood(@RequestBody ConsumptionDTO dto) {
 
         BloodType type = switch(dto.getBloodType()) {

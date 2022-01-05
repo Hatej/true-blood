@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class DonationController {
 	 
 	 @CrossOrigin(origins = "*")
 	 @RequestMapping(value = "/donations",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	 @Secured("ROLE_DONOR")
      public List<DonationDTO> getDonations(@RequestHeader String username) {
         User usr = userService.findByUsername(username).get();
         
@@ -59,6 +61,7 @@ public class DonationController {
 	 
 	@CrossOrigin(origins = "*")
     @PostMapping("/generatePDF")
+	@Secured("ROLE_DONOR")
     public ResponseEntity<String> generatePDF(@RequestHeader Long id) {
         Donation donation = donationService.findById(id).get();
         User usr = userService.findByUsername(donation.getDonor().getUsername()).get();

@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -127,6 +130,7 @@ public class UserController {
     
     @CrossOrigin(origins = "*")
     @PostMapping("/addDjelatnik")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<User> createDjelatnik(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
 
         Role userRole = roleService.findByName(RoleName.DJELATNIK).get();
@@ -245,6 +249,11 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @PostMapping("/editUserInfo")
     public ResponseEntity<String> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        String currUsername = context.getAuthentication().getName();
+        if (!currUsername.equals(username)) {
+            return ResponseEntity.badRequest().build();
+        }
         if (userService.updateUserInfo(username, newUserInfo)) {
             return ResponseEntity.ok("User updated!");
         }
@@ -254,6 +263,11 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/getMessages",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MessageDTO> getMess(@RequestHeader String username) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        String currUsername = context.getAuthentication().getName();
+        if (!currUsername.equals(username)) {
+            return ResponseEntity.badRequest().build();
+        }
    	
        User usr = userService.findByUsername(username).get();
        MessageDTO messages = new MessageDTO();
