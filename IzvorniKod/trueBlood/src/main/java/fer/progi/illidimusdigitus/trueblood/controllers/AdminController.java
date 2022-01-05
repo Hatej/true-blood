@@ -112,47 +112,39 @@ public class AdminController {
 
     @CrossOrigin("*")
     @DeleteMapping("/deactivateEmployee")
-    public ResponseEntity deleteEmployee(@RequestBody String donorid) {
+    public ResponseEntity deleteEmployee(@RequestBody String employeeid) {
+       employeeid = employeeid.substring(1, employeeid.length - 1);
+       Optional<User> employeeoptional = userService.findByUsername(employeeid);
 
-       Optional<User> donoroptional = userService.findByUsername(donorid);
+       if(employeeoptional.isEmpty())
+            return ResponseEntity.badRequest().build();
 
-       if(donoroptional.isEmpty())
-            return  ResponseEntity.badRequest().build();
+       User employee = employeeoptional.get();
 
-       User donor = donoroptional.get();
-
-       if(!donor.getRole().getName().toString().equals("DJELATNIK"))
+       if(!employee.getRole().getName().toString().equals("DJELATNIK"))
            return ResponseEntity.badRequest().build();
 
-
-        userService.deleteByUsername(donor.getUsername());
-
-        return  ResponseEntity.ok().build();
+       userService.deleteByUsername(employee.getUsername());
+       return ResponseEntity.ok().build();
     }
 
     @CrossOrigin("*")
     @DeleteMapping("/deactivateDonor")
     public ResponseEntity deleteDonor(@RequestBody String donorid) {
-
         String[] donoridpodaci = donorid.split("\"");
-
         donorid = donoridpodaci[3];
-
-
         Optional<User> donoroptional = userService.findByUsername(donorid);
 
         if(donoroptional.isEmpty())
-            return  ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
 
         User donor = donoroptional.get();
 
         if(!donor.getRole().getName().toString().equals("DONOR"))
             return ResponseEntity.badRequest().build();
 
-
         userService.deleteByUsername(donor.getUsername());
-
-        return  ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
     
     

@@ -154,13 +154,14 @@ public class User {
     
     
     public User(String username,String password, String name, String surname,
-            String oib, Role role, String email,boolean male,  String workplace, String mobilePrivate, String mobileBusiness, Date birthdate) {
+            String oib, Role role, Blood bloodType, String email,boolean male,  String workplace, String mobilePrivate, String mobileBusiness, Date birthdate) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.oib = oib;
 		this.role = role;
+		this.bloodType = bloodType;
 		this.email = email;
 		this.gender = male;
 		this.workplace = workplace;

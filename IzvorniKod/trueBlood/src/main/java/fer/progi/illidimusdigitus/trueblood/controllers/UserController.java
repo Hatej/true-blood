@@ -95,7 +95,7 @@ public class UserController {
                 dto.getBirthdate(),
                 userRole,
                 userBloodType
-                );
+        );
 
         userService.createUser(newUser);
         userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
@@ -131,6 +131,19 @@ public class UserController {
 
         Role userRole = roleService.findByName(RoleName.DJELATNIK).get();
 
+        BloodType userBT = switch(dto.getBloodTypeName()) {
+            case "A+" -> BloodType.A_PLUS;
+            case "A-" -> BloodType.A_MINUS;
+            case "B+" -> BloodType.B_PLUS;
+            case "B-" -> BloodType.B_MINUS;
+            case "0+" -> BloodType.ZERO_PLUS;
+            case "0-" -> BloodType.ZERO_MINUS;
+            case "AB+" -> BloodType.AB_PLUS;
+            case "AB-" -> BloodType.AB_MINUS;
+            default -> BloodType.A_PLUS;
+        };
+        Blood userBloodType = bloodService.findByName(userBT).get();
+
         String nPass = alphaNumericString(8);
         System.out.println(nPass);
 
@@ -141,13 +154,14 @@ public class UserController {
                 dto.getSurname(),
                 dto.getOib(),
                 userRole,
+                userBloodType,
                 dto.getEmail(), 
                 dto.isGenderMale(),
                 dto.getWorkplace(),
                 dto.getMobilePrivate(),
                 dto.getMobileBusiness(),
                 dto.getBirthdate()
-                );
+        );
 
         userService.createUser(newUser);
        
