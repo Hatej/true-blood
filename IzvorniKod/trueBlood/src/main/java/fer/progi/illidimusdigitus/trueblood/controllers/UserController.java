@@ -160,7 +160,9 @@ public class UserController {
                 dto.getWorkplace(),
                 dto.getMobilePrivate(),
                 dto.getMobileBusiness(),
-                dto.getBirthdate()
+                dto.getBirthdate(),
+                dto.getAddress(),
+                dto.getBirthplace()
         );
 
         userService.createUser(newUser);

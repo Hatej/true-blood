@@ -113,7 +113,8 @@ public class AdminController {
     @CrossOrigin("*")
     @DeleteMapping("/deactivateEmployee")
     public ResponseEntity deleteEmployee(@RequestBody String employeeid) {
-       employeeid = employeeid.substring(1, employeeid.length - 1);
+       String[] employeeidpodaci = employeeid.split("\"");
+       employeeid = employeeidpodaci[3];
        Optional<User> employeeoptional = userService.findByUsername(employeeid);
 
        if(employeeoptional.isEmpty())
