@@ -9,7 +9,7 @@ function EmployeeData(props) {
 
     //props.mode može biti "EMPLOYEE_ACCESSING_DATA" ili "ADMIN_ACCESSING_DATA" ili "ADMIN_ADDING_EMPLOYEE" //iako to ovdje možda ne treba jer ne postoje podaci djelatnika koja admin može mijenjati, a djelatnik ne
     //props.username
-    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"",  residenceAdress:"f", privatePhoneNumber:"", workPhoneNumber:"", email:""});
+    const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"",  residenceAdress:"", privatePhoneNumber:"", workPhoneNumber:"", email:""});
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
     const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
@@ -251,7 +251,6 @@ function EmployeeData(props) {
                         />
                     </Form.Group>
                 </Row>
-                
                 <Row className="mb-3">
                     <Form.Group as={Col} md="3" className="me-5">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
@@ -267,6 +266,17 @@ function EmployeeData(props) {
                             Poništi izmjene
                         </Button>
                     </Form.Group>
+                    {(() => {
+                        if(props.mode === "ADMIN_ACCESSING_DATA"){
+                            return (
+                                <Form.Group as={Col} md="4">
+                                    <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
+                                        Vrati se nazad
+                                    </Button>
+                                </Form.Group>
+                            );
+                        }
+                    })()}
                 </Row>
             </Form>
         </div>

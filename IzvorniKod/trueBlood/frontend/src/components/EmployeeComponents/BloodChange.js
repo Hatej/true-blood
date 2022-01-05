@@ -179,6 +179,8 @@ function BloodChange(props) {
                 </div>
                 <div className="col">
                     <p>Krv: {bloodName(bloodChange.name)}</p>
+                    <p>Gornja granica: {bloodChange.upperbound}</p>
+                    <p>Donja granica: {bloodChange.lowerbound}</p>
                     <p>Trenutna zaliha: {bloodChange.supply}</p>
                     <p>Nakon slanja: {subtract(bloodChange.supply, bloodConsumption.quantity)}</p>
                 </div>

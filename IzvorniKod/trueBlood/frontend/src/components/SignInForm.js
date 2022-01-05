@@ -42,13 +42,23 @@ function SignInForm(props) {
             body: JSON.stringify(data)
         };
         setError("");
-        return fetch(SPRING_URL.concat('/user/add'), options)
+        let endPoint = SPRING_URL.concat('/user');
+        if(props.mode === "ADDING_EMPLOYEE"){
+            endPoint = endPoint.concat('/addDjelatnik');
+        } else {
+            endPoint = endPoint.concat('/add');
+        }
+        return fetch(endPoint, options)
             .then(response => {
                 if (response.ok) {
                     (() => {
-                        if(props.mode === "EMPLOYEE_ADDING_DONOR"){
+                        if(props.mode === "ADDING_DONOR"){
                             setError("Donor dodan!");
-                        } else {
+                            props.setView("NORMAL");
+                        } else if(props.mode === "ADDING_EMPLOYEE") {
+                            setError("Djelatnik dodan!");
+                            props.setView("NORMAL");
+                        }    else {
                             history.push('/home');
                         }
                     })()
@@ -241,7 +251,7 @@ function SignInForm(props) {
                         <div>{error}</div>
                     </Form.Group>
                     {(() => {
-                        if(props.mode === "EMPLOYEE_ADDING_DONOR"){
+                        if(props.mode === "ADDING_DONOR" || props.mode === "ADDING_EMPLOYEE"){
                             return (
                                 <Form.Group as={Col} md="4">
                                     <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>

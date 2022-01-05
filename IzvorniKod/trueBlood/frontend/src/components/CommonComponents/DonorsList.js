@@ -59,7 +59,7 @@ function DonorsList(props) {
             ).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    console.log("User deleated!")
+                    console.log("Donor izbrisan!")
                     getDonorsData();
                 }
                 if (res.status === 400) {
@@ -139,7 +139,7 @@ function DonorsList(props) {
                     case ADDING:
                         return(
                             <div>  
-                                 <SignInForm mode="EMPLOYEE_ADDING_DONOR" setView={setViewTo}/>
+                                 <SignInForm mode="ADDING_DONOR" setView={setViewTo}/>
                             </div>
                         )
                     case MAKING_DONATION:

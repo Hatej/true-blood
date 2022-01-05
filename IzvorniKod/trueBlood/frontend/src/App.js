@@ -13,7 +13,6 @@ import Confirm from './components/Confirm';
 
 function App() {
 
-  const [language, setLanguage] = React.useState("english")
   const [log, setLog] = React.useState("");
 
   if(AuthHandler.isUserLoggedIn()) {
@@ -24,30 +23,22 @@ function App() {
     setLog(isLoggedIn);
   }
 
-  function languageSet(language) {
-    setLanguage(language)
-  }
-
- 
   return (
     <BrowserRouter>
-      <Header log={log} logSet={logSet} language={language}/>
+      <Header log={log} logSet={logSet}/>
         <div className="App">
             <Switch>
               <Route exact path='/login'>
-                <LoginForm logSet={logSet} language={language}/>
+                <LoginForm logSet={logSet}/>
               </Route>
               <Route exact path='/signin'>
-                <SignInForm language={language}/>
+                <SignInForm/>
               </Route>
               <Route exact path='/'>
-                <Home language={language}/>
+                <Home/>
               </Route>
               <Route exact path='/home'>
-                <Home language={language}/>
-              </Route>
-              <Route exact path='/language'>
-                <ChooseLanguageForm language={language} languageSet={languageSet}/>
+                <Home/>
               </Route>
               <Route exact path='/admin'>
                 <Admin/>

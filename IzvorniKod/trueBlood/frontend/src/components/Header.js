@@ -45,7 +45,7 @@ function Header(props) {
                         <Nav.Link href={roleLink} hidden={!isLoggedIn}>{roleText}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/signin" hidden={isLoggedIn}>Registriraj</Nav.Link>
+                        <Nav.Link href="/signin" hidden={isLoggedIn}>Registriraj se</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="/login" hidden={isLoggedIn}>Prijavi se</Nav.Link>

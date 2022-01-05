@@ -13,7 +13,9 @@ function LoginForm(props) {
 
     function onSubmit(e) {
         e.preventDefault();
-        setError("")
+        setError("");
+        AuthHandler.logout();
+        props.logSet(false);
         AuthHandler
             .executeBasicAuthenticationService(loginForm.username, loginForm.password)
             .then((res) => {

@@ -145,7 +145,7 @@ function Limits(props) {
                 </Row>
                 <Row>
                     <Form.Label>Nove granice:</Form.Label>
-                    <Form.Group as={Col} md="6">
+                    <Form.Group as={Col} md="6" className="mb-1">
                         <Form.Control
                             type="number"
                             min={bloodBounds.lowerbound}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {Table} from 'react-bootstrap';
 import SignInForm from '../SignInForm';
 import { SPRING_URL } from '../Constants';
@@ -9,11 +10,12 @@ function EmployeesList(props) {
     const [employeesList, setEmployeesList] = useState([]);
 
     async function getEmployeesData() {
-        
+        let data = await axios.get(SPRING_URL.concat('/employees')).then(res => res.data);
+        setEmployeesList(data);
     }
 
     useEffect(() => {
-        
+        getEmployeesData();
     }, []);
 
     const NORMAL = "NORMAL", DETAILS = "DETAILS", ADDING = "ADDING"
@@ -44,7 +46,20 @@ function EmployeesList(props) {
 
     function deleteEmployee(id){
         console.log("Brisem " + id);
-        
+        const data = {
+            employeeid: id
+        };
+        axios.delete(SPRING_URL.concat('/deactivateEmployee'), {data : data}
+            ).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    console.log("Djelatnik izbrisan!")
+                    getEmployeesData();
+                }
+                if (res.status === 400) {
+                    console.log("Error!");
+                }
+            });
     }
 
     return(
@@ -73,9 +88,7 @@ function EmployeesList(props) {
                                                 <tr key={employee.username} hidden={!(employee.name.includes(filter) || employee.surname.includes(filter))}>
                                                     <td>{employee.name}</td>
                                                     <td>{employee.surname}</td>
-        
                                                     <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, employee.username)}>Detalji</button></td>
-                                                   
                                                     <td><button className="btn btn-danger" onClick={() => deleteEmployee(employee.username)}>Izbriši zaposlenika</button></td>
                                                 </tr>
                                             )}
@@ -88,17 +101,14 @@ function EmployeesList(props) {
                         return(
                             <div>
                                 <EmployeeData mode="ADMIN_ACCESSING_DATA" username={editedEmployee.username} setView={setViewTo}/>
-                                <td><button className="btn btn-outline-danger" onClick={() => setViewTo(NORMAL)}>Vrati se nazad</button></td>
                             </div>
                         )
                     case ADDING:
                         return(
                             <div>  
-                                <EmployeeData mode="ADMIN_ADDING_EMPLOYEE" username={editedEmployee.username} setView={setViewTo}/>
-                                <td><button className="btn btn-outline-danger" onClick={() => setViewTo(NORMAL)}>Vrati se nazad</button></td>
+                                 <SignInForm mode="ADDING_EMPLOYEE" setView={setViewTo}/>
                             </div>
                         )
-        
                     default:
                         break;
                 }
