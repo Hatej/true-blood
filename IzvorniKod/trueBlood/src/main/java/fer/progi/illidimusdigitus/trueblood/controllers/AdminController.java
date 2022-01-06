@@ -52,7 +52,6 @@ public class AdminController {
         String username = authentication.getName();
         List<?> authhshss = authentication.getAuthorities().stream().toList();
         Object principal = authentication.getPrincipal();
-        System.out.println(authhshss.get(0));
 
        return allUsers.stream()
                .filter((e) -> e.getRole().getName().toString().equals("DONOR"))

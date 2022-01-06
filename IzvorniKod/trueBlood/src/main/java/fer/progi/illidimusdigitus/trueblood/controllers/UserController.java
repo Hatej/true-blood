@@ -227,7 +227,9 @@ public class UserController {
     public ResponseEntity<CreateUserDTO> getUserInfo(@RequestHeader String username) {
         SecurityContext context = SecurityContextHolder.getContext();
         String currUsername = context.getAuthentication().getName();
-        if (!currUsername.equals(username)) {
+        List<?> authhshss = context.getAuthentication().getAuthorities().stream().toList();
+
+        if (!currUsername.equals(username) && authhshss.get(0) == "DONOR") {
             return ResponseEntity.badRequest().build();
         }
 
