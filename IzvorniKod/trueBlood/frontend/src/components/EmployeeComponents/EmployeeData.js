@@ -89,13 +89,13 @@ function EmployeeData(props) {
         }).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    setError("Promijene spremljene!");
                     getEmployeeData();
                     setOldEmployeeDataForm({ ...employeeDataForm });
                     setEditingMode(false);
+                    alert("Promijene spremljene!");
                 }
                 if (res.status === 400) {
-                    setError("Došlo je do greške!");
+                    alert("Došlo je do greške!");
                 }
             });
     
@@ -251,17 +251,16 @@ function EmployeeData(props) {
                         />
                     </Form.Group>
                 </Row>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="3" className="me-5">
+                <Row className="mb-2">
+                    <Form.Group as={Col} md="4" className="me-5 mb-1">
                         <Button hidden={!editingMode} className="btn-danger" type="submit">
                             Spremi promjene
                         </Button>
                         <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
-                            Edit
+                            Promijeni osobne podatke
                         </Button>
-                        <span>{error}</span>
                     </Form.Group>
-                    <Form.Group as={Col} md="2">
+                    <Form.Group as={Col} md="3" className="mb-1">
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
                             Poništi izmjene
                         </Button>
@@ -269,7 +268,7 @@ function EmployeeData(props) {
                     {(() => {
                         if(props.mode === "ADMIN_ACCESSING_DATA"){
                             return (
-                                <Form.Group as={Col} md="4">
+                                <Form.Group as={Col} md="3">
                                     <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
                                         Vrati se nazad
                                     </Button>

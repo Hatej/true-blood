@@ -229,7 +229,7 @@ public class UserController {
         String currUsername = context.getAuthentication().getName();
         List<?> authhshss = context.getAuthentication().getAuthorities().stream().toList();
 
-        if (!currUsername.equals(username) && authhshss.get(0) == "DONOR") {
+        if (!currUsername.equals(username) && authhshss.get(0).equals("DONOR")) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -259,7 +259,9 @@ public class UserController {
     public ResponseEntity<String> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
         SecurityContext context = SecurityContextHolder.getContext();
         String currUsername = context.getAuthentication().getName();
-        if (!currUsername.equals(username)) {
+        List<?> authhshss = context.getAuthentication().getAuthorities().stream().toList();
+
+        if (!currUsername.equals(username) && authhshss.get(0).equals("DONOR")) {
             return ResponseEntity.badRequest().build();
         }
         if (userService.updateUserInfo(username, newUserInfo)) {

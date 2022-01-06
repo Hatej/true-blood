@@ -57,7 +57,7 @@ function BloodChange(props) {
                 .then(res => {
                     console.log(res);
                     getBloodData();
-                    setError("Krv poslana!");
+                    alert("Krv poslana!");
                     setBloodConsumption(values => ({
                         ...values, 
                         quantity: 0
@@ -170,7 +170,7 @@ function BloodChange(props) {
                         <Row className="mb-3">
                             <Form.Group as={Col} md="6">
                                 <Button className="btn-danger" type="submit">
-                                    Evidentiraj promjenu
+                                    Smanji zalihu
                                 </Button>
                                 <div>{error}</div>
                             </Form.Group>

@@ -53,7 +53,7 @@ function EmployeesList(props) {
             ).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    console.log("Djelatnik izbrisan!")
+                    alert("Djelatnik izbrisan!");
                     getEmployeesData();
                 }
                 if (res.status === 400) {
@@ -72,7 +72,7 @@ function EmployeesList(props) {
                             <div className="container">
                                 <div>
                                     <input type="text" name="filter" onChange={filterFunction} placeholder="Pretraži..."/>
-                                    <button className="btn btn-danger ms-1" onClick={() => setViewTo(ADDING)}>Dodaj zaposlenika</button>
+                                    <button className="btn btn-danger ms-1" onClick={() => setViewTo(ADDING)}>Dodaj djelatnika</button>
                                 </div>
                                 <div>
                                     <Table hover>
@@ -89,7 +89,7 @@ function EmployeesList(props) {
                                                     <td>{employee.name}</td>
                                                     <td>{employee.surname}</td>
                                                     <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, employee.username)}>Detalji</button></td>
-                                                    <td><button className="btn btn-danger" onClick={() => deleteEmployee(employee.username)}>Izbriši zaposlenika</button></td>
+                                                    <td><button className="btn btn-danger" onClick={() => deleteEmployee(employee.username)}>Obriši djelatnika</button></td>
                                                 </tr>
                                             )}
                                         </tbody>

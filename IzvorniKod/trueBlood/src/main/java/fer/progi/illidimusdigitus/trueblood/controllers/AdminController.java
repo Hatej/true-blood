@@ -43,7 +43,7 @@ public class AdminController {
     //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
     @CrossOrigin("*")
     @GetMapping("/donorList")
-    @Secured("ROLE_ADMIN")
+    @Secured({ "ROLE_ADMIN", "ROLE_DJELATNIK" })
     public List<AdminListAllUserDTO> getDonorList() {
        List<User> allUsers =  userService.listAll();
 
