@@ -1,0 +1,152 @@
+package fer.progi.illidimusdigitus.trueblood;
+
+
+
+import java.util.Date;
+import java.util.Optional;
+
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import fer.progi.illidimusdigitus.trueblood.controllers.BloodController;
+import fer.progi.illidimusdigitus.trueblood.controllers.BloodDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.UserController;
+import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
+import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.User;
+import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
+import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
+import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
+import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
+import fer.progi.illidimusdigitus.trueblood.service.BloodService;
+import fer.progi.illidimusdigitus.trueblood.service.RoleService;
+
+@SpringBootTest
+public class UnitTests {
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	UserController userController;
+	@Autowired
+	RoleService roleService;
+	@Autowired
+	BloodService bloodService;
+	
+	@Autowired
+	BloodRepository bloodRepository;
+	@Autowired
+	BloodController bloodController;
+    
+	/*
+	 * Updating user surname, which is allowed in our application
+	 */
+	@Test
+	public void editUserProfileCorrectly() {
+		
+		User user = new User("MR78912",
+                "12345678",
+                "Marko",
+                "Radić",
+                true,
+                "Zagreb",
+                "12345678912",
+                "Radićeva 7",
+                "Radnička 8",
+                "markoradic@fer.hr",
+                "0987412589",
+                "0987412589",
+                new Date(),
+                /*new Role(RoleName.DONOR),
+                new Blood(Long.valueOf(10), BloodType.A_MINUS, 0, 0, 0)*/
+                roleService.findByName(RoleName.DONOR).get(),
+                bloodService.findByName(BloodType.A_MINUS).get());
+		
+        userRepository.save(user);
+        
+        String newSurname="Radićević";
+        UserInfoDTO userWithNewSurname = new UserInfoDTO(user.getName(),newSurname,
+                user.getBirthplace(), user.getAddress(), user.getWorkplace(),
+                user.getMobilePrivate(), user.getMobileBusiness(), user.getBirthdate(), false);
+
+        String expected = newSurname;
+        
+        userController.getEditUserInfo(userWithNewSurname, user.getUsername());
+        String result = userRepository.findByUsername(user.getUsername()).get().getSurname();
+        Assertions.assertEquals(expected,result);
+	}
+	
+	/*
+	 * User field rejected can not be updated using userController.getEditUserInfo()
+	 */
+	@Test
+	public void editUserProfileIncorrectly() {
+		User user = new User("MR78912",
+                "12345678",
+                "Marko",
+                "Radić",
+                true,
+                "Zagreb",
+                "12345678912",
+                "Radićeva 7",
+                "Radnička 8",
+                "markoradic@fer.hr",
+                "0987412589",
+                "0987412589",
+                new Date(),
+                roleService.findByName(RoleName.DONOR).get(),
+                bloodService.findByName(BloodType.A_MINUS).get());
+		
+        userRepository.save(user);
+        boolean newRejected = !user.isRejected();
+        UserInfoDTO userWithNewRejected = new UserInfoDTO(user.getName(), user.getSurname(),
+                user.getBirthplace(), user.getAddress(), user.getWorkplace(),
+                user.getMobilePrivate(), user.getMobileBusiness(), user.getBirthdate(), newRejected);
+
+        String expected = "not updated";
+        String result = userController.getEditUserInfo(userWithNewRejected, user.getUsername()).getBody();
+        Assertions.assertEquals(expected,result);
+	}
+	
+	/*
+	 * Updating blood lower bound when it is positive integer
+	 */
+	@Test
+	public void changeLowerboundCorrectly() {
+			Blood blood = bloodService.findByName(BloodType.A_PLUS).get();
+		 	int newLowerbound = 100;
+		 	BloodDTO newBounds = new BloodDTO("A+", blood.getUpperbound(), newLowerbound);
+
+	        int expected = newLowerbound;
+	       
+	        bloodController.changeBounds(newBounds);
+	        int result = bloodService.findByName(BloodType.A_PLUS).get().getLowerbound();
+	        Assertions.assertEquals(expected,result);
+	}
+	
+	/*
+	 * Updating blood lower bound when it is negative integer, not allowed operation
+	 */
+	@Test
+	public void changeBoundsIncorrectly() {
+			Blood blood = bloodService.findByName(BloodType.A_PLUS).get();
+		 	int newLowerbound = -100;
+		 	BloodDTO newBounds = new BloodDTO("A+", blood.getUpperbound(), newLowerbound);
+	
+	        String expected = "not updated";
+	       
+	        String result = bloodController.changeBounds(newBounds).getBody();
+	        Assertions.assertEquals(expected,result);
+	}
+	
+}	
