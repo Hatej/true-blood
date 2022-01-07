@@ -59,7 +59,7 @@ function DonorsList(props) {
             ).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    console.log("Donor izbrisan!")
+                    alert("Donor izbrisan!");
                     getDonorsData();
                 }
                 if (res.status === 400) {
@@ -122,7 +122,7 @@ function DonorsList(props) {
                                                     <td>{!donor.rejected ? "Može" : "Ne može"}</td>
                                                     <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
                                                     <td><button className="btn btn-outline-danger" hidden={donor.rejected === true || props.mode === "ADMIN"} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
-                                                    <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)}>Izbriši donor-a</button></td>
+                                                    <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)} hidden={props.mode!=="ADMIN"}>Obriši donora</button></td>
                                                 </tr>
                                             )}
                                         </tbody>

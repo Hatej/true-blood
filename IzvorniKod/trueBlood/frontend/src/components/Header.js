@@ -17,7 +17,7 @@ function Header(props) {
         roleText = "Administrator";
     } else if (role === "DJELATNIK") {
         roleLink =  "/employee";
-        roleText = "Employee";
+        roleText = "Djelatnik";
     } else if (role === "DONOR") {
         roleLink = "/donor";
         roleText = "Donor";

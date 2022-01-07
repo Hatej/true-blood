@@ -26,6 +26,7 @@ function Confirm(props) {
                 .get(SPRING_URL.concat('/user/add/confirm'),
                     { headers: { code: code, password: passwordForm.password } })
                 .then(() => {
+                    alert("Lozinka postavljena!");
                     history.push('/login');
                 }).catch(() => {
                 setError("Login failed!");

@@ -1,66 +1,34 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {SPRING_URL} from '../Constants';
+import AuthHandler from '../AuthHandler';
+import {ListGroup, ListGroupItem} from 'react-bootstrap';
 
 
 function Messages(props) {
     
-    const [listOfMessages, setlistOfMessages] = React.useState([
-        {date: "777", sender: "Zagreb", messageText: "jdsfsaofjsadoipgjsiodfgjidfsojgjdsoipfgjdsfopgjdsfoigjdsopifgjdsoipfgjiodsfgjoidsfjgdsfigjidsfpg", messageID: 1, opened: false}, 
-        {date: "123", sender: "tihomir", messageText: "dfgdofsgdsfgdsfgkdspfgkpodsfkgdskfgodskfgodskfgpodskfgposkdfgpokdsfpgodsopfgkdosfkgdposfg", messageID: 2, opened: false}, 
-        {date: "33", sender: "ja", messageText: "dfgkdfsogdfkosgdfsgdsfgkdspfgkopdsfkgpdsfkgpodsfkgpodfskgopdfskgopdsfkgodskfgopdsfkgpodfksogdfs", messageID: 3, opened: false}, 
-    ]);
+    const [messages, setMessages] = useState({months: "false", belowLower: "false"});
 
-    const [activeMessage, setActiveMessage] = React.useState()
+    async function getMessages(){
+        let data = await axios.get(SPRING_URL.concat('/user/getMessages'), {
+                                    headers: {
+                                        username: AuthHandler.getLoggedInUserName()
+                                    }
+                                }).then(res => res.data);
+        console.log(data);
+        setMessages(data);
+    }
 
-    function openMessage(id) {
-        let index = listOfMessages.findIndex((element)=>element.messageID === id)
-        let message = listOfMessages[index]
-        console.log(id)
-        setActiveMessage(message)
-        if (message.opened === false) {
-            message.opened = true
-            //treba se još poslati backendu da u bazi poruci s ovim IDem namjesti opened = true
-        }
-    } 
-    
+    useEffect(() => {
+        getMessages();
+    }, []);
 
     return(
-        <div>
-            <div>
-                <Table>
-                
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Pošiljatelj</th>
-                        </tr>
-                    </thead>
-                    
-
-
-                    {listOfMessages.map(message => 
-
-                            <tr onClick={() => openMessage(message.messageID)}>
-                                <td>{message.date}</td>
-                                <td>{message.sender}</td>
-                                <td>{message.opened ? "Opened" : "Unopened" }</td>
-                            </tr>
-                    )}
-
-                </Table>
-            </div>
-            <br/>
-            {activeMessage === undefined ? "Nije odbranan niti jedna poruka" : ""}
-            <div hidden={activeMessage === undefined}>
-                <p><b>Sender:</b>{activeMessage === undefined ? "" : activeMessage.sender} <b>Date:</b>{activeMessage === undefined ? "" : activeMessage.date}</p>
-                <hr/>
-                <div>
-                    {activeMessage === undefined ? "" : activeMessage.messageText}
-                </div>
-            </div>
-        </div> 
-       
-       
+        <ListGroup>
+            <ListGroupItem hidden={!messages.belowLower}>Razina vaše krvne vrste je pala ispod donje granice! Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={!messages.months}>Još niste donirali ili je prošlo tri mjeseca od uspješne donacije. Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={messages.belowLower || messages.months}>Nemate poruka!</ListGroupItem>
+        </ListGroup>    
     )
 }
 

@@ -71,14 +71,10 @@ function DonorData(props) {
         }
     }, []);
 
-
-    const [error, setError] = React.useState("");
     const [editingMode, setEditingMode] = React.useState(false)
-    const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
-        setError("")
 
         const data = {
             name: donorDataForm.givenName,
@@ -103,13 +99,13 @@ function DonorData(props) {
         }).then(res => {
                 console.log(res);
                 if (res.status === 200) {
-                    setError("Promijene spremljene!");
+                    alert(res.data);
                     getDonorData();
                     setOldDonorDataForm({ ...donorDataForm });
                     setEditingMode(false);
                 }
                 if (res.status === 400) {
-                    setError("Došlo je do greške!");
+                    alert("Došlo je do greške!");
                 }
             });
     }
@@ -342,17 +338,16 @@ function DonorData(props) {
                         />
                     </Form.Group>
                 </Row>
-                <Row className="mb-4">
+                <Row className="mb-2">
                     <Form.Group as={Col} md="3" className="me-5">
-                        <Button hidden={!editingMode} className="btn-danger" type="submit">
+                        <Button hidden={!editingMode} className="btn-danger mb-1" type="submit">
                             Spremi promjene
                         </Button>
                         <Button hidden={editingMode} className="btn-danger" onClick={enterEditingMode}>
-                            Edit
+                            Promijeni osobne podatke
                         </Button>
-                        <span>{error}</span>
                     </Form.Group>
-                    <Form.Group as={Col} md="2">
+                    <Form.Group as={Col} md="3">
                         <Button hidden={!editingMode} className="btn-danger" onClick={returnToOld}>
                             Poništi izmjene
                         </Button>
@@ -360,7 +355,7 @@ function DonorData(props) {
                     {(() => {
                         if(props.mode === "EMPLOYEE_ACCESSING_DATA" || props.mode === "EMPLOYEE_ADDING_DONOR"){
                             return (
-                                <Form.Group as={Col} md="4">
+                                <Form.Group as={Col} md="3">
                                     <Button className="btn-danger" onClick={() => props.setView("NORMAL")}>
                                         Vrati se nazad
                                     </Button>

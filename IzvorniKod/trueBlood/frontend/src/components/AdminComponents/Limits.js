@@ -107,7 +107,7 @@ function Limits(props) {
         return axios.post(SPRING_URL.concat('/bloodGroups'), newBloodBounds)
                 .then(res => {
                     console.log(res);
-                    setError("Granice promijenjene!");
+                    alert("Granice promijenjene!");
                     getBloodData();
                 })
                 .catch(err => {

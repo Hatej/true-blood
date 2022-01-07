@@ -14,13 +14,13 @@ function Admin(props) {
                     <Col className="col-md-2 mb-1">
                         <Nav variant="pills" className="flex-column nav-justified">
                             <Nav.Item>
-                                <Nav.Link eventKey="first">Djelatnici</Nav.Link>
+                                <Nav.Link eventKey="first">Popis djelatnika</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="second">Donori</Nav.Link>
+                                <Nav.Link eventKey="second">Popis donora</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="third">Granice</Nav.Link>
+                                <Nav.Link eventKey="third">Definiraj granice</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

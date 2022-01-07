@@ -14,13 +14,13 @@ function Donor(props) {
                     <Col className="col-md-2 mb-1">
                         <Nav variant="pills" className="flex-column nav-justified">
                             <Nav.Item>
-                                <Nav.Link eventKey="first">Moji podaci</Nav.Link>
+                                <Nav.Link eventKey="first">Osobni podaci</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="second">Povijest donacija</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="third">Poruke</Nav.Link>
+                                <Nav.Link eventKey="third">Pretinac</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>

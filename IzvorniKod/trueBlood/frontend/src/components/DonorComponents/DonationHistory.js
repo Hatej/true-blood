@@ -23,7 +23,7 @@ function DonationHistory(props) {
             id: id
         };
         axios.post(SPRING_URL.concat('/generatePDF'),{}, {headers: header})
-                .then(res => console.log(res))
+                .then(res => alert(res.data))
                 .catch(err => console.log(err));
     }
 

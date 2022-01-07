@@ -85,10 +85,10 @@ function BloodData(props){
                                     {bloodName(blood.name)}
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                    <p>Name: {bloodName(blood.name)}</p>
-                                    <p>Amount: {blood.supply}</p>
-                                    <p>Upper bound: {blood.upperbound}</p>
-                                    <p>Lower bound: {blood.lowerbound}</p>
+                                    <p>Vrsta: {bloodName(blood.name)}</p>
+                                    <p>Zaliha: {blood.supply}</p>
+                                    <p>Gornja granica: {blood.upperbound}</p>
+                                    <p>Donja granica: {blood.lowerbound}</p>
                                 </Accordion.Body>
                             </Accordion.Item>  
                             )

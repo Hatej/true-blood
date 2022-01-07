@@ -53,18 +53,19 @@ function SignInForm(props) {
                 if (response.ok) {
                     (() => {
                         if(props.mode === "ADDING_DONOR"){
-                            setError("Donor dodan!");
                             props.setView("NORMAL");
+                            alert("Donor dodan!");
                         } else if(props.mode === "ADDING_EMPLOYEE") {
-                            setError("Djelatnik dodan!");
                             props.setView("NORMAL");
+                            alert("Djelatnik dodan!");
                         }    else {
                             history.push('/home');
                         }
                     })()
                 }
                 if (response.status === 400) {
-                    setError("Error on signup!");
+                    console.log(response);
+                    alert("Greška u stvaranja računa!")
                 }
             });
     }
@@ -86,8 +87,8 @@ function SignInForm(props) {
 
     return (
 
-        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
-            <Form className="mt-3 mb-3" onSubmit={onSubmit}>
+        <div className="container col-md-6 border border-danger rounded">
+            <Form className="mt-2 mb-2" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">
                         <Form.Label>First name</Form.Label>
@@ -245,7 +246,7 @@ function SignInForm(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Button className="btn-danger" type="submit">
+                        <Button className="btn-danger mb-1" type="submit">
                             Registriraj
                         </Button>
                         <div>{error}</div>

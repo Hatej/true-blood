@@ -43,7 +43,7 @@ public class AdminController {
     //TREBA SECURITY NAPRAVITI OVDJE I NA OSTALIM MJESTIMA
     @CrossOrigin("*")
     @GetMapping("/donorList")
-    @Secured("ROLE_ADMIN")
+    @Secured({ "ROLE_ADMIN", "ROLE_DJELATNIK" })
     public List<AdminListAllUserDTO> getDonorList() {
        List<User> allUsers =  userService.listAll();
 
@@ -52,7 +52,6 @@ public class AdminController {
         String username = authentication.getName();
         List<?> authhshss = (authentication.getAuthorities().stream()).collect(Collectors.toList());
         Object principal = authentication.getPrincipal();
-        System.out.println(authhshss.get(0));
 
        return allUsers.stream()
                .filter((e) -> e.getRole().getName().toString().equals("DONOR"))
