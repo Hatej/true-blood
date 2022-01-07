@@ -174,7 +174,7 @@ public class User {
 		this.birthplace = birthplace;
         this.activation = oib.substring(1);
     }
-
+    
 	public String getUsername() {
 		return username;
 	}

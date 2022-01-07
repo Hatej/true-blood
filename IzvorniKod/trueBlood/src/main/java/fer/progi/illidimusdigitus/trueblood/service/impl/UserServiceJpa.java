@@ -136,7 +136,8 @@ public class UserServiceJpa implements UserService, UserDetailsService {
         }
 
         User user = userMaybe.get();
-
+        
+        if(user.isRejected() != userDTO.getRejected()) return false;
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setBirthplace(userDTO.getBirthplace());

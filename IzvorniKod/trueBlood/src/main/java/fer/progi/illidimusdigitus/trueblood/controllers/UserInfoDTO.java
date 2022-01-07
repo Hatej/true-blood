@@ -26,7 +26,20 @@ public class UserInfoDTO {
 
     public boolean rejected;
 
-    public boolean getRejected(){return rejected;}
+    public UserInfoDTO(String name, String surname, String birthplace, String address, String workplace,
+			String mobilePrivate, String mobileBusiness, Date birthdate, boolean rejected) {
+		this.name = name;
+		this.surname = surname;
+		this.birthplace = birthplace;
+		this.address = address;
+		this.workplace = workplace;
+		this.mobilePrivate = mobilePrivate;
+		this.mobileBusiness = mobileBusiness;
+		this.birthdate = birthdate;
+		this.rejected = rejected;
+	}
+
+	public boolean getRejected(){return rejected;}
 
     public void setRejected(boolean rejected) {
         this.rejected = rejected;

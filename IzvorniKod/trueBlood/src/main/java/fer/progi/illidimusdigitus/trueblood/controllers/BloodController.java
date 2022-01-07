@@ -31,7 +31,7 @@ public class BloodController {
     @CrossOrigin(origins = "*")
     @PostMapping("/bloodGroups")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<Blood> changeBounds(@RequestBody BloodDTO dto) {
+    public ResponseEntity<String> changeBounds(@RequestBody BloodDTO dto) {
 
         BloodType type = switch(dto.getName()) {
             case "A+" -> BloodType.A_PLUS;
@@ -46,7 +46,7 @@ public class BloodController {
         };
         bloodService.updateBounds(type, dto);
         
-
+        if(dto.getLowerbound() < 0) return ResponseEntity.ok("not updated");
         Blood blood = bloodService.findByName(type).get();
         
         if(blood.getSupply() < blood.getLowerbound()) {
@@ -55,7 +55,6 @@ public class BloodController {
         if(blood.getSupply() > blood.getUpperbound()) {
         	bloodService.sendNotifUpper(blood);
         }
-        
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("updated");
     }
 }

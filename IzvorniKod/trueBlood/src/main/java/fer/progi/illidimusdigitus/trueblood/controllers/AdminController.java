@@ -50,7 +50,7 @@ public class AdminController {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username = authentication.getName();
-        List<?> authhshss = authentication.getAuthorities().stream().toList();
+        List<?> authhshss = (authentication.getAuthorities().stream()).collect(Collectors.toList());
         Object principal = authentication.getPrincipal();
         System.out.println(authhshss.get(0));
 

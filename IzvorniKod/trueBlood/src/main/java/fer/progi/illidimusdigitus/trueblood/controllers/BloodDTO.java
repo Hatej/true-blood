@@ -18,7 +18,14 @@ public class BloodDTO {
         this.name = name;
     }
 
-    public int getUpperbound() {
+    public BloodDTO(String name, int upperbound, int lowerbound) {
+		super();
+		this.name = name;
+		this.upperbound = upperbound;
+		this.lowerbound = lowerbound;
+	}
+
+	public int getUpperbound() {
         return upperbound;
     }
 

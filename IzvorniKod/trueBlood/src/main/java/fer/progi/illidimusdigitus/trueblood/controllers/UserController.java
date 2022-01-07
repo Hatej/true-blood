@@ -260,10 +260,11 @@ public class UserController {
         if (!currUsername.equals(username)) {
             return ResponseEntity.badRequest().build();
         }
+    	
         if (userService.updateUserInfo(username, newUserInfo)) {
-            return ResponseEntity.ok("User updated!");
+            return ResponseEntity.ok("updated");
         }
-        return ResponseEntity.ok("Could not update user!");
+        return ResponseEntity.ok("not updated");
     }
     
     @CrossOrigin(origins = "*")
