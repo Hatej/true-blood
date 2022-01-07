@@ -87,8 +87,8 @@ function SignInForm(props) {
 
     return (
 
-        <div className="container col-md-6 col-md-offset-2 border border-danger rounded">
-            <Form className="mt-3 mb-3" onSubmit={onSubmit}>
+        <div className="container col-md-6 border border-danger rounded">
+            <Form className="mt-2 mb-2" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">
                         <Form.Label>First name</Form.Label>

@@ -11,7 +11,6 @@ function EmployeeData(props) {
     //props.username
     const [employeeDataForm, setEmployeeDataForm] = React.useState({givenName:"", familyName:"", OIB:"", dateOfBirth:"", birthPlace:"",  residenceAdress:"", privatePhoneNumber:"", workPhoneNumber:"", email:""});
     const [oldEmployeeDataForm, setOldEmployeeDataForm] = React.useState(); //za cuvanje stare forme, iz nekog razloga ne radi kada samo napisem let oldMydataForm;
-    const [error, setError] = React.useState("");
     const [editingMode, setEditingMode]= React.useState(false)
 
     let targetUsername;
@@ -65,7 +64,6 @@ function EmployeeData(props) {
 
     function onSubmit(e) {
         e.preventDefault();
-        setError("")
 
         const data = {
             name: employeeDataForm.givenName,

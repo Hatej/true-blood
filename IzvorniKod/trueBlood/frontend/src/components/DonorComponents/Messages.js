@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {SPRING_URL} from '../Constants';
 import AuthHandler from '../AuthHandler';
+import {ListGroup, ListGroupItem} from 'react-bootstrap';
 
 
 function Messages(props) {
@@ -23,11 +24,11 @@ function Messages(props) {
     }, []);
 
     return(
-        <div>
-            <p hidden={!messages.belowLower}>Razina vaše krvne vrste je pala ispod donje granice! Pozivamo vas na doniranje!</p>
-            <p hidden={!messages.months}>Još niste donirali ili je prošlo tri mjeseca od uspješne donacije. Pozivamo vas na doniranje!</p>
-            <p hidden={messages.belowLower || messages.months}>Nemate poruka!</p>
-        </div>    
+        <ListGroup>
+            <ListGroupItem hidden={!messages.belowLower}>Razina vaše krvne vrste je pala ispod donje granice! Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={!messages.months}>Još niste donirali ili je prošlo tri mjeseca od uspješne donacije. Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={messages.belowLower || messages.months}>Nemate poruka!</ListGroupItem>
+        </ListGroup>    
     )
 }
 

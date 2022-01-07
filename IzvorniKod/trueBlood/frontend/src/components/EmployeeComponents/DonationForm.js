@@ -58,7 +58,6 @@ function DonationForm(props) {
     });
 
     const [mjestoDarivanja, setMjestoDarivanja] = useState("");
-    const [donationResponse, setDonationResponse] = useState("");
     const [questionsForm, setQuestionsForm] = useState(() => {
         let temp = []; 
         for(let j= 0; j < questionsList.length; j++) {
@@ -91,7 +90,6 @@ function DonationForm(props) {
 
     function onSubmit(e) {
         e.preventDefault();
-        setDonationResponse("");
 
         let upitnikData = {
             1: questionsForm[0],
@@ -127,7 +125,8 @@ function DonationForm(props) {
                 console.log(res);
                 if (res.status === 200) {
                     console.log("Uspješna donacija.");
-                    setDonationResponse("Uspješna donacija!");
+                    alert("Donacija evidentirana");
+                    props.setView("NORMAL");
                 }
                 if (res.status === 400) {
                     console.log("There was an error!");  
@@ -231,9 +230,6 @@ function DonationForm(props) {
                                 Vrati se nazad
                             </Button>
                         </Form.Group>
-                        <div>
-                            {donationResponse}
-                        </div>
                     </Row>
                 </Form>
             </div>
