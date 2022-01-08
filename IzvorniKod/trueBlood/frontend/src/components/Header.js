@@ -14,13 +14,13 @@ function Header(props) {
     var roleLink, roleText;
     if (role === "ADMIN") {
         roleLink = "/admin";
-        roleText = "Administrator";
+        roleText = "Izbornik";
     } else if (role === "DJELATNIK") {
         roleLink =  "/employee";
-        roleText = "Djelatnik";
+        roleText = "Izbornik";
     } else if (role === "DONOR") {
         roleLink = "/donor";
-        roleText = "Donor";
+        roleText = "Izbornik";
     }
 
     const history = useHistory();
