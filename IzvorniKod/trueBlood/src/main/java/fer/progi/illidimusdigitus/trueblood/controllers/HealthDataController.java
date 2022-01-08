@@ -127,9 +127,10 @@ public class HealthDataController {
         }
        
        	if(success == true) {
-       		bloodService.incrementSupply(usr.getBloodType(), 5);
        		
-	       	Blood blood = bloodService.findByName(usr.getBloodType().getName()).get();
+       		bloodService.incrementSupply(donor.getBloodType(), 5);
+       		
+	       	Blood blood = bloodService.findByName(donor.getBloodType().getName()).get();
 	        
 	        if(blood.getSupply() > blood.getUpperbound()){
 	        	bloodService.sendNotifUpper(blood);

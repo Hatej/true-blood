@@ -105,8 +105,9 @@ public class BloodServiceJpa implements BloodService {
 	@Override
 	public void incrementSupply(Blood blood, int size) {
 		Optional<Blood> bloodSupply = findByName(blood.getName());
-
+		
         Blood currBlood = bloodSupply.get();
+        System.out.println(currBlood.getName());
         currBlood.setSupply(currBlood.getSupply() + size);
         bloodRepo.save(currBlood);
 		
