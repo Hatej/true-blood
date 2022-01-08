@@ -91,25 +91,25 @@ function SignInForm(props) {
             <Form className="mt-2 mb-2" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>First name</Form.Label>
+                        <Form.Label>Ime</Form.Label>
                         <Form.Control
                             required
                             type="text"
                             name="givenName"
                             value={signinForm.givenName}
                             onChange={onChange}
-                            placeholder="First name"
+                            placeholder="Ime"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Last name</Form.Label>
+                        <Form.Label>Prezime</Form.Label>
                         <Form.Control
                             required
                             type="text"
                             name="familyName"
                             value={signinForm.familyName}
                             onChange={onChange}
-                            placeholder="Last name"
+                            placeholder="Prezime"
                         />
                     </Form.Group>
                 </Row>
@@ -128,7 +128,7 @@ function SignInForm(props) {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Date of birth</Form.Label>
+                        <Form.Label>Datum rođenja</Form.Label>
                         <Form.Control
                             required
                             type="date"
@@ -140,43 +140,43 @@ function SignInForm(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Birth place</Form.Label>
+                        <Form.Label>Mjesto rođenja</Form.Label>
                         <Form.Control
                             required
                             type="text"
                             name="birthPlace"
                             value={signinForm.birthPlace}
                             onChange={onChange}
-                            placeholder="Birth place"
+                            placeholder="Mjesto rođenja"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Residence address</Form.Label>
+                        <Form.Label>Adresa prebivališta</Form.Label>
                         <Form.Control
                             required
                             type="text"
                             name="residenceAdress"
                             value={signinForm.residenceAdress}
                             onChange={onChange}
-                            placeholder="Residence adress"
+                            placeholder="Adresa prebivališta"
                         />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="12">
-                        <Form.Label>Place of employment</Form.Label>
+                        <Form.Label>Mjesto zaposlenja</Form.Label>
                         <Form.Control
                             type="text"
                             name="workplaceName"
                             value={signinForm.workplaceName}
                             onChange={onChange}
-                            placeholder="Place of employment"
+                            placeholder="Mjesto zaposlenja"
                         />
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Private phone number</Form.Label>
+                        <Form.Label>Privatni telefon</Form.Label>
                         <Form.Control
                             required
                             type="tel"
@@ -188,7 +188,7 @@ function SignInForm(props) {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Official phone number</Form.Label>
+                        <Form.Label>Poslovni telefon</Form.Label>
                         <Form.Control
                             type="tel"
                             pattern="[0-9]{10}"
@@ -201,7 +201,7 @@ function SignInForm(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="12">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>E-mail</Form.Label>
                         <Form.Control
                             required
                             type="email"
@@ -214,7 +214,7 @@ function SignInForm(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>spol</Form.Label>
+                        <Form.Label>Spol</Form.Label>
                         <Form.Select
                             name="gender"
                             onChange={onChange}
@@ -226,7 +226,7 @@ function SignInForm(props) {
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Blood type</Form.Label>
+                        <Form.Label>Krvna grupa</Form.Label>
                         <Form.Select
                             name="bloodTypeName"
                             onChange={onChange}

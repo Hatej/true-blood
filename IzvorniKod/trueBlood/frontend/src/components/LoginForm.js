@@ -51,7 +51,7 @@ function LoginForm(props) {
                         name="username"
                         value={loginForm.username}
                         onChange={onChange}
-                        placeholder="Username"  
+                        placeholder="Korisničko ime"  
                     />
                 </Form.Group>
                 <br/>
@@ -63,7 +63,7 @@ function LoginForm(props) {
                         name="password"
                         value={loginForm.password}
                         onChange={onChange}
-                        placeholder="Password"  
+                        placeholder="Lozinka"  
                     />
                 </Form.Group>
                 <Form.Check type="checkbox" label="Prikaži lozinku" onClick={() => togglePassword()}></Form.Check>

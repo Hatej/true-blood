@@ -138,25 +138,25 @@ function EmployeeData(props) {
             <Form className="mt-3 mb-3" onSubmit={onSubmit}>
                 <Row className="mb-2">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>First name</Form.Label>
+                        <Form.Label>Ime</Form.Label>
                         <Form.Control 
                             required
                             type="text"
                             name="givenName"
                             value={employeeDataForm.givenName}
                             onChange={onChange}
-                            placeholder="First name"  
+                            placeholder="Ime"  
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Last name</Form.Label>
+                        <Form.Label>Prezime</Form.Label>
                         <Form.Control 
                             required
                             type="text"
                             name="familyName"
                             value={employeeDataForm.familyName}
                             onChange={onChange}
-                            placeholder="Last name"  
+                            placeholder="Prezime"  
                         />
                     </Form.Group>
                 </Row>
@@ -176,7 +176,7 @@ function EmployeeData(props) {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Date of birth</Form.Label>
+                        <Form.Label>Datum rođenja</Form.Label>
                         <Form.Control 
                             required
                             type="date"
@@ -188,32 +188,32 @@ function EmployeeData(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Birth place</Form.Label>
+                        <Form.Label>Mjesto rođenja</Form.Label>
                         <Form.Control 
                             required
                             type="text"
                             name="birthPlace"
                             value={employeeDataForm.birthPlace}
                             onChange={onChange}  
-                            placeholder="Birth place"
+                            placeholder="Mjesto rođenja"
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Residence address</Form.Label>
+                        <Form.Label>Adresa prebivališta</Form.Label>
                         <Form.Control 
                             required
                             type="text"
                             name="residenceAdress"
                             value={employeeDataForm.residenceAdress}
                             onChange={onChange} 
-                            placeholder="Residence adress"
+                            placeholder="Adresa prebivališta"
                         />
                     </Form.Group>
                 </Row>
                 
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Private phone number</Form.Label>
+                        <Form.Label>Privatni telefon</Form.Label>
                         <Form.Control 
                             required
                             type="tel"
@@ -225,7 +225,7 @@ function EmployeeData(props) {
                         />
                     </Form.Group>
                     <Form.Group as={Col} md="6">
-                        <Form.Label>Official phone number</Form.Label>
+                        <Form.Label>Poslovni telefon</Form.Label>
                         <Form.Control 
                             type="tel"
                             pattern="[0-9]{10}"
@@ -238,14 +238,14 @@ function EmployeeData(props) {
                 </Row>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="12">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>E-mail</Form.Label>
                         <Form.Control 
                             readOnly={props.mode === "EMPLOYEE_ACCESSING_DATA"}
                             type="email"
                             name="email"
                             value={employeeDataForm.email}
                             onChange={onChange}  
-                            placeholder="email"
+                            placeholder="E-mail"
                         />
                     </Form.Group>
                 </Row>
