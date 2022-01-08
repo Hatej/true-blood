@@ -156,14 +156,14 @@ function BloodChange(props) {
                                 />
                             </Form.Group>
                             <Form.Group as={Col} md="6">
-                                <Form.Label>Lokacija</Form.Label>
+                                <Form.Label>Institucija</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
                                     name="location"
                                     value={bloodConsumption.location}
                                     onChange={onChange}
-                                    placeholder="Lokacija"
+                                    placeholder="Institucija"
                                 />
                             </Form.Group>
                         </Row>  

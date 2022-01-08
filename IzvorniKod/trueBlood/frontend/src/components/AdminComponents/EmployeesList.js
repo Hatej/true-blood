@@ -88,7 +88,7 @@ function EmployeesList(props) {
                                                 <tr key={employee.username} hidden={!(employee.name.includes(filter) || employee.surname.includes(filter))}>
                                                     <td>{employee.name}</td>
                                                     <td>{employee.surname}</td>
-                                                    <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, employee.username)}>Detalji</button></td>
+                                                    
                                                     <td><button className="btn btn-danger" onClick={() => deleteEmployee(employee.username)}>Obriši djelatnika</button></td>
                                                 </tr>
                                             )}

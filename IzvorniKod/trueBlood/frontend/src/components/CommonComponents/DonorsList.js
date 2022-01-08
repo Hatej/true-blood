@@ -120,7 +120,7 @@ function DonorsList(props) {
                                                     <td>{donor.surname}</td>
                                                     <td>{bloodName(donor.blood.name)}</td>
                                                     <td>{!donor.rejected ? "Može" : "Ne može"}</td>
-                                                    <td><button className="btn btn-outline-danger" onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
+                                                    <td><button className="btn btn-outline-danger" hidden={props.mode === "ADMIN"} onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
                                                     <td><button className="btn btn-outline-danger" hidden={donor.rejected === true || props.mode === "ADMIN"} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
                                                     <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)} hidden={props.mode!=="ADMIN"}>Obriši donora</button></td>
                                                 </tr>
