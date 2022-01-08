@@ -49,7 +49,8 @@ public class UnitTests {
 	BloodController bloodController;
     
 	/*
-	 * Updating user surname, which is allowed in our application
+	 * Updating user surname, which is allowed in our application.
+	 * Before running tests, disable security in UserController.
 	 */
 	@Test
 	public void editUserProfileCorrectly() {
@@ -87,7 +88,8 @@ public class UnitTests {
 	}
 	
 	/*
-	 * User field rejected can not be updated using userController.getEditUserInfo()
+	 * User field rejected can not be updated using userController.getEditUserInfo().
+	 * Before running tests, disable security in UserController.
 	 */
 	@Test
 	public void editUserProfileIncorrectly() {
@@ -119,7 +121,8 @@ public class UnitTests {
 	}
 	
 	/*
-	 * Updating blood lower bound when it is positive integer
+	 * Updating blood lower bound when it is positive integer.
+	 * Before running tests, disable security in BloodController.
 	 */
 	@Test
 	public void changeLowerboundCorrectly() {
@@ -135,7 +138,8 @@ public class UnitTests {
 	}
 	
 	/*
-	 * Updating blood lower bound when it is negative integer, not allowed operation
+	 * Updating blood lower bound when it is negative integer, not allowed operation.
+	 * Before running tests, disable security in BloodController.
 	 */
 	@Test
 	public void changeBoundsIncorrectly() {

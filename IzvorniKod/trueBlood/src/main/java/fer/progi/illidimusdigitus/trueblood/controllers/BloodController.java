@@ -44,9 +44,9 @@ public class BloodController {
             case "AB-" -> BloodType.AB_MINUS;
             default -> BloodType.A_PLUS;
         };
-        bloodService.updateBounds(type, dto);
         
         if(dto.getLowerbound() < 0) return ResponseEntity.ok("not updated");
+        bloodService.updateBounds(type, dto);
         Blood blood = bloodService.findByName(type).get();
         
         if(blood.getSupply() < blood.getLowerbound()) {
