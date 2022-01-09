@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -82,6 +84,35 @@ public class HealthDataController {
 
        User donor = userService.findByUsername(id_donora).get();
        User empl = userService.findByUsername(username).get();
+
+       if (donor.isRejected()) {
+           return ResponseEntity.badRequest().build();
+       }
+
+       Date lastSuccessfulDonation = donationService.getLastSuccessfulDonationDate(donor.username);
+       System.out.println("Zadnja uspješna donacija je bila: " + lastSuccessfulDonation);
+
+
+       Calendar c = Calendar.getInstance();
+       Date moguceDoniratiOd = null;
+       if (lastSuccessfulDonation != null) {
+           c.setTime(lastSuccessfulDonation);
+           c.add(Calendar.MONTH, 3);
+           moguceDoniratiOd = c.getTime();
+           System.out.println("Moguce je donirati opet od: " + moguceDoniratiOd);
+       }
+
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       Date currDate;
+        try {
+            currDate = sdf.parse(sdf.format(new Date()));
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (moguceDoniratiOd != null && currDate.before(moguceDoniratiOd)) {
+            return ResponseEntity.badRequest().build();
+        }
 
        Donation donation = new Donation(date,mjesto_darivanja,true,donor,empl);
        boolean success = true;

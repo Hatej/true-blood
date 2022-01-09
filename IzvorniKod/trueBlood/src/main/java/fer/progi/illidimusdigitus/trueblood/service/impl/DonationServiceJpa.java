@@ -68,4 +68,6 @@ public class DonationServiceJpa implements DonationService {
 		donationRepo.delete(donation);
 	}
 
+	@Override
+	public Date getLastSuccessfulDonationDate(String username) { return donationRepo.getLastSuccessfulDonationDate(username); }
 }

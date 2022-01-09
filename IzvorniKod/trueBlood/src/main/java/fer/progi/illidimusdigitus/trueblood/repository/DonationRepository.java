@@ -29,4 +29,7 @@ public interface DonationRepository extends JpaRepository<Donation,Long>{
 
 	//@Query("DELETE FROM Donation WHERE id = ?1; DELETE FROM HealthDataAnswered WHERE donation = ?1; ")
 	void delete(Donation donation);
+
+	@Query("SELECT MAX(date) FROM Donation WHERE donor.username = ?1 AND success = true")
+	Date getLastSuccessfulDonationDate(String username);
 }
