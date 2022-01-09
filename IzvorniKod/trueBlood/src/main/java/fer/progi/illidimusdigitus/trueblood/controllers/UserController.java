@@ -266,9 +266,9 @@ public class UserController {
         }
     	
         if (userService.updateUserInfo(username, newUserInfo)) {
-            return ResponseEntity.ok("updated");
+            return ResponseEntity.ok().body("updated");
         }
-        return ResponseEntity.ok("not updated");
+        return ResponseEntity.badRequest().body("not updated");
     }
     
     @CrossOrigin(origins = "*")

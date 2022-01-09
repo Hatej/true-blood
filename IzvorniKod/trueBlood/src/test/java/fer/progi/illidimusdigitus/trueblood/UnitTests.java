@@ -2,6 +2,7 @@ package fer.progi.illidimusdigitus.trueblood;
 
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
@@ -21,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fer.progi.illidimusdigitus.trueblood.controllers.BloodController;
 import fer.progi.illidimusdigitus.trueblood.controllers.BloodDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.ConsumptionController;
+import fer.progi.illidimusdigitus.trueblood.controllers.ConsumptionDTO;
 import fer.progi.illidimusdigitus.trueblood.controllers.UserController;
 import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
@@ -42,12 +45,12 @@ public class UnitTests {
 	RoleService roleService;
 	@Autowired
 	BloodService bloodService;
-	
 	@Autowired
 	BloodRepository bloodRepository;
 	@Autowired
 	BloodController bloodController;
-    
+	@Autowired
+	ConsumptionController consumptionController;
 	/*
 	 * Updating user surname, which is allowed in our application.
 	 * Before running tests, disable security in UserController.
@@ -121,7 +124,7 @@ public class UnitTests {
 	}
 	
 	/*
-	 * Updating blood lower bound when it is positive integer.
+	 * Try to change blood lower bound (positive integer).
 	 * Before running tests, disable security in BloodController.
 	 */
 	@Test
@@ -138,18 +141,92 @@ public class UnitTests {
 	}
 	
 	/*
-	 * Updating blood lower bound when it is negative integer, not allowed operation.
+	 * Try to change blood lower bound (negative integer), not allowed operation.
 	 * Before running tests, disable security in BloodController.
 	 */
 	@Test
-	public void changeBoundsIncorrectly() {
+	public void changeLowerboundIncorrectly() {
 			Blood blood = bloodService.findByName(BloodType.A_PLUS).get();
-		 	int newLowerbound = -100;
+		 	
+			int newLowerbound = -100;
 		 	BloodDTO newBounds = new BloodDTO("A+", blood.getUpperbound(), newLowerbound);
 	
 	        String expected = "not updated";
 	       
 	        String result = bloodController.changeBounds(newBounds).getBody();
+	        Assertions.assertEquals(expected,result);
+	        
+	}
+	
+	/*
+	 * Try to make consumption with positive quantity.
+	 * Before running tests, disable security in ConsumptionController.
+	 */
+	@Test
+	public void makeConsumptionCorrectly() {
+		Blood blood = bloodService.findByName(BloodType.A_PLUS).get();
+		
+		User employee = new User("DR78912",
+                "12345678",
+                "Dario",
+                "Radić",
+                true,
+                "Zagreb",
+                "12345678912",
+                "Radićeva 7",
+                "Radnička 8",
+                "markoradic@fer.hr",
+                "0987412589",
+                "0987412589",
+                new Date(),
+                roleService.findByName(RoleName.DJELATNIK).get(),
+                bloodService.findByName(BloodType.A_MINUS).get());
+		
+		userRepository.save(employee);
+		
+		
+	 	int quantity = 25;
+	 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), quantity, "Zagreb", employee.getUsername());
+	 	
+	 	int expected = bloodService.findByName(blood.getName()).get().getSupply() - quantity;
+	 	consumptionController.consumeBlood(newConsump);
+        
+        int result = bloodService.findByName(blood.getName()).get().getSupply();
+        Assertions.assertEquals(expected,result);
+	}
+	
+	/*
+	 * Try to make consumption with negative quantity, not allowed operation.
+	 * Before running tests, disable security in ConsumptionController.
+	 */
+	@Test
+	public void makeConsumptionIncorrectly() {
+			Blood blood = bloodService.findByName(BloodType.A_PLUS).get();
+		
+			User employee = new User("DR78912",
+	                "12345678",
+	                "Dario",
+	                "Radić",
+	                true,
+	                "Zagreb",
+	                "12345678912",
+	                "Radićeva 7",
+	                "Radnička 8",
+	                "markoradic@fer.hr",
+	                "0987412589",
+	                "0987412589",
+	                new Date(),
+	                roleService.findByName(RoleName.DJELATNIK).get(),
+	                bloodService.findByName(BloodType.A_MINUS).get());
+			
+			userRepository.save(employee);
+			
+		 	int quantity = -5;
+		 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), quantity, "Zagreb", employee.getUsername());
+		 	
+		 	String expected = "not consumed";
+		 
+	        String result = consumptionController.consumeBlood(newConsump).getBody();
 	        Assertions.assertEquals(expected,result);
 	}
 	

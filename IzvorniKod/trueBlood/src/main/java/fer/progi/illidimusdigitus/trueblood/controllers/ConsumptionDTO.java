@@ -24,6 +24,15 @@ public class ConsumptionDTO {
 		return timestamp;
 	}
 
+	public ConsumptionDTO(String bloodType, String timestamp, int quantity, String location, String employee) {
+		super();
+		this.bloodType = bloodType;
+		this.timestamp = timestamp;
+		this.quantity = quantity;
+		this.location = location;
+		this.employee = employee;
+	}
+
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}

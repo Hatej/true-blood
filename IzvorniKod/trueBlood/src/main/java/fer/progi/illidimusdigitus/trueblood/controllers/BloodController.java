@@ -1,6 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
+import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class BloodController {
             default -> BloodType.A_PLUS;
         };
         
-        if(dto.getLowerbound() < 0) return ResponseEntity.ok("not updated");
+        if(dto.getLowerbound() < 0) return ResponseEntity.badRequest().body("not updated");
+        
         bloodService.updateBounds(type, dto);
         Blood blood = bloodService.findByName(type).get();
         
@@ -55,6 +57,6 @@ public class BloodController {
         if(blood.getSupply() > blood.getUpperbound()) {
         	bloodService.sendNotifUpper(blood);
         }
-        return ResponseEntity.ok("updated");
+        return ResponseEntity.ok().body("updated");
     }
 }
