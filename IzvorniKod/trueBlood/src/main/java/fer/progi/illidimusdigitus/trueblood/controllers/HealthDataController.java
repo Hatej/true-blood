@@ -49,7 +49,7 @@ public class HealthDataController {
        String[] userPass = decodedString.split(":");
 
        if (userService.findByUsername(userPass[0]).isEmpty()) {
-           return ResponseEntity.badRequest().build();
+           return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
        }
 
        User usr = userService.findByUsername(userPass[0]).get();
@@ -78,15 +78,15 @@ public class HealthDataController {
        System.out.println(date);
 
        if(userService.findByUsername(id_donora).isEmpty())
-            return  ResponseEntity.badRequest().build();
+            return  ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
        if(userService.findByUsername(username).isEmpty())
-            return  ResponseEntity.badRequest().build();
+            return  ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
 
        User donor = userService.findByUsername(id_donora).get();
        User empl = userService.findByUsername(username).get();
 
        if (donor.isRejected()) {
-           return ResponseEntity.badRequest().build();
+           return ResponseEntity.badRequest().body("Nije moguće donirati! Korisniku je trajno odbijeno doniranje!");
        }
 
        Date lastSuccessfulDonation = donationService.getLastSuccessfulDonationDate(donor.username);
@@ -97,7 +97,11 @@ public class HealthDataController {
        Date moguceDoniratiOd = null;
        if (lastSuccessfulDonation != null) {
            c.setTime(lastSuccessfulDonation);
-           c.add(Calendar.MONTH, 3);
+           if (donor.isMale()) {
+               c.add(Calendar.MONTH, 3);
+           } else {
+               c.add(Calendar.MONTH, 4);
+           }
            moguceDoniratiOd = c.getTime();
            System.out.println("Moguce je donirati opet od: " + moguceDoniratiOd);
        }
@@ -107,11 +111,11 @@ public class HealthDataController {
         try {
             currDate = sdf.parse(sdf.format(new Date()));
         } catch (ParseException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
         }
 
         if (moguceDoniratiOd != null && currDate.before(moguceDoniratiOd)) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Nije moguće donirati! Nije prošlo dovoljno vremena od zadnje donacije!");
         }
 
        Donation donation = new Donation(date,mjesto_darivanja,true,donor,empl);
@@ -126,19 +130,19 @@ public class HealthDataController {
        int broj_kljuceva = healthAnswers.getUpitnik().keySet().size();
 
        if(broj_kljuceva != 20)
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
 
        for(int i = 0; i < healthAnswers.getUpitnik().keySet().size(); i++) {
 
             if(healthDataService.findById(i+1).isEmpty())
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
 
             HealthData healthData = healthDataService.findById(i + 1).get();
 
             HealthDataAnsweredId healthDataAnsweredId = new HealthDataAnsweredId(donation,healthData);
 
             if(healthDataAnsweredService.findById(healthDataAnsweredId).isPresent())
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
 
             long id_zdravstvenih = i + 1;
             boolean odgovor = healthAnswers.getUpitnik().get((long)(i + 1));
