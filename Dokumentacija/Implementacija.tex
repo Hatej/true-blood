@@ -13,8 +13,7 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			
-Nakon što smo završili s izradom testirali smo rad aplikacije koristeći JUnit tehnologiju i
-Selenium WebDriver. Testovi su dali zadovoljavajuće rezultate te možemo zaključiti da smo uspjeli implementirati zadane funkcionalnosti.
+Nakon što smo završili s izradom testirali smo rad aplikacije koristeći JUnit tehnologiju i Selenium WebDriver. Testovi su dali zadovoljavajuće rezultate te možemo zaključiti da smo uspjeli implementirati zadane funkcionalnosti.
 			
 			\subsection{Ispitivanje komponenti}
 			
@@ -23,17 +22,55 @@ Za ispitivanje komponenti koristili smo JUnit tehnologiju. JUnit okvir je za tes
 \textbf{Ažuriranje osobnih podataka donora}
 \\\\
 Pozivom funkcije getEditUserInfo iz klase UserController želimo donoru uspješno promijeniti prezime. Na kraju uspoređujemo je li prezime ažuriranog donora jednako željenom novom prezimenu.
-\\\\
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/unit1}
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit1}
 	\caption{Unit test1}
 \end{figure}
-	
-U idućem testu pozivom iste funkcije želimo neuspješno ažurirati polje rejected, koje se ne bi smjelo mijenjati. Na kraju uspoređujemo je li dobivena statusn poruka jednaka očekivanoj "400" što bi značilo da aplikacija na pobuđeno situaciju prikladno odgovara.
+{U idućem testu pozivom iste funkcije želimo neuspješno ažurirati polje rejected, koje se ne bi smjelo mijenjati. Na kraju uspoređujemo je li dobivena statusna poruka jednaka očekivanoj "400 BADREQUEST" što bi značilo da aplikacija na pobuđenu situaciju prikladno odgovara.}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit2}
+	\caption{Unit test2}
+\end{figure}
+\textbf{Promjena optimalnih granica krvi}
+\\\\
+Pozivom funkcije changeBounds iz klase BloodController želimo uspješno promijeniti donju optimalnu granicu određene krvne grupe. Na kraju uspoređujemo je li donja optimalna granica ažurirane krvne grupe jednaka željenoj granici.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit3}
+	\caption{Unit test3}
+\end{figure}
+\eject
+{U idućem testu pozivom iste funkcije želimo neuspješno ažurirati donju optimalnu granicu, koja bi uvijek morala biti pozitivna. Na kraju uspoređujemo je li dobivena statusna poruka jednaka očekivanoj "400 BADREQUEST" što bi značilo da aplikacija na pobuđenu situaciju prikladno odgovara.}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit4}
+	\caption{Unit test4}
+\end{figure}
+\textbf{Evidencija krvi slanjem u instituciju}
+\\\\
+Pozivom funkcije consumeBlood iz klase ConsumptionController želimo uspješno evidentirati slanje određene krvne grupe u neku instituciju. Na kraju uspoređujemo je li trenutna količina ažurirane krvne grupe jednaka količini umanjenjoj za količinu koja je poslana u instituciju.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit5}
+	\caption{Unit test5}
+\end{figure}
+\eject	
+{U idućem testu pozivom iste funkcije želimo neuspješno evidentirati slanje krvi, čija bi količina uvijek morala biti pozitivna i veća od 0. Na kraju uspoređujemo je li dobivena statusna poruka jednaka očekivanoj "400 BADREQUEST" što bi značilo da aplikacija na pobuđenu situaciju prikladno odgovara. }
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit6}
+	\caption{Unit test6}
+\end{figure}
+\eject
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/unit_testing}
+	\caption{Rezultati ispitivanja komponenti}
+\end{figure}
 
-	
-			
 			
 			\subsection{Ispitivanje sustava}
 			
