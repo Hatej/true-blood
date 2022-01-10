@@ -34,7 +34,7 @@ public class ConsumptionController {
 	@CrossOrigin(origins = "*")
     @PostMapping("/recordChange")
     @Secured("ROLE_DJELATNIK")
-    public ResponseEntity<String> consumeBlood(@RequestBody ConsumptionDTO dto) {
+    public ResponseEntity<Consumption> consumeBlood(@RequestBody ConsumptionDTO dto) {
 
         BloodType type = switch(dto.getBloodType()) {
             case "A+" -> BloodType.A_PLUS;
@@ -48,7 +48,7 @@ public class ConsumptionController {
             default -> BloodType.A_PLUS;
         };
         
-        if(dto.getQuantity() <= 0) return   ResponseEntity.badRequest().body("not consumed");
+        if(dto.getQuantity() <= 0) return   ResponseEntity.badRequest().build();
         
         User usr = userService.findByUsername(dto.getEmployee()).get();
         boolean req = bloodService.consume(type, dto);
@@ -62,6 +62,6 @@ public class ConsumptionController {
         	Consumption consumption = new Consumption(Timestamp.valueOf(dto.getTimestamp()), dto.getQuantity(), dto.getLocation(),blood , usr);
             consumptionService.makeConsump(consumption);
         }
-        return ResponseEntity.ok().body("consumed");
+        return ResponseEntity.ok().build();
     }
 }

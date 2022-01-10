@@ -34,19 +34,19 @@ import fer.progi.illidimusdigitus.trueblood.repository.BloodRepository;
 import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
+import fer.progi.illidimusdigitus.trueblood.service.UserService;
 
 @SpringBootTest
 public class UnitTests {
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 	@Autowired
 	UserController userController;
 	@Autowired
 	RoleService roleService;
 	@Autowired
 	BloodService bloodService;
-	@Autowired
-	BloodRepository bloodRepository;
+	
 	@Autowired
 	BloodController bloodController;
 	@Autowired
@@ -71,12 +71,11 @@ public class UnitTests {
                 "0987412589",
                 "0987412589",
                 new Date(),
-                /*new Role(RoleName.DONOR),
-                new Blood(Long.valueOf(10), BloodType.A_MINUS, 0, 0, 0)*/
+                
                 roleService.findByName(RoleName.DONOR).get(),
                 bloodService.findByName(BloodType.A_MINUS).get());
 		
-        userRepository.save(user);
+        userService.save(user);
         
         String newSurname="Radićević";
         UserInfoDTO userWithNewSurname = new UserInfoDTO(user.getName(),newSurname,
@@ -86,7 +85,7 @@ public class UnitTests {
         String expected = newSurname;
         
         userController.getEditUserInfo(userWithNewSurname, user.getUsername());
-        String result = userRepository.findByUsername(user.getUsername()).get().getSurname();
+        String result = userService.findByUsername(user.getUsername()).get().getSurname();
         Assertions.assertEquals(expected,result);
 	}
 	
@@ -112,14 +111,14 @@ public class UnitTests {
                 roleService.findByName(RoleName.DONOR).get(),
                 bloodService.findByName(BloodType.A_MINUS).get());
 		
-        userRepository.save(user);
+        userService.save(user);
         boolean newRejected = !user.isRejected();
         UserInfoDTO userWithNewRejected = new UserInfoDTO(user.getName(), user.getSurname(),
                 user.getBirthplace(), user.getAddress(), user.getWorkplace(),
                 user.getMobilePrivate(), user.getMobileBusiness(), user.getBirthdate(), newRejected);
 
-        String expected = "not updated";
-        String result = userController.getEditUserInfo(userWithNewRejected, user.getUsername()).getBody();
+        String expected = "400 BAD_REQUEST";
+        String result = userController.getEditUserInfo(userWithNewRejected, user.getUsername()).getStatusCode().toString();
         Assertions.assertEquals(expected,result);
 	}
 	
@@ -151,9 +150,9 @@ public class UnitTests {
 			int newLowerbound = -100;
 		 	BloodDTO newBounds = new BloodDTO("A+", blood.getUpperbound(), newLowerbound);
 	
-	        String expected = "not updated";
+		 	String expected = "400 BAD_REQUEST";
 	       
-	        String result = bloodController.changeBounds(newBounds).getBody();
+	        String result = bloodController.changeBounds(newBounds).getStatusCode().toString();
 	        Assertions.assertEquals(expected,result);
 	        
 	}
@@ -182,11 +181,12 @@ public class UnitTests {
                 roleService.findByName(RoleName.DJELATNIK).get(),
                 bloodService.findByName(BloodType.A_MINUS).get());
 		
-		userRepository.save(employee);
+		userService.save(employee);
 		
 		
 	 	int quantity = 25;
-	 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), quantity, "Zagreb", employee.getUsername());
+	 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), 
+	 			quantity, "Zagreb", employee.getUsername());
 	 	
 	 	int expected = bloodService.findByName(blood.getName()).get().getSupply() - quantity;
 	 	consumptionController.consumeBlood(newConsump);
@@ -219,14 +219,15 @@ public class UnitTests {
 	                roleService.findByName(RoleName.DJELATNIK).get(),
 	                bloodService.findByName(BloodType.A_MINUS).get());
 			
-			userRepository.save(employee);
+			userService.save(employee);
 			
 		 	int quantity = -5;
-		 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), quantity, "Zagreb", employee.getUsername());
+		 	ConsumptionDTO newConsump = new ConsumptionDTO(blood.getName().toString(), new Timestamp(0).toString(), 
+		 			quantity, "Zagreb", employee.getUsername());
 		 	
-		 	String expected = "not consumed";
+		 	String expected = "400 BAD_REQUEST";
 		 
-	        String result = consumptionController.consumeBlood(newConsump).getBody();
+	        String result = consumptionController.consumeBlood(newConsump).getStatusCode().toString();
 	        Assertions.assertEquals(expected,result);
 	}
 	

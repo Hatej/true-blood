@@ -256,7 +256,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/editUserInfo")
-    public ResponseEntity<String> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
+    public ResponseEntity<User> getEditUserInfo(@RequestBody UserInfoDTO newUserInfo, @RequestHeader String username) {
         SecurityContext context = SecurityContextHolder.getContext();
         String currUsername = context.getAuthentication().getName();
         List<?> authhshss = context.getAuthentication().getAuthorities().stream().collect(Collectors.toList());
@@ -266,9 +266,9 @@ public class UserController {
         }
     	
         if (userService.updateUserInfo(username, newUserInfo)) {
-            return ResponseEntity.ok().body("updated");
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().body("not updated");
+        return ResponseEntity.badRequest().build();
     }
     
     @CrossOrigin(origins = "*")
