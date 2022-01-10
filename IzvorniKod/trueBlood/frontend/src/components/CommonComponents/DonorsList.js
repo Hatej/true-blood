@@ -12,6 +12,7 @@ function DonorsList(props) {
 
     async function getDonorsData() {
         let data = await axios.get(SPRING_URL.concat('/donorList')).then(res => res.data);
+        console.log(data);
         setDonorsList(data);
     }
 
@@ -110,7 +111,7 @@ function DonorsList(props) {
                                                 <th>Ime</th>
                                                 <th>Prezime</th>
                                                 <th>Krvna grupa</th>
-                                                <th>Mogućnost Doniranja</th>
+                                                <th>Odbijen</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,7 +120,7 @@ function DonorsList(props) {
                                                     <td>{donor.name}</td>
                                                     <td>{donor.surname}</td>
                                                     <td>{bloodName(donor.blood.name)}</td>
-                                                    <td>{!donor.rejected ? "Može" : "Ne može"}</td>
+                                                    <td>{!donor.rejected ? "Ne" : "Da"}</td>
                                                     <td><button className="btn btn-outline-danger" hidden={props.mode === "ADMIN"} onClick={() => setViewTo(DETAILS, donor.username)}>Detalji</button></td>
                                                     <td><button className="btn btn-outline-danger" hidden={donor.rejected === true || props.mode === "ADMIN"} onClick={() => setViewTo(MAKING_DONATION, donor.username)}>Obavi donaciju</button></td>
                                                     <td><button className="btn btn-danger" onClick={() => deleteDonor(donor.username)} hidden={props.mode!=="ADMIN"}>Obriši donora</button></td>

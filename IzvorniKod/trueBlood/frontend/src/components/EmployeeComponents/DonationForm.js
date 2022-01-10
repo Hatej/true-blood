@@ -73,12 +73,10 @@ function DonationForm(props) {
 */
 
     useEffect(() => {
-        console.log(props.donorData);
         setDonorDataForm(props.donorData);
     });
 
     function onChange(event) {
-        console.log(event.target.value);
         setMjestoDarivanja(event.target.value);
     }
 
@@ -88,7 +86,7 @@ function DonationForm(props) {
         setQuestionsForm(newQuestionsForm);
     }
 
-    function onSubmit(e) {
+    async function onSubmit(e) {
         e.preventDefault();
 
         let upitnikData = {
@@ -120,17 +118,19 @@ function DonationForm(props) {
             upitnik: upitnikData
         };
 
-        return axios.post(SPRING_URL.concat('/healthDataAnswered'),
+        axios.post(SPRING_URL.concat('/healthDataAnswered'),
             data).then(res => {
-                console.log(res);
                 if (res.status === 200) {
                     console.log("Uspješna donacija.");
                     alert("Donacija evidentirana");
                     props.setView("NORMAL");
                 }
                 if (res.status === 400) {
-                    console.log("There was an error!");  
+                    alert(res);
                 }
+            }).catch(err => {
+                alert(err.response.data);
+                props.setView("NORMAL");
             });
     }
 
@@ -221,7 +221,7 @@ function DonationForm(props) {
                     </Row>
                     <Row className="mb-3">
                         <Form.Group as={Col} md="6">
-                            <Button className="btn-danger" type="submit">
+                            <Button className="btn-danger mb-1" type="submit">
                                 Evidentiraj donaciju
                             </Button>
                         </Form.Group>
