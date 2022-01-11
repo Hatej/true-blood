@@ -162,7 +162,7 @@ public class HealthDataController {
         }
        
        	if(success == true) {
-       		
+       		donor.setRejected(true);
        		bloodService.incrementSupply(donor.getBloodType(), 5);
        		
 	       	Blood blood = bloodService.findByName(donor.getBloodType().getName()).get();
