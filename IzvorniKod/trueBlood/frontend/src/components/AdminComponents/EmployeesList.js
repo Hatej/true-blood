@@ -57,8 +57,10 @@ function EmployeesList(props) {
                     getEmployeesData();
                 }
                 if (res.status === 400) {
-                    console.log("Error!");
+                    alert("Došlo je do greške!");
                 }
+            }).catch(err => {
+                alert("Došlo je do greške!");
             });
     }
 

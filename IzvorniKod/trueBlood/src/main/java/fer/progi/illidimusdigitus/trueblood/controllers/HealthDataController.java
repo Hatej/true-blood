@@ -132,6 +132,8 @@ public class HealthDataController {
        if(broj_kljuceva != 20)
             return ResponseEntity.badRequest().body("Dogodila se pogreška kod pokušaja doniranja! Molimo probajte ponovo!");
 
+       String poruka = "Uspješno obavljena donacija!";
+
        for(int i = 0; i < healthAnswers.getUpitnik().keySet().size(); i++) {
 
             if(healthDataService.findById(i+1).isEmpty())
@@ -151,9 +153,13 @@ public class HealthDataController {
                 donation.setSuccess(false);
                 donationService.save(donation);
                 success = false;
+                if (!donor.isRejected()) {
+                    poruka = "Donacija neuspješna! Donor privremeno odbijen!";
+                }
                 if(healthData.getCriterion() == false) {
                     donor.setRejected(true);
                     userService.save(donor);
+                    poruka = "Donacija neuspješna! Donor trajno odbijen!";
                 }
                 notDone = false;
             }
@@ -172,6 +178,6 @@ public class HealthDataController {
 	        }
        	}
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(poruka);
     }
 }

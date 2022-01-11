@@ -120,9 +120,9 @@ function DonationForm(props) {
 
         axios.post(SPRING_URL.concat('/healthDataAnswered'),
             data).then(res => {
+                console.log(res);
                 if (res.status === 200) {
-                    console.log("Uspješna donacija.");
-                    alert("Donacija evidentirana");
+                    alert(res.data);
                     props.setView("NORMAL");
                 }
                 if (res.status === 400) {

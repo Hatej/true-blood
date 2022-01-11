@@ -111,7 +111,7 @@ function DonorsList(props) {
                                                 <th>Ime</th>
                                                 <th>Prezime</th>
                                                 <th>Krvna grupa</th>
-                                                <th>Odbijen</th>
+                                                <th>Trajno odbijen</th>
                                             </tr>
                                         </thead>
                                         <tbody>
