@@ -171,7 +171,76 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
+		Ove upute vrijede te su rađene za Windows Server 2019 desktop experience operativni sustav. Slična (ili gotovo ista) procedura je i za ostale windows, pa čak i linux operativne sustave. Većina razlika je u samoj instalaciji potrebnih programskih paketa i runtime-a te postavljanje putanje, nakon čega je njihovo korištenje gotovo identično.
+		
+			\textbf{Instalacija poslužitelja baze podataka}\\
+			Potrebno je preuzeti \href{https://www.enterprisedb.com/downloads/postgres-postgresql-downloads}{PostgreSQL bazu podataka za Windows x86-64}. Preporuča se verzija 13.x. Prilikom instalacije preporuča se ostaviti sve (po defaultu) označene komponente za instalaciju, jer će kasnije biti potrebno inicijalno popuniti bazu pomoću pgAdmin 4 alata. Odaberite šifru za korisnika postgres te port na kojem će baza podataka slušati zahtjeve. Prilikom završetka instalacije nije potrebno pokretati stack builder. Nakon instalacije (i prilikom svakog restarta servera), windows automatski pokreće servis baze podataka, te je ona dostupna na prethodno specificiranom portu.
+			
+			\textbf{Instalacija Node.js runtime-a}\\
+			Potrebno je preuzeti i instalirati \href{https://nodejs.org/en/download/}{Node.js runtime} koji će pokrenuti frontend dio aplikacije. Preporuča se trenutno dostupna LTS verzija (16.13.2 na dan pisanja). Prilikom instalacije potrebno je ostaviti sve (po defaultu) označene komponente za instalaciju, dok ponuđeni alat Chocolatey nije potrebno instalirati. Installer je automatski postavio PATH varijablu okruženja, te su "npm" i "node" naredbe postale globalno dostupne u cmd-u.
+			
+			\textbf{Instalacija Jave}\\
+			Potrebno je preuzeti i instalirati \href{https://www.oracle.com/java/technologies/downloads/#jdk17-windows}{JDK paket} koji će pokretati backend dio aplikacije.
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/JDKdownload}
+			\caption{Download JDK 17 Installera}
+			\label{fig:JDKdownload}
+			\end{figure}
+
+			Potrebna je trenutna 17.x.x verzija, no moguće je koristiti i neku od novijih verzija. Installer je automatski postavio PATH varijablu okruženja, te je "java" naredba postala globalno dostupna u cmd-u.
+			
+			\textbf{Instalacija Maven alata i postavljanje PATH varijable okruženja}\\
+			Potrebno je preuzeti \href{https://maven.apache.org/download.cgi}{Maven alat} koji služi za kreiranje .jar datoteke iz izvornog koda koja sadrži cijelu backend aplikaciju sa web serverom. Preporuča se 3.8.4 verzija ili novija.
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/mavenDownload}
+			\caption{Download Maven Binary-a}
+			\label{fig:mavenDownload}
+			\end{figure}
+			
+			Nakon preuzimanja potrebno je raspakirati folder u proizvoljnu mapu (u ovom primjeru na "\textit{C:/Program Files/apache-maven-3.8.4-bin}") te dodati "bin" folder u PATH varijablu okruženja. Pritiskom "\textit{Windows}" + "\textit{R}" tipki otvara se prozor u kojem treba napisati "\textit{SystemPropertiesAdvanced}" i pritisnuti enter.
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/RunWindow}
+			\caption{Prozor pokreni}
+			\label{fig:RunWindow}
+			\end{figure}
+			
+			Nakon toga otvara se drugi prozor gdje treba stisnuti gumb "Environment Variables...".
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/SystemPropertiesAdvanced}
+			\caption{Prozor naprednih postavka sustava}
+			\label{fig:SystemPropertiesAdvanced}
+			\end{figure}
+			
+			Time se otvara i treći prozor gdje treba locirati sistemsku "\textit{Path}" varijablu, označiti ju te pritisnuti gumb "\textit{Edit...}"
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/EnvironmentVariables}
+			\caption{Prozor varijabli okruženja}
+			\label{fig:EnvironmentVariables}
+			\end{figure}
+			
+			Nakon toga, u novootvorenom prozoru, pritiskom na tipku "\textit{New}" potrebno je napisati putanju do bin foldera prethodno raspakiranog maven alata. U ovom slučaju to je "\textit{C:/Program Files/apache-maven-3.8.4-bin/apache-maven-3.8.4/bin}"
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/newPathInsert}
+			\caption{Nova putanja u PATH varijabli okruženja}
+			\label{fig:newPathInsert}
+			\end{figure}
+			
+			\textbf{Podešavanje i pokretanje backend dio aplikacije}\\
+			
+			
+			\textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
 		
 			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
 			
