@@ -115,20 +115,20 @@ public class AdminController {
     @DeleteMapping("/deactivateEmployee")
     @Secured("ROLE_ADMIN")
     public ResponseEntity deleteEmployee(@RequestBody String employeeid) {
-       String[] employeeidpodaci = employeeid.split("\"");
-       employeeid = employeeidpodaci[3];
-       Optional<User> employeeoptional = userService.findByUsername(employeeid);
+        String[] employeeidpodaci = employeeid.split("\"");
+        employeeid = employeeidpodaci[3];
+        Optional<User> donoroptional = userService.findByUsername(employeeid);
 
-       if(employeeoptional.isEmpty())
+        if(donoroptional.isEmpty())
             return ResponseEntity.badRequest().build();
 
-       User employee = employeeoptional.get();
+        User donor = donoroptional.get();
 
-       if(!employee.getRole().getName().toString().equals("DJELATNIK"))
-           return ResponseEntity.badRequest().build();
+        if(!donor.getRole().getName().toString().equals("DJELATNIK"))
+            return ResponseEntity.badRequest().build();
 
-       userService.deleteByUsername(employee.getUsername());
-       return ResponseEntity.ok().build();
+        userService.deleteByUsername(donor.getUsername());
+        return ResponseEntity.ok().build();
     }
 
     @CrossOrigin("*")

@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import {SPRING_URL} from './Constants';
+import axios from "axios";
 
 function SignInForm(props) {
 
@@ -48,9 +49,9 @@ function SignInForm(props) {
         } else {
             endPoint = endPoint.concat('/add');
         }
-        return fetch(endPoint, options)
+        return axios.post(endPoint, data)
             .then(response => {
-                if (response.ok) {
+                if (response.status === 200) {
                     (() => {
                         if(props.mode === "ADDING_DONOR"){
                             props.setView("NORMAL");
