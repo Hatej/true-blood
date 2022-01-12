@@ -16,7 +16,7 @@ import fer.progi.illidimusdigitus.trueblood.service.DonationService;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
 
 @Service
-public class DonationServiceJpa implements DonationService {
+public class DonationServiceImpl implements DonationService {
 	
 	@Autowired
 	private DonationRepository donationRepo;

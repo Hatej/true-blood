@@ -21,11 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fer.progi.illidimusdigitus.trueblood.controllers.BloodController;
-import fer.progi.illidimusdigitus.trueblood.controllers.BloodDTO;
 import fer.progi.illidimusdigitus.trueblood.controllers.ConsumptionController;
-import fer.progi.illidimusdigitus.trueblood.controllers.ConsumptionDTO;
 import fer.progi.illidimusdigitus.trueblood.controllers.UserController;
-import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.BloodDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.ConsumptionDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.UserInfoDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;

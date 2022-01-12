@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class HealthDataAnsweredServiceJpa implements HealthDataAnsweredService {
+public class HealthDataAnsweredServiceImpl implements HealthDataAnsweredService {
 
     @Autowired
     HealthDataAnsweredRepository healthDataAnsweredRepository;

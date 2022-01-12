@@ -1,7 +1,7 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
-import fer.progi.illidimusdigitus.trueblood.controllers.BloodDTO;
-import fer.progi.illidimusdigitus.trueblood.controllers.ConsumptionDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.BloodDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.ConsumptionDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
@@ -20,10 +20,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class BloodServiceJpa implements BloodService {
 
-    @Autowired
+@Service
+public class BloodServiceImpl implements BloodService{
+	@Autowired
     private BloodRepository bloodRepo;
     
     @Autowired

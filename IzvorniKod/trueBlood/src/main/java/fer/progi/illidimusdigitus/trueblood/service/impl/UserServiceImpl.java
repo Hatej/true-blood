@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.service.impl;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.UserInfoDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Role;
 import fer.progi.illidimusdigitus.trueblood.model.User;
@@ -7,7 +8,7 @@ import fer.progi.illidimusdigitus.trueblood.repository.UserRepository;
 import fer.progi.illidimusdigitus.trueblood.service.EmailService;
 import fer.progi.illidimusdigitus.trueblood.service.RequestDeniedException;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
-import fer.progi.illidimusdigitus.trueblood.controllers.UserInfoDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 @Service
 @EnableAsync
-public class UserServiceJpa implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.BloodDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;

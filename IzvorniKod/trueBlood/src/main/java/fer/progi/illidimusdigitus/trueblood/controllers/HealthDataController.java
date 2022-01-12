@@ -1,5 +1,6 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.HealthAnswersDTO;
 import fer.progi.illidimusdigitus.trueblood.model.*;
 import fer.progi.illidimusdigitus.trueblood.service.BloodService;
 import fer.progi.illidimusdigitus.trueblood.service.DonationService;

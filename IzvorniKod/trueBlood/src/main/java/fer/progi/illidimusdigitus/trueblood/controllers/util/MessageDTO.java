@@ -1,4 +1,4 @@
-package fer.progi.illidimusdigitus.trueblood.controllers;
+package fer.progi.illidimusdigitus.trueblood.controllers.util;
 
 public class MessageDTO {
 	boolean months;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.ConsumptionDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Consumption;
 import fer.progi.illidimusdigitus.trueblood.model.User;

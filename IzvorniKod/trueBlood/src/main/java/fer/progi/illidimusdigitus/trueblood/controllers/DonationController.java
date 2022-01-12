@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.DonationDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Donation;
 import fer.progi.illidimusdigitus.trueblood.model.User;
 import fer.progi.illidimusdigitus.trueblood.service.DonationService;

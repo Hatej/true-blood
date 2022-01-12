@@ -1,16 +1,21 @@
-package fer.progi.illidimusdigitus.trueblood.controllers;
+package fer.progi.illidimusdigitus.trueblood.controllers.util;
 
-import  fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
-import fer.progi.illidimusdigitus.trueblood.model.util.RoleName;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.Date;
+import fer.progi.illidimusdigitus.trueblood.model.*;
 
-public class UserInfoDTO {
+public class AdminListAllUserDTO {
+
     public String name;
 
     public String surname;
+
+    public Role role;
+
+    public Blood blood;
+
+    public String username;
+
+    public boolean rejected;
 
     public String birthplace;
 
@@ -24,25 +29,28 @@ public class UserInfoDTO {
 
     public Date birthdate;
 
-    public boolean rejected;
+    public String getUsername() {return  username;}
 
-    public UserInfoDTO(String name, String surname, String birthplace, String address, String workplace,
-			String mobilePrivate, String mobileBusiness, Date birthdate, boolean rejected) {
-		this.name = name;
-		this.surname = surname;
-		this.birthplace = birthplace;
-		this.address = address;
-		this.workplace = workplace;
-		this.mobilePrivate = mobilePrivate;
-		this.mobileBusiness = mobileBusiness;
-		this.birthdate = birthdate;
-		this.rejected = rejected;
-	}
+    public boolean getRejected() {return rejected;}
 
-	public boolean getRejected(){return rejected;}
+    public Blood getBlood() {return blood;}
+
+    public Role getRole() {return role;}
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public void setRejected(boolean rejected) {
         this.rejected = rejected;
+    }
+
+    public void setBlood(Blood blood) {
+        this.blood = blood;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -106,5 +114,6 @@ public class UserInfoDTO {
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
+
 
 }

@@ -1,5 +1,8 @@
 package fer.progi.illidimusdigitus.trueblood.controllers;
 
+import fer.progi.illidimusdigitus.trueblood.controllers.util.CreateUserDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.MessageDTO;
+import fer.progi.illidimusdigitus.trueblood.controllers.util.UserInfoDTO;
 import fer.progi.illidimusdigitus.trueblood.model.Blood;
 import fer.progi.illidimusdigitus.trueblood.model.Donation;
 import fer.progi.illidimusdigitus.trueblood.model.Role;

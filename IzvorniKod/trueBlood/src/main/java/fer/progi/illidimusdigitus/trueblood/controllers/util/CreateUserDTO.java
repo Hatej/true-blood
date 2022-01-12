@@ -1,4 +1,4 @@
-package fer.progi.illidimusdigitus.trueblood.controllers;
+package fer.progi.illidimusdigitus.trueblood.controllers.util;
 
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 
