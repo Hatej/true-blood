@@ -81,22 +81,75 @@ Pozivom funkcije consumeBlood iz klase ConsumptionController želimo uspješno e
 	\includegraphics[width=\textwidth, scale=0.5]{slike/unit_testing}
 	\caption{Rezultati ispitivanja komponenti}
 \end{figure}
-
+\eject
 			
 			\subsection{Ispitivanje sustava}
+			Selenium WebDriver, okvir koji omogućuje programsku interakciju sa internetskim preglednicima, je bio korišten za ispitivanje sustava. Testovi su provedeni na Google Chrome pregledniku. Za sljedeće funkcionalnosti je napravljeno programsko ispitivanje:
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
 			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
+			 	\item {prijava (za donore, djelatnike i admin-a)}
+			 	\item {promjene optimalnih granica krvnih grupa (funkcionalnost admin-a)}
+			 	\item {evidencija potrošnje krvi (funkcionalnost djelatnika)}
+			 	\item {upisivanje donacije u registar (funkcionalnost djelatnika)}
+			 	
 			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
-			
-			\eject 
-		
-		
+		 Korištena je dodatna funkcija za usporavanje sustava, kako se ne bi određeni dijelovi programskog koda za testiranje prerano izvršili:	
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/wait}
+	\caption{Funkcija za usporavanje sustava}
+\end{figure}
+\eject
+\textbf{Prijava}	
+\\\\
+Ovaj test ima za zadaću ispitati može li se svaka vrsta korisnika sustava ulogirati. Program učitava stranicu i pokušava se ulogirati sa zadanim username­-om i password­-om, te provjera je li doista ulogiran profil za zadani role. Uspjehom se smatra kada je zadani role upisan u drugo polje s desna u gornjoj traci.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/selenium1}
+	\caption{Selenium test1}
+\end{figure}
+
+\textbf{Promjena optimalnih granica krvnih grupa}	
+\\\\
+Ovaj test ima za zadaću ispitati može li admin postaviti gornju i donju granicu količine krvi određene grupe, koje ako budu pređene dolazi do već spominjanih akcija. Test proglašavamo uspješnim ako poslije pritiska gumba brojevi prikazani u poljima Gornja i Donja odgovaraju željenima.
+\eject
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/selenium2}
+	\caption{Selenium test2}
+\end{figure}
+
+\textbf{Evidencija potrošnje krvi}	
+\\\\
+U ovom se testu ispituje može li djelatnik evidentirati slanje krvi u određenu instituciju i odgovara li količina određene krvne grupe u banci nakon slanja očekivanoj količini. Test je uspješan ako je količina krvi određene krvne poslije slanja jednaka očekivanoj. Krv se šalje fiktivnoj lokaciji TESTNA LOKACIJA.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/selenium3}
+	\caption{Selenium test3}
+\end{figure}
+\eject
+\textbf{Upisivanje donacije u registar}	
+\\\\
+U ovom se testu ispituje može li djelatnik evidentirati obavljenu donaciju (koju je figurativno obavio donor imena TESTDONORNAME na lokaciji TESTLOKACIJA).
+Test je prolazan ako preglednik izbaci poruku "Donacija evidentirana" ili "Nije moguće donirati! Nije prošlo dovoljno vremena od zadnje donacije!".
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/selenium4}
+	\caption{Selenium test4}
+\end{figure}
+\eject
+Te sve testne funkcije iskoristimo za provođenje testova u glavnoj (main) funkciji:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/main}
+	\caption{Funkcija main}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{slike/rezultat}
+	\caption{Rezultat ispitivanja sustava}
+\end{figure}
+\eject
 		\section{Dijagram razmještaja}
 			
 			Dijagrami razmještaja prikazuju topologiju sustava i odnos sklopovskih i program-
@@ -112,9 +165,9 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 	\caption{Dijagram razmještaja}
 	\label{fig:dijagram_razmještaja}
 \end{figure}
+\eject
+	
 			
-			
-			\eject 
 		
 		\section{Upute za puštanje u pogon}
 		
