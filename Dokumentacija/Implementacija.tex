@@ -171,13 +171,13 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 		
 		\section{Upute za puštanje u pogon}
 		
-		Ove upute vrijede te su rađene za Windows Server 2019 desktop experience operativni sustav. Slična (ili gotovo ista) procedura je i za ostale windows, pa čak i linux operativne sustave. Većina razlika je u samoj instalaciji potrebnih programskih paketa i runtime-a te postavljanje putanje, nakon čega je njihovo korištenje gotovo identično.
+		Ove upute vrijede te su rađene za Windows Server 2019 desktop experience operativni sustav. Slična (ili gotovo ista) procedura je i za ostale windows, pa čak i linux operativne sustave. Većina razlika je u samoj instalaciji potrebnih programskih paketa i runtime-a te postavljanje putanje, nakon čega je konfiguriranje aplikacije i njezino korištenje gotovo identično.
 		
 			\textbf{Instalacija poslužitelja baze podataka}\\
 			Potrebno je preuzeti \href{https://www.enterprisedb.com/downloads/postgres-postgresql-downloads}{PostgreSQL bazu podataka za Windows x86-64}. Preporuča se verzija 13.x. Prilikom instalacije preporuča se ostaviti sve (po defaultu) označene komponente za instalaciju, jer će kasnije biti potrebno inicijalno popuniti bazu pomoću pgAdmin 4 alata. Odaberite šifru za korisnika postgres te port na kojem će baza podataka slušati zahtjeve. Prilikom završetka instalacije nije potrebno pokretati stack builder. Nakon instalacije (i prilikom svakog restarta servera), windows automatski pokreće servis baze podataka, te je ona dostupna na prethodno specificiranom portu.
 			
 			\textbf{Instalacija Node.js runtime-a}\\
-			Potrebno je preuzeti i instalirati \href{https://nodejs.org/en/download/}{Node.js runtime} koji će pokrenuti frontend dio aplikacije. Preporuča se trenutno dostupna LTS verzija (16.13.2 na dan pisanja). Prilikom instalacije potrebno je ostaviti sve (po defaultu) označene komponente za instalaciju, dok ponuđeni alat Chocolatey nije potrebno instalirati. Installer je automatski postavio PATH varijablu okruženja, te su "npm" i "node" naredbe postale globalno dostupne u cmd-u.
+			Potrebno je preuzeti i instalirati \href{https://nodejs.org/en/download/}{Node.js runtime} koji će pokrenuti frontend dio aplikacije. Preporuča se trenutno dostupna LTS verzija (16.13.2 na dan pisanja). Prilikom instalacije potrebno je ostaviti sve (po defaultu) označene komponente za instalaciju, dok ponuđeni alat Chocolatey nije potrebno instalirati. Installer je automatski postavio PATH varijablu okruženja, te su "\textit{npm}" i "\textit{node}" naredbe postale globalno dostupne u cmd-u.
 			
 			\textbf{Instalacija Jave}\\
 			Potrebno je preuzeti i instalirati \href{https://www.oracle.com/java/technologies/downloads/#jdk17-windows}{JDK paket} koji će pokretati backend dio aplikacije.
@@ -189,7 +189,7 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\label{fig:JDKdownload}
 			\end{figure}
 
-			Potrebna je trenutna 17.x.x verzija, no moguće je koristiti i neku od novijih verzija. Installer je automatski postavio PATH varijablu okruženja, te je "java" naredba postala globalno dostupna u cmd-u.
+			Potrebna je trenutna 17.x.x verzija, no moguće je koristiti i neku od novijih verzija. Installer je automatski postavio PATH varijablu okruženja, te je "\textit{java}" naredba postala globalno dostupna u cmd-u.
 			
 			\textbf{Instalacija Maven alata i postavljanje PATH varijable okruženja}\\
 			Potrebno je preuzeti \href{https://maven.apache.org/download.cgi}{Maven alat} koji služi za kreiranje .jar datoteke iz izvornog koda koja sadrži cijelu backend aplikaciju sa web serverom. Preporuča se 3.8.4 verzija ili novija.
@@ -201,7 +201,8 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\label{fig:mavenDownload}
 			\end{figure}
 			
-			Nakon preuzimanja potrebno je raspakirati folder u proizvoljnu mapu (u ovom primjeru na "\textit{C:/Program Files/apache-maven-3.8.4-bin}") te dodati "bin" folder u PATH varijablu okruženja. Pritiskom "\textit{Windows}" + "\textit{R}" tipki otvara se prozor u kojem treba napisati "\textit{SystemPropertiesAdvanced}" i pritisnuti enter.
+			Nakon preuzimanja potrebno je raspakirati folder u proizvoljnu mapu (u ovom primjeru na "\textit{C:/Program Files/apache-maven-3.8.4-bin}") te dodati "\textit{bin}" folder u PATH varijablu okruženja što se napravi na sljedeći način: 
+			Pritiskom "\textit{Windows}" + "\textit{R}" tipki otvara se prozor u kojem treba napisati "\textit{SystemPropertiesAdvanced}" i pritisnuti enter.
 			
 			\begin{figure}[H]
 			\centering
@@ -210,7 +211,7 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\label{fig:RunWindow}
 			\end{figure}
 			
-			Nakon toga otvara se drugi prozor gdje treba stisnuti gumb "Environment Variables...".
+			Nakon toga otvara se drugi prozor gdje treba stisnuti gumb "\textit{Environment Variables...}".
 			
 			\begin{figure}[H]
 			\centering
@@ -228,7 +229,7 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\label{fig:EnvironmentVariables}
 			\end{figure}
 			
-			Nakon toga, u novootvorenom prozoru, pritiskom na tipku "\textit{New}" potrebno je napisati putanju do bin foldera prethodno raspakiranog maven alata. U ovom slučaju to je "\textit{C:/Program Files/apache-maven-3.8.4-bin/apache-maven-3.8.4/bin}"
+			Nakon toga, u novootvorenom prozoru, pritiskom na tipku "\textit{New}" potrebno je napisati putanju do "\textit{bin}" foldera prethodno raspakiranog maven alata. U ovom slučaju to je "\textit{C:/Program Files/apache-maven-3.8.4-bin/apache-maven-3.8.4/bin}"
 			
 			\begin{figure}[H]
 			\centering
@@ -238,13 +239,7 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\end{figure}
 			
 			\textbf{Podešavanje i pokretanje backend dio aplikacije te inicijalno punjenje baze}\\
-			Kako bi aplikacija ispravno radila, potrebno je postaviti parametre za povezivanje s bazom podataka. U datoteci "\textit{application.properties}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/src/main/resources}") nalaze se 3 ključne linije za povezivanje s bazom:
-			"\textit{spring.datasource.url= jdbc:postgresql://localhost:5432/postgres}"
-			"\textit{spring.datasource.username= postgres}"
-			"\textit{spring.datasource.password= password}"
-			Na prvoj liniji je potrebno specificirati odabrani port prilikom instalacije ("...//localhost:<port_number>/..."), te ime baze ("...5432/<ime_baze>"), ukoliko se ne koristi default baza (PostgreSQL ima svoju default bazu "postgres" koja je kreirana prilikom instalacije)
-			Na drugoj liniji specificira se ime korisnika kojeg aplikacija koristi za pristup bazi, te na trećoj liniji lozinka tog korisnika. Ukoliko se koristi default "postgres" korisnik za koji je definirana lozinka prilikom instalacije, ovdje se upiše ta ista lozinka.
-			Na samom vrhu nalazi se konfiguarijcka linija "\textit{server.port=8080}" kojom se može promijeniti port backend servera (default je 8080).
+			Kako bi aplikacija ispravno radila, potrebno je postaviti parametre za povezivanje s bazom podataka te ispravnu IP adresu i port za aktivacijski link u datoteci "\textit{application.properties}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/src/main/resources}").
 			
 			\begin{figure}[H]
 			\centering
@@ -252,6 +247,23 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\caption{application.properties datoteka}
 			\label{fig:ApplicationProperties}
 			\end{figure}
+			
+			Na samom vrhu nalazi se konfiguarijcka linija "\textit{server.port=8080}" kojom se može promijeniti port backend servera (default je 8080).
+			Ispod toga, nalazi se linija "\textit{activationURL = http://localhost:80}". Ovdje je potrebno specificirati javnu IP adresu servera (ili DNS name tj. link ukoliko se koristi), te port frontend dijela aplikacije (ukoliko nije default 80). Jedan od načina kako se to može napraviti jest tako da se na serveru otvori stranica "\textit{https://www.whatismyip.com/} te se kopira ispisana IP adresa na mjesto ("activationURL = http://<ip_adresa>:80")
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/WhatIsMyIp}
+			\caption{Kopiranje javne IPv4 adrese servera}
+			\label{fig:WhatIsMyIp}
+			\end{figure}
+
+			Nadalje, ispod se nalaze 3 ključne linije za povezivanje s bazom:
+			"\textit{spring.datasource.url= jdbc:postgresql://localhost:5432/postgres}"
+			"\textit{spring.datasource.username= postgres}"
+			"\textit{spring.datasource.password= password}"
+			Na prvoj liniji je potrebno specificirati odabrani port prilikom instalacije ("...//localhost:<port_number>/..."), te ime baze ("...5432/<ime_baze>") ukoliko se ne koristi default baza (PostgreSQL ima svoju default bazu "postgres" koja je kreirana prilikom instalacije)
+			Na drugoj liniji specificira se ime korisnika kojeg aplikacija koristi za pristup bazi, te na trećoj liniji lozinka tog korisnika. Ukoliko se koristi default "postgres" korisnik za koji je definirana lozinka prilikom instalacije, ovdje se upiše ta ista lozinka.
 			
 			Nakon modificiranja i spremanja konfiguracijske datoteke, potrebno je otvoriti cmd, pozicionirati se u trueBlood folder (putanja "\textit{IzvorniKod/trueBlood}") te izvršiti komandu "\textit{mvn clean install -DskipTests}" kojom će maven alat preuzeti potrebne "dependency-e" te izraditi .jar datoteku spremnu za pokretanje.
 			
@@ -270,9 +282,9 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 				\end{minipage}
 			\end{figure}
 
-			Izrađena .jar datoteka nalazi se na putanji "\textit{IzvorniKod/trueBlood/target}" pod imenom "\textit{trueBlood-0.0.1-SNAPSHOT}", te se sa cmd-om potrebno pozicionirati u navedeni folder i izvršiti komandu "\textit{java -jar trueBlood-0.0.1-SNAPSHOT.jar}" čime se pokreće backend dio aplikacije. Potrebno je ostaviti otvoren cmd prozor kako bi aplikacija radila.\\
+			Izrađena .jar datoteka (koja u sebi sadrži sve što je potrebno za njezino pokretanje, uključujući i tomcat web server) nalazi se na putanji "\textit{IzvorniKod/trueBlood/target}" pod imenom "\textit{trueBlood-0.0.1-SNAPSHOT}", te se sa cmd-om potrebno pozicionirati u navedeni folder i izvršiti komandu "\textit{java -jar trueBlood-0.0.1-SNAPSHOT.jar}" čime se pokreće backend dio aplikacije. Potrebno je ostaviti otvoren cmd prozor kako bi aplikacija radila.\\
 			
-			Aplikacija sama stvara tablice i strukturu podataka u schemu "public" unutar baze specificirane u application.properties. No za ispravan rad potrebno je još dodavanje statičkih redova na način da se otvori prije instalirana aplikacija "PgAdmin", (na upit za lozinku upiše se odabrana lozinka prilikom instalacije) desnim klikom na korištenu bazu odabere se "\textit{Query Tool}", u tekstni prozor se kopira sadržaj datoteke "\textit{puniteljBaze.sql}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/puniteljBaze.sql}") bilo samim kopiranjem teksta ili drag and drop metodom, te se pritisne tipka "\textit{Execute}". Ovim početnim punjenjem baze podataka, definira se početni admin korisnički račun (username: "admin", password: "admin") pomoću kojeg se dalje mogu kreirati druge vrste korisničkih računa.
+			Aplikacija sama stvara tablice i strukturu podataka u schemu "public" unutar baze specificirane u application.properties. No za ispravan rad potrebno je još dodavanje statičkih redova na način da se otvori prije instalirana aplikacija "PgAdmin", (na upit za lozinku upiše se odabrana lozinka prilikom instalacije) desnim klikom na korištenu bazu odabere se "\textit{Query Tool}", u tekstni prozor se kopira sadržaj datoteke "\textit{puniteljBaze.sql}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/puniteljBaze.sql}") bilo samim kopiranjem teksta ili drag and drop metodom, te se pritisne tipka "\textit{Execute}". Ovim početnim punjenjem baze podataka, definira se početni admin korisnički račun (username: "\textit{admin}", password: "\textit{admin}") pomoću kojeg je moguće daljnje upravljanje aplikacijom.
 			
 			\begin{figure}[H]
 			\centering
@@ -282,32 +294,21 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\end{figure}
 			
 			\textbf{Podešavanje i pokretanje frontend dijela aplikacije}\\
-			Nakon uspješno pokrenutog backend dijela aplikacije, potrebno je još posložiti i pokrenuti i frontend dio aplikacije. Prvo je potrebno saznati javnu IP adresu servera. jedan od načina kako se to može napraviti jest tako da se na serveru otvori stranica "\textit{https://www.whatismyip.com/} te se kopira ispisana IP adresa. Nakon toga, tu IP adresu i port backend dijela aplijacije definiranog prije u application.properties potrebno je upisati u datoteku "\textit{Constants.js}" (koja se nalazi na putanji "\textit{IzvorniKod/trueBlood/frontend/src/components/Constants.js}") na liniji "\textit{export const SPRING_URL = 'http://localhost:8080';}" ("...= <IP_adresa>:<port_number>';").
+			Nakon uspješno pokrenutog backend dijela aplikacije, potrebno je još posložiti i pokrenuti i frontend dio aplikacije. Potrebno je javnu IP adresu servera (dobivenu prije danim uputama) i port backend dijela aplijacije (definiranog prije u application.properties) upisati u datoteku "\textit{Constants.js}" (koja se nalazi na putanji "\textit{IzvorniKod/trueBlood/frontend/src/components}") na liniji "\textit{export const SPRING_URL = 'http://localhost:8080';}" ("...= <IP_adresa>:<port_number>';").
 
-			\begin{figure}[!tbp]
-				\centering
-				\begin{minipage}[b]{0.4\textwidth}
-					\includegraphics[width=\textwidth]{slike/WhatIsMyIp}
-					\caption{Kopiranje javne IPv4 adrese servera}
-					\label{fig:WhatIsMyIp}
-				\end{minipage}
-				\hfill
-				\begin{minipage}[b]{0.4\textwidth}
-					\includegraphics[width=\textwidth]{slike/ConstantsJs}
-					\caption{Constants.js datoteka}
-					\label{fig:ConstantsJs}
-				\end{minipage}
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/ConstantsJs}
+			\caption{Constants.js datoteka}
+			\label{fig:ConstantsJs}
 			\end{figure}
 			
-			Nakon modificiranja i spremanja datoteke Constants.js, potrebno je otvoriti novi cmd prozor, pozicionirati se u frontend folder (putanja "\textit{IzvorniKod/trueBlood/frontend}") te izvršiti komandu "\textit{npm install}" kojom se instaliraju potrebni node moduli, zatim komandu "\textit{npm run build}" kojom se kreira "build" folder u kojem se nalaze izvršne datoteke spremne za korištenje u produkciji. Te datoteke mogu se upogoniti u bilo kojem proizvoljnom web serveru (poput microsoftovog IIS-a), no radi jednostavnosti, nakon izvršenja prethodne naredbe, naredbom "\textit{npm install -g serve}" dodatno se instalira "serve" modul, koji koristi za posluživanje prije kreiranih datoteka. Napokon, naredbom "\textit{serve -s build -l 80}" pokrećemo Node.js web server na portu 80, te je ovime kompletna aplikacija spremna za upotrebu.
-			Napomena: 
+			Nakon modificiranja i spremanja datoteke Constants.js, potrebno je otvoriti novi cmd prozor, pozicionirati se u frontend folder (putanja "\textit{IzvorniKod/trueBlood/frontend}") te izvršiti komandu "\textit{npm install}" kojom se instaliraju potrebni node moduli, zatim komandu "\textit{npm run build}" kojom se kreira "\textit{build}" folder u kojem se nalaze izvršne datoteke spremne za korištenje u produkciji. Te datoteke mogu se upogoniti u bilo kojem proizvoljnom web serveru (poput microsoftovog IIS-a), no radi jednostavnosti, nakon izvršenja prethodne naredbe, naredbom "\textit{npm install -g serve}" dodatno se instalira "\textit{serve}" modul, koji koristi za posluživanje prije kreiranih datoteka. Napokon, naredbom "\textit{serve -s build -l 80}" pokreće se Node.js web server na portu 80 (ukoliko je ranije odabran neki drugi port frontend aplikacije, sa opcijom "\textit{...-l <port_number>}" se aplikacija pokreće na odabranom portu), te je ovime kompletna aplikacija spremna za upotrebu.
 			
-			\textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
-		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			\textbf{Napomene}\\
 			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			Ukoliko je uključen, potrebno je odabrane portove frontend i backend dijela aplikacije propustiti kroz firewall.\\
+			Ukoliko nakon pokretanja backend ili frontend dijela aplikacije neki od njih izgledno ne radi, moguće da se slučajnim lijevim klika mišom na cmd prozor (koji ga pokreće taj dio aplikacije zamrznuo. Potrebno je na taj isti prozor stisnuti desni klik miša, što će nastaviti rad zamrznutog dijela aplikacije. Preporuča se minimiziranje cmd prozora kako ne bi došlo do tog problema.\\
 			
 			
 			\eject 
