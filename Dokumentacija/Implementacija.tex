@@ -237,8 +237,70 @@ računalu nalaze web poslužitelj i poslužitelj baze podataka (PostgreSQL).
 			\label{fig:newPathInsert}
 			\end{figure}
 			
-			\textbf{Podešavanje i pokretanje backend dio aplikacije}\\
+			\textbf{Podešavanje i pokretanje backend dio aplikacije te inicijalno punjenje baze}\\
+			Kako bi aplikacija ispravno radila, potrebno je postaviti parametre za povezivanje s bazom podataka. U datoteci "\textit{application.properties}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/src/main/resources}") nalaze se 3 ključne linije za povezivanje s bazom:
+			"\textit{spring.datasource.url= jdbc:postgresql://localhost:5432/postgres}"
+			"\textit{spring.datasource.username= postgres}"
+			"\textit{spring.datasource.password= password}"
+			Na prvoj liniji je potrebno specificirati odabrani port prilikom instalacije ("...//localhost:<port_number>/..."), te ime baze ("...5432/<ime_baze>"), ukoliko se ne koristi default baza (PostgreSQL ima svoju default bazu "postgres" koja je kreirana prilikom instalacije)
+			Na drugoj liniji specificira se ime korisnika kojeg aplikacija koristi za pristup bazi, te na trećoj liniji lozinka tog korisnika. Ukoliko se koristi default "postgres" korisnik za koji je definirana lozinka prilikom instalacije, ovdje se upiše ta ista lozinka.
+			Na samom vrhu nalazi se konfiguarijcka linija "\textit{server.port=8080}" kojom se može promijeniti port backend servera (default je 8080).
 			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/ApplicationProperties}
+			\caption{application.properties datoteka}
+			\label{fig:ApplicationProperties}
+			\end{figure}
+			
+			Nakon modificiranja i spremanja konfiguracijske datoteke, potrebno je otvoriti cmd, pozicionirati se u trueBlood folder (putanja "\textit{IzvorniKod/trueBlood}") te izvršiti komandu "\textit{mvn clean install -DskipTests}" kojom će maven alat preuzeti potrebne "dependency-e" te izraditi .jar datoteku spremnu za pokretanje.
+			
+			\begin{figure}[!tbp]
+				\centering
+				\begin{minipage}[b]{0.4\textwidth}
+					\includegraphics[width=\textwidth]{slike/CmdCommands}
+					\caption{Pozicioniranje i izvršavanje komandi}
+					\label{fig:CmdCommands}
+				\end{minipage}
+				\hfill
+				\begin{minipage}[b]{0.4\textwidth}
+					\includegraphics[width=\textwidth]{slike/cmdBuildFinished}
+					\caption{Završni izlaz nakon uspješnog builda aplikacije}
+					\label{fig:cmdBuildFinished}
+				\end{minipage}
+			\end{figure}
+
+			Izrađena .jar datoteka nalazi se na putanji "\textit{IzvorniKod/trueBlood/target}" pod imenom "\textit{trueBlood-0.0.1-SNAPSHOT}", te se sa cmd-om potrebno pozicionirati u navedeni folder i izvršiti komandu "\textit{java -jar trueBlood-0.0.1-SNAPSHOT.jar}" čime se pokreće backend dio aplikacije. Potrebno je ostaviti otvoren cmd prozor kako bi aplikacija radila.\\
+			
+			Aplikacija sama stvara tablice i strukturu podataka u schemu "public" unutar baze specificirane u application.properties. No za ispravan rad potrebno je još dodavanje statičkih redova na način da se otvori prije instalirana aplikacija "PgAdmin", (na upit za lozinku upiše se odabrana lozinka prilikom instalacije) desnim klikom na korištenu bazu odabere se "\textit{Query Tool}", u tekstni prozor se kopira sadržaj datoteke "\textit{puniteljBaze.sql}" (koja se nalazi na putanji "\textit{IzvorniKod/trueblood/puniteljBaze.sql}") bilo samim kopiranjem teksta ili drag and drop metodom, te se pritisne tipka "\textit{Execute}". Ovim početnim punjenjem baze podataka, definira se početni admin korisnički račun (username: "admin", password: "admin") pomoću kojeg se dalje mogu kreirati druge vrste korisničkih računa.
+			
+			\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth, scale=0.5]{slike/puniteljBaze}
+			\caption{Punjenje baze statičkim podacima}
+			\label{fig:puniteljBaze}
+			\end{figure}
+			
+			\textbf{Podešavanje i pokretanje frontend dijela aplikacije}\\
+			Nakon uspješno pokrenutog backend dijela aplikacije, potrebno je još posložiti i pokrenuti i frontend dio aplikacije. Prvo je potrebno saznati javnu IP adresu servera. jedan od načina kako se to može napraviti jest tako da se na serveru otvori stranica "\textit{https://www.whatismyip.com/} te se kopira ispisana IP adresa. Nakon toga, tu IP adresu i port backend dijela aplijacije definiranog prije u application.properties potrebno je upisati u datoteku "\textit{Constants.js}" (koja se nalazi na putanji "\textit{IzvorniKod/trueBlood/frontend/src/components/Constants.js}") na liniji "\textit{export const SPRING_URL = 'http://localhost:8080';}" ("...= <IP_adresa>:<port_number>';").
+
+			\begin{figure}[!tbp]
+				\centering
+				\begin{minipage}[b]{0.4\textwidth}
+					\includegraphics[width=\textwidth]{slike/WhatIsMyIp}
+					\caption{Kopiranje javne IPv4 adrese servera}
+					\label{fig:WhatIsMyIp}
+				\end{minipage}
+				\hfill
+				\begin{minipage}[b]{0.4\textwidth}
+					\includegraphics[width=\textwidth]{slike/ConstantsJs}
+					\caption{Constants.js datoteka}
+					\label{fig:ConstantsJs}
+				\end{minipage}
+			\end{figure}
+			
+			Nakon modificiranja i spremanja datoteke Constants.js, potrebno je otvoriti novi cmd prozor, pozicionirati se u frontend folder (putanja "\textit{IzvorniKod/trueBlood/frontend}") te izvršiti komandu "\textit{npm install}" kojom se instaliraju potrebni node moduli, zatim komandu "\textit{npm run build}" kojom se kreira "build" folder u kojem se nalaze izvršne datoteke spremne za korištenje u produkciji. Te datoteke mogu se upogoniti u bilo kojem proizvoljnom web serveru (poput microsoftovog IIS-a), no radi jednostavnosti, nakon izvršenja prethodne naredbe, naredbom "\textit{npm install -g serve}" dodatno se instalira "serve" modul, koji koristi za posluživanje prije kreiranih datoteka. Napokon, naredbom "\textit{serve -s build -l 80}" pokrećemo Node.js web server na portu 80, te je ovime kompletna aplikacija spremna za upotrebu.
+			Napomena: 
 			
 			\textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
 		
