@@ -34,6 +34,7 @@ public class HealthDataController {
     @Autowired
     private BloodService bloodService;
 
+    @CrossOrigin("*")
     @GetMapping("/healthData")
     @Secured({ "ROLE_ADMIN", "ROLE_DJELATNIK" })
     public List<HealthData> getHealthData() {
