@@ -251,7 +251,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 		\section{Dijagram razreda}
 		
 	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7., 4.8 prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
-	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Razredi \texit{HealthData}, \texit{HealthDataAnswered} i \texit{HealthDataAnsweredId} modeliraju zdravstvene podatke potrebne za donacije. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
+	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Razredi \textit{HealthData}, \textit{HealthDataAnswered} i \textit{HealthDataAnsweredId} modeliraju zdravstvene podatke potrebne za donacije. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/dijagram_razreda1}
@@ -289,13 +289,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 \eject
 			
-			\textbf{\textit{dio 2. revizije}}\\			
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
-			
-			
-			\eject
 		
 		\section{Dijagram stanja}
 			Dijagram stanja primijenjuje se za opis stanja objekta i za opisivanje prijelaza iz jednog u drugo stanje. Priložena slika prikazuje stanjadijagram stanja za registriranog donora. Početno stanje je početna stranica aplikacije. U izborniku aplikacije donor može odabrati jednu od mogućnosti. Klikom na "Moji podaci" prikazuju mu se njegovi podaci, koje moeže urediti. Odabirom opcije "Poruke" prikazuju se poruke donoru koje mu javlja sustav. Klikom na 
