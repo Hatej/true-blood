@@ -250,8 +250,8 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
 		\section{Dijagram razreda}
 		
-	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7. prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
-	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
+	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7., 4.8 prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
+	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Razredi \texit{HealthData}, \texit{HealthDataAnswered} i \texit{HealthDataAnsweredId} modeliraju zdravstvene podatke potrebne za donacije. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/dijagram_razreda1}
@@ -260,7 +260,7 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 \end{figure}
 		
 	\eject
-	Na idućoj slici prikazana je sloj \textit{backenda} koji je odgovoran za neposrednu komunikaciju s poslužiteljem baze podataka. Kao glavna komponenta na slici prikazano je sučelje JpaRepository, koje predstavlja apstraktni repozitorij podataka. Iz tog sučelja, izvedena su sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite ServiceJpa klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService. 
+	Na idućoj slici prikazana je sloj \textit{backenda} koji je odgovoran za neposrednu komunikaciju s poslužiteljem baze podataka. Imamo sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository, HealthDataRepository te HealthDataAnsweredRepository koja predstavljaju apstraktni repozitorij podataka. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite Service klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService.  
 	
 \begin{figure}[H]
 	\centering
@@ -271,13 +271,20 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 \eject
 
-	Na zadnjoj slici prikazani su \textit{Controlleri} koji komuniciraju s vanjskim svijetom odnosno \textit{frontendom} te upravljaju modelom podataka. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController i DonationController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
+	Na zadnje dvije slike prikazani su \textit{Controlleri} koji komuniciraju s vanjskim svijetom odnosno \textit{frontendom} te upravljaju modelom podataka i DTO-ovi (eng. Data Transfer Object) koje oni koriste za prijenos podataka. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController, DonationController, AdminController i HealthDataController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint i DTO-ove koji su u paketu \textit{Util}. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
 	
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_razreda3}
 	\caption{Dijagram razreda koji opisuju kontrolere}
 	\label{fig:dijagram_kontrolera}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_razreda4}
+	\caption{Dijagram razreda koji opisuju DTO-ove}
+	\label{fig:dijagram_DTO}
 \end{figure}
 
 \eject
