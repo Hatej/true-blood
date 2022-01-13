@@ -57,7 +57,7 @@ function DonationHistory(props) {
                                 <td><button className="btn btn-danger" onClick={()=>generatePDF(donacija.id)}>Generiraj PDF</button></td>
                             </tr>
                         ); 
-                    }) : <span>Loading</span>}
+                    }) : <tr></tr>}
                 </tbody>            
             </Table>
         </div> 

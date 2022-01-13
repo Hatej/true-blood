@@ -25,9 +25,9 @@ function Messages(props) {
 
     return(
         <ListGroup>
-            <ListGroupItem hidden={!messages.belowLower}>Razina vaše krvne vrste je pala ispod donje granice! Pozivamo vas na doniranje!</ListGroupItem>
-            <ListGroupItem className="border" hidden={!messages.months}>Još niste donirali ili je prošlo tri mjeseca od uspješne donacije. Pozivamo vas na doniranje!</ListGroupItem>
-            <ListGroupItem className="border" hidden={messages.belowLower || messages.months}>Nemate poruka!</ListGroupItem>
+            <ListGroupItem hidden={!messages.belowLower ? true : false}>Razina vaše krvne vrste je pala ispod donje granice! Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={!messages.months ? true : false}>Još niste donirali ili je prošlo tri mjeseca od uspješne donacije. Pozivamo vas na doniranje!</ListGroupItem>
+            <ListGroupItem className="border" hidden={messages.belowLower || messages.months ? true : false}>Nemate poruka!</ListGroupItem>
         </ListGroup>    
     )
 }

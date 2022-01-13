@@ -3,6 +3,8 @@ import { useState } from 'react';
 import {useHistory} from "react-router-dom";
 import AuthHandler from "./AuthHandler";
 import { Form, Button } from 'react-bootstrap';
+import axios from "axios";
+import {SPRING_URL} from "./Constants";
 
 function LoginForm(props) {
 
@@ -11,17 +13,28 @@ function LoginForm(props) {
     const [passwordShown, setPasswordShown] = useState(false);
     const history = useHistory();
 
-    function onSubmit(e) {
+    async function onSubmit(e) {
         e.preventDefault();
         setError("");
         AuthHandler.logout();
         props.logSet(false);
         AuthHandler
             .executeBasicAuthenticationService(loginForm.username, loginForm.password)
-            .then((res) => {
+            .then(async (res) => {
                 AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password, res.data.role);
                 props.logSet(true);
                 history.push('/home');
+                if(res.data.role === "DONOR"){
+                    let message = await axios.get(SPRING_URL.concat('/user/getMessages'), {
+                        headers: {
+                            username: AuthHandler.getLoggedInUserName()
+                        }
+                    }).then(res => res.data);
+                    console.log(message);
+                    if(message.belowLower || message.months){
+                        alert("Imate poruka u pretincu!");
+                    }
+                }
             }).catch(() => {
                 setError("Login failed!");
                 history.push('/login');

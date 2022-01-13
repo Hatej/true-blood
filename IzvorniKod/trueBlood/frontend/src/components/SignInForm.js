@@ -34,14 +34,6 @@ function SignInForm(props) {
         };
 
         console.log(data);
-
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        };
         setError("");
         let endPoint = SPRING_URL.concat('/user');
         if(props.mode === "ADDING_EMPLOYEE"){
