@@ -14,6 +14,7 @@ import fer.progi.illidimusdigitus.trueblood.service.DonationService;
 import fer.progi.illidimusdigitus.trueblood.service.RoleService;
 import fer.progi.illidimusdigitus.trueblood.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,13 @@ public class UserController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    private final String activationURL;
+
+    @Autowired
+    public UserController(@Value("${activationURL}") String activationURL) {
+        this.activationURL = activationURL;
+    }
 
     //@CrossOrigin(origins = "*", allowCredentials = "true")
     //@GetMapping("")
@@ -104,7 +112,7 @@ public class UserController {
         );
 
         userService.createUser(newUser);
-        userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
+        userService.sendMail(newUser,activationURL + "/user/add/confirm");
         return ResponseEntity.ok().build();
     }
     
