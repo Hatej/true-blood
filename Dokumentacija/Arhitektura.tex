@@ -22,8 +22,9 @@
 	\underbar{ \textit{Baza podataka}}{ je zbirka zapisa pohranjenih u računalu na sustavan način, tako da joj se računalni program može obratiti prilikom odgovaranja na problem. Web poslužitelj komunicira s bazom podataka te povlači potrebne zapise iz nje.}
 	
 	\underbar{ \textit{Web poslužitelj}}{ je srce našeg sustava. Njegova zadaća je komunikacija klijenta s aplikacijom te bazom podataka. Pri komunikaciji koristi HTTP protokol.Korisnik i aplikacija razmjenjuju HTTP zahtjeve (eng. HTTP request) i HTTP odgovore (HTTP response). Radi jednostavnosti, baza podataka je također smještena na poslužitelju.}\\
-	Korisnik kroz grafičko sučelje, odnosno frontend, šalje zahtjeve na REST pristupne točke backenda. Tada stražnji kraj procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, stražnji kraj šalje odgovor prednjem kraju u obliku JSON objekta, a prednji kraj procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
-	Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
+	Korisnik kroz grafičko sučelje, odnosno frontend, šalje zahtjeve na REST pristupne točke backenda. Tada backend procesuira zahtjev i ako je potrebno komunicira s bazom podataka. Nakon konstrukcije, backend šalje odgovor frontendu u obliku JSON objekta, a frontend procesuira odgovor i promjene prikazuje korisniku u obliku HTML stranice.
+\eject
+	Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Java zajedno s Spring radnim okvirom te programski jezik JavaScript u sklopu React-a. Odabrana razvojna okruženja su Eclipse i IntelliJ IDEA. Za aplikaciju je odabrana višeslojna arhitektura temeljena na \textbf{MVC} (Model - View - Controller) arhitekturnom stilu te uslužnoj arhitekturi. Podjela slojeva možemo napraviti na idući način:
 	\begin{figure}[H]
 			\centering
 			\includegraphics[scale=0.9]{slike/arhitektura2.png}
@@ -31,14 +32,14 @@
 			\label{fig:slojevi}
 		\end{figure}
 	\begin{itemize}
-\eject
 		\item 	\textit{sloj korisničke strane} - korisničko sučelje
 		\item 	\textit{sloj nadglednika} - REST nadglednici
 		\item 	\textit{sloj domene}	- model podataka iz domene primjene
 		\item 	\textit{sloj za pristup podacima} - posrednik između sloja domene i baze podataka
 		\item 	\textit{sloj baze podataka} - pohrana podataka	
 		\end{itemize}
-	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija prednjeg i stražnjeg kraja ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i prednji i stražnji kraj neovisno o jeziku implementacije, što potiče ponovnu uporabu. }
+
+\eject	{Ovakva arhitektura odabrana je zbog poželjnih svojstava MVC arhitekturnog stila i višeslojne arhitekture: razvoj pojedinih slojeva je jednostavniji i u velikom stupnju nezavisan od razvoja drugih slojeva. Također komunikacija frontenda i backenda ostvarena je primjenom REST arhitekturnog stila. Zbog toga su i frontend i backend neovisni o jeziku implementacije, što potiče ponovnu uporabu. }
 	
 	 {Model-View-Controller se sastoji od:}
 	\begin{itemize}
@@ -249,8 +250,13 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
 		\section{Dijagram razreda}
 		
+<<<<<<< HEAD
 	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7. prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
 	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Razred HealthData modelira zdravstvena pitanja, a HealthDataAnswered modelira odgovore na određena zdravstvena pitanja. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
+=======
+	Dijagram razreda pokazuje odnose između različitih objekata, te njihove atribute i operacije kojima vladaju. Na slikama 4.5., 4.6, 4.7., 4.8 prikazani su razredi koji pripadaju \textit{backend} dijelu naše arhitekture. Radi jednostavnosti, dijagram razreda je podijeljen u više slika, no bez obzira na to, prikazani razredi na neki način komuniciraju.
+	Na idućoj slici prikazan je model podataka kojima backend rukuje. Korisnik aplikacije (administartor, djelatnik banke, donor) modeliran je razredom \textit{User}. Razred \textit{Blood} modelira krvne grupe. Razred \textit{Consumption} modelira potrošnju krvi. Razred \textit{Donation} modelira pokušaj donacije krvi, dok razred \textit{Role} modelira 3 moguće uloge u aplikaciji. Razredi \textit{HealthData}, \textit{HealthDataAnswered} i \textit{HealthDataAnsweredId} modeliraju zdravstvene podatke potrebne za donacije. Također navedene su enumeracije za nazive krvnih grupa i nazive uloga.
+>>>>>>> devdoc
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, scale=2.0]{dijagrami/dijagram_razreda1}
@@ -259,7 +265,11 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 \end{figure}
 		
 	\eject
+<<<<<<< HEAD
 	Na idućoj slici prikazana je sloj \textit{backenda} koji je odgovoran za neposrednu komunikaciju s poslužiteljem baze podataka. Kao glavna komponenta na slici prikazano je sučelje JpaRepository, koje predstavlja apstraktni repozitorij podataka. Iz tog sučelja, izvedena su sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository, HealthDataRepository i HealthDataAnsweredRepository. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite ServiceJpa klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService. 
+=======
+	Na idućoj slici prikazana je sloj \textit{backenda} koji je odgovoran za neposrednu komunikaciju s poslužiteljem baze podataka. Imamo sučelja UserRepository, RoleRepository, BloodRepository, ConsumptionRepository, DonationRepository, HealthDataRepository te HealthDataAnsweredRepository koja predstavljaju apstraktni repozitorij podataka. Ta sučelja predstavljaju repozitorij podataka za prije navedene razrede modela, tj. oni predstavljaju poveznicu s bazom ili DAO (eng. Data Access Object). Također koriste se različite Service klase koje koriste te repozitorije, te one implementiraju sučelje imeKlaseService.  
+>>>>>>> devdoc
 	
 \begin{figure}[H]
 	\centering
@@ -270,7 +280,8 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 \eject
 
-	Na zadnjoj slici prikazani su \textit{Controlleri} koji komuniciraju s vanjskim svijetom odnosno \textit{frontendom} te upravljaju modelom podataka. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController ,DonationController, HealthDataController i HealthDataAnsweredController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
+	Na zadnje dvije slike prikazani su \textit{Controlleri} koji komuniciraju s vanjskim svijetom odnosno \textit{frontendom} te upravljaju modelom podataka i DTO-ovi (eng. Data Transfer Object) koje oni koriste za prijenos podataka. Ovdje vidimo razrede UserController, RoleController, BloodController, ConsumptionController, DonationController, AdminController i HealthDataController. Svi ti razredi koriste Java anotaciju RestController koji predstavlja REST endpoint i DTO-ove koji su u paketu \textit{Util}. Ti razredi su oni koji dobivaju zahtjeve iz vanjskog svijeta, a odgovaraju HTTP odgovorima i JSON objektima.
+
 	
 \begin{figure}[H]
 	\centering
@@ -279,35 +290,60 @@ Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 	\label{fig:dijagram_kontrolera}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_razreda4}
+	\caption{Dijagram razreda koji opisuju DTO-ove}
+	\label{fig:dijagram_DTO}
+\end{figure}
+
 \eject
 			
-			\textbf{\textit{dio 2. revizije}}\\			
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
-			
-			
-			\eject
 		
 		\section{Dijagram stanja}
+			Dijagram stanja primijenjuje se za opis stanja objekta i za opisivanje prijelaza iz jednog u drugo stanje. Priložena slika prikazuje stanjadijagram stanja za registriranog donora. Početno stanje je početna stranica aplikacije. U izborniku aplikacije donor može odabrati jednu od mogućnosti. Klikom na "Moji podaci" prikazuju mu se njegovi podaci, koje moeže urediti. Odabirom opcije "Poruke" prikazuju se poruke donoru koje mu javlja sustav. Klikom na 
+"Povijest darivanja" prikazuju se prijašnja darivanja za koje, ako je darivanje uspješno,  može izvaditi PDF potvrdu.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.7]{dijagrami/dijagram_stanja}
+	\caption{Dijagram stanja}
+	\label{fig:dijagram_stanja}
+\end{figure}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
 			
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			Dijagram aktivnosti prikazuje povezane aktivnosti na visokoj apstrakcijskoj razini,odnosno intuitivno prikazuje kako podaci teku kroz aplikaciju i kako se
+kontrola nad podacima mijenja. U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog. Idući dijagram prikazuje proces smanjivanja količine krvi slanjem u zdravstvenu ustanovu. Ovaj proces može provesti djelatnik banke. Proces započinje prijavom, djelatnik banke odabere krvnu grupu na prikazu količina krvi i unese količinu krvi koju želi poslati zdravstvenoj ustanovi. Kada transakcija završi prikazuje mu se potvrda o smanjenju krvi.
+		
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_aktivnosti}
+	\caption{Dijagram aktivnosti}
+	\label{fig:dijagram_aktivnosti}
+\end{figure}
+				
 			
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			Dijagram komponenti omogućuje nam pogled na sustav s visoke razine apstrak-
+cije. Web aplikacija komunicira sa sustavom preko dva sučelja. Prvo sučelje služi
+za dohvat samih stranica, dakle HTML, CSS i JS datoteka. Drugo sučelje služi
+za komunikaciju između aplikacije i baze podataka. Dakle, web aplikacija šalje
+zahtjev REST API-u, koji preko kontrolera komunicira s repozitorijima
+podataka, koji predstavljaju sloj povezanosti između baze podataka i kontrolera.  Podaci koji su pristigli
+iz baze se šalju dalje MVC arhitekturi u obliku DTO (Data transfer object).
+React view komponenta preko dostupnih sučelja komunicira s web aplikacijom te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth, scale=0.5]{dijagrami/dijagram_komponenti}
+	\caption{Dijagram komponenti}
+	\label{fig:dijagram_komponenti}
+\end{figure}
