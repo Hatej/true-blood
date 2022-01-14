@@ -181,8 +181,8 @@ public class UserController {
         );
 
         userService.createUser(newUser);
-       
-        userService.sendMail(newUser,"http://localhost:3000/user/add/confirm");
+
+        userService.sendMail(newUser,activationURL + "/user/add/confirm");
         
         return ResponseEntity.ok().build();
     }
