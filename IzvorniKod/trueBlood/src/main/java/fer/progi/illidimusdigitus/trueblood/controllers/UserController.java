@@ -94,7 +94,7 @@ public class UserController {
         System.out.println(nPass);
 
         User newUser = new User(
-                String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
+        		buildUsername(dto.getName(), dto.getSurname(), dto.getOib()),
                 passwordEncoder.encode(nPass),
                 dto.getName(),
                 dto.getSurname(),
@@ -115,7 +115,31 @@ public class UserController {
         userService.sendMail(newUser,activationURL + "/user/add/confirm");
         return ResponseEntity.ok().build();
     }
-    
+    public String buildUsername(String name, String surname, String oib) {
+    	String first = String.valueOf(name.charAt(0)).toUpperCase();
+    	String second = String.valueOf(surname.charAt(0)).toUpperCase();
+    	
+    	switch(first) {
+    		case "Č" -> first = "C";
+    		case "Ć" -> first = "C";
+    		case "Đ" -> first = "D";
+    		case "Š" -> first = "S";
+    		case "Ž" -> first = "Z";
+    	}
+    	System.out.println(first);
+    	
+    	switch(second) {
+			case "Č" -> second = "C";
+			case "Ć" -> second = "C";
+			case "Đ" -> second = "D";
+			case "Š" -> second = "S";
+			case "Ž" -> second = "Z";
+    	}
+    	System.out.println(second);
+    	
+    	return first + second + oib.substring(6);
+    	
+    }
     /*@CrossOrigin(origins = "*")
     @PostMapping("/addAdmin")
     public ResponseEntity<User> createAdmin(@RequestBody CreateUserDTO dto, HttpServletRequest request) {
@@ -163,7 +187,7 @@ public class UserController {
         System.out.println(nPass);
 
         User newUser = new User(
-                String.valueOf(dto.getName().charAt(0)) + String.valueOf(dto.getSurname().charAt(0)) + dto.getOib().substring(6),
+        		buildUsername(dto.getName(), dto.getSurname(), dto.getOib()),
                 passwordEncoder.encode(nPass),
                 dto.getName(),
                 dto.getSurname(),
