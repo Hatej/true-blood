@@ -155,10 +155,10 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor/djelatnik/administrator unosi e-mail i lozinku u login formu te odabire akciju "Prijava"
+							\item Donor unosi e-mail i lozinku u login formu te odabire akciju "Prijava"
 							\item Sustav validira unesene podatke, provodi autentikaciju i autorizaciju korisnika
 							\item Sustav otvara početni ekran aplikacije te korisniku 
-							\item Pregledavanje ispisane obavijesti na ekranu da pogleda u pretinac svojih poruka ako su prijeđene optimalne granice ili ako dobiva poziv na doniranje
+							\item Pregledavanje ispisane obavijesti na ekranu 
 							
 						\end{packed_enum}
 						\item  \textbf{Opis mogućih odstupanja:}
@@ -173,7 +173,7 @@
 							\item[3.a] Prijeđena je donja optimalna granica ili je prošlo dovoljno vremena od prijašnje donacije
 							\item[] \begin{packed_enum}
 								
-								\item  Sustav prikazuje oznaku iznad izbornika "Donor" što znači da ima novih poruka u pretincu
+								\item  Sustav prikazuje obavijest da ima novih poruka u pretincu
 							\end{packed_enum}
 					\end{packed_item}
 					\end{packed_item}
@@ -213,20 +213,6 @@
 							\item Sustav ažurira bazu podataka
 							
 						\end{packed_enum}
-
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[3.a] Korisnik ne spremi promjenu
-							\item[] \begin{packed_enum}
-								
-								\item  Sustav obavještava korisnika da nije spremio podatke prilikom izlaska iz prozora i vraća ga u korak 3 osnovnog tijeka
-							 
-
-								
-									\end{packed_enum}
-								\end{packed_item}
 					\end{packed_item}
 \noindent \underbar{\textbf{UC6 - Pregledaj povijest darivanja}}
 					\begin{packed_item}
@@ -239,8 +225,8 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Povijest darivanja"
-							\item Sustav dohvaća povijest darivanja s baze podataka te ju prikazuje
+							\item Donor odabire opciju "Povijest donacija"
+							\item Sustav dohvaća povijest darivanja iz baze podataka te ju prikazuje
 							
 						\end{packed_enum}
 
@@ -257,9 +243,9 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Donor odabire opciju "Povijest darivanja"
+							\item Donor odabire opciju "Povijest donacija"
 							\item Sustav dohvaća povijest darivanja iz baze podataka te ju prikazuje
-							\item Donor odabire opciju "PDF potvrda" koja se nalazi uz svaki zapis doniranja krvi
+							\item Donor odabire opciju "Generiraj PDF" koja se nalazi uz svaki uspješan zapis doniranja krvi
 							\item Sustav donoru šalje potvrdu na mail
 							
 						\end{packed_enum}
@@ -301,7 +287,7 @@
 							\item Sustav dohvaća podatke za svaku vrstu krvi
 							\item Djelatnik odabire krvnu grupu čiju zalihu želi smanjiti
 							\item Djelatnik upisuje količinu i naziv institucije u koju je potrebno poslati krv
-							\item Djelatnik odabire akciju "Smanji količinu krvi"
+							\item Djelatnik odabire akciju "Smanji zalihu"
 							\item Sustav provjerava je li moguće provesti smanjivanje
 							\item Sustav provodi smanjivanje u bazi podataka
 						\end{packed_enum}
@@ -316,7 +302,7 @@
 							\item[5.a] Smanjivanjem se prešla donja granica optimalne količine krvi
 							\item[] \begin{packed_enum}
 								
-								\item  Sustav šalje notifikaciju na mail adresu djelatinu banke i donoru(donoru se također šalje poruka u pretinac poruke)
+								\item  Sustav šalje notifikaciju na mail adresu djelatniku banke i donoru(donoru se također šalje poruka u pretinac poruke)
 							 
 
 								
@@ -457,10 +443,10 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju "Prikaz donora"}
+		\item {Administrator odabire opciju "Popis donora"}
 		\item {Sustav prikazuje popis registriranih donora} 
-		\item {Administrator odabire opciju "Deaktiviraj račun"}
-		\item {Sustav deaktivira račun donora}
+		\item {Administrator odabire opciju "Obriši donora"}
+		\item {Sustav briše donora, ali ostaje zapis o njegovim donacijama}
 		\item {Baza se ažurira}
 	\end{packed_enum}
 	
@@ -489,11 +475,6 @@
 	
 		\item[] \begin{packed_item}
 		
-			\item[4.a] {Administrator ne spremi promjene}
-				\item[] \begin{packed_enum}
-			
-				\item Sustav obavještava administratora da nije spremio promjene i vraća ga na korak 4. 
-				\end{packed_enum}
 			\item[4.b] {Prešle su se gornje optimalne granice}	
 				\item[] \begin{packed_enum}
 			
@@ -522,7 +503,7 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju "Prikaz popisa djelatnika banke"}
+		\item {Administrator odabire opciju "Popis djelatnika"}
 		\item {Sustav prikazuje popis svih djelatnika banke}
 		\end{packed_enum}
 \end{packed_item}
@@ -539,10 +520,10 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item {Administrator odabire opciju "Prikaz djelatnika banke"}
+		\item {Administrator odabire opciju "Popis djelatnika"}
 		\item {Sustav vraća popis djelatnika banke}
-		\item {Administrator odabire opciju "Deaktiviraj račun"}
-		\item {Sustav briše djelatnika}
+		\item {Administrator odabire opciju "Obriši djelatnika banke"}
+		\item {Sustav briše djelatnika, ali ostaju zapisi o njegovim provedenim donacija i evidentiranju smanjenja količina krvi}
 		\item {Baza se ažurira}
 	\end{packed_enum}
 	
