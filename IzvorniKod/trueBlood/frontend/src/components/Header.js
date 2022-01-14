@@ -40,7 +40,7 @@ function Header(props) {
                 <Nav.Item>
                     <Nav.Link className="navbar-brand" href="/home">
                         <img src={logo} width="30" height="30" className="d-inline-block align-top" alt=""/>
-                        Home
+                        {'Početna stranica'}
                     </Nav.Link>
                 </Nav.Item>
                 <div className="navbar-nav justify-content-end ms-auto">
