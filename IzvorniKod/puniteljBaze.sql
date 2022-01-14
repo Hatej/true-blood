@@ -35,10 +35,6 @@ INSERT INTO "krvna_vrsta" VALUES (8,1,'ZERO_MINUS',1,1);
 
 INSERT INTO "korisnik_aplikacije" VALUES ('admin',NULL,'Adresa stanovanja','2021-12-23','mjesto rodjenja','adminmail@gmail.com',TRUE,'','0994206969','admin','74114785258','$2a$12$S5AvMwo32Glo/cwDdVZdGuQBYp8YrsUR7BWijVURzHts6mJAAJQTC','false','adminkovic','mjesto zaposlenja',1,1);
 
-INSERT INTO "korisnik_aplikacije" VALUES ('djelatnik',NULL,'Adresa stanovanja','2021-12-23','mjesto rodjenja','djelatnikmail@gmail.com',TRUE,'','0986942069','djelatnik','96524763127','$2a$12$82W7cA5Pvt/9kZxxvjEBE.hYSmvxjB88L0Rf3t24WBcS7CYcX7dZa','false','djelatnicic','mjesto zaposlenja',1,2);
-
-INSERT INTO "korisnik_aplikacije" VALUES ('donor',NULL,'Adresa stanovanja','2021-12-23','mjesto rodjenja','donormail@gmail.com',TRUE,'','0956942069','donor','32567415984','$2a$12$WWtHST9AYSwblmoGDWCxs.ct3tlqt.7Hejg7jOiefB9lAnNsQV1nm','false','donorcic','mjesto zaposlenja',1,3);
-
 UPDATE krvna_vrsta
 SET donja_granica = 275, gornja_granica = 1150, trenutna_zaliha = 470
 WHERE ime_krvne_grupe = 'A_PLUS';
