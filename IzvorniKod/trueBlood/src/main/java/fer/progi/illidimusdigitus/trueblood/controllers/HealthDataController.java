@@ -178,6 +178,8 @@ public class HealthDataController {
 	        if(blood.getSupply() > blood.getUpperbound()){
 	        	bloodService.sendNotifUpper(blood);
 	        }
+	        
+	        donationService.sendPDF(donation, donor);
        	}
 
         return ResponseEntity.ok().body(poruka);
