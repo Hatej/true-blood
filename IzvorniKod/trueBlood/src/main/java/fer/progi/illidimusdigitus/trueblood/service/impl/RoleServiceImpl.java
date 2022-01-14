@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RoleServiceJpa implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository roleRepo;

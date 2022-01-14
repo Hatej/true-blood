@@ -1,41 +1,40 @@
 import React from 'react';
+import { useState } from 'react';
 import {useHistory} from "react-router-dom";
-import "./SignInForm.css";
 import AuthHandler from "./AuthHandler";
+import { Form, Button } from 'react-bootstrap';
+import axios from "axios";
+import {SPRING_URL} from "./Constants";
 
 function LoginForm(props) {
 
-    let usernameText, passwordText, loginText, showPasswordText;
-    if (props.language === "croatian") {
-        usernameText = "Korisničko ime"
-        passwordText = "Lozinka"
-        loginText = "Prijavi se"
-        showPasswordText = "Prikaži lozinku"
-    
-    }
-
-    if (props.language === "english") {
-        usernameText = "Username"
-        passwordText = "Password"
-        loginText = "Log in"
-        showPasswordText = "Show password"
-    
-    }
-
-    const [loginForm, setLoginForm] = React.useState({ username: '', password: ''});
-    const [error, setError] = React.useState("");
-    const [passwordType, setPasswordType] = React.useState("password")
+    const [loginForm, setLoginForm] = useState({ username: '', password: ''});
+    const [error, setError] = useState("");
+    const [passwordShown, setPasswordShown] = useState(false);
     const history = useHistory();
 
-    function onSubmit(e) {
+    async function onSubmit(e) {
         e.preventDefault();
-        setError("")
+        setError("");
+        AuthHandler.logout();
+        props.logSet(false);
         AuthHandler
             .executeBasicAuthenticationService(loginForm.username, loginForm.password)
-            .then(() => {
-                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password)
+            .then(async (res) => {
+                AuthHandler.registerSuccessfulLogin(loginForm.username, loginForm.password, res.data.role);
                 props.logSet(true);
                 history.push('/home');
+                if(res.data.role === "DONOR"){
+                    let message = await axios.get(SPRING_URL.concat('/user/getMessages'), {
+                        headers: {
+                            username: AuthHandler.getLoggedInUserName()
+                        }
+                    }).then(res => res.data);
+                    console.log(message);
+                    if(message.belowLower || message.months){
+                        alert("Imate poruka u pretincu!");
+                    }
+                }
             }).catch(() => {
                 setError("Login failed!");
                 history.push('/login');
@@ -50,33 +49,43 @@ function LoginForm(props) {
         setLoginForm(newForm);
     }   
 
-    function onClick(event) {
-        if(passwordType === "text") {
-            setPasswordType("password")
-        } else {
-            setPasswordType("text")
-        }
+    function togglePassword(){
+        setPasswordShown(!passwordShown);
     }
        
-
     return (
-        <div className="SignupLoginForm">
-            <form onSubmit={onSubmit}>
-                <div className="FormRow">
-                    <label>{usernameText}</label>
-                    <input name='username' onChange={onChange} value={loginForm.username} type='text' required/>
-                </div>
-                <div className="FormRow">
-                    <label>{passwordText}</label>
-                    <input name='password' type={passwordType} onChange={onChange} value={loginForm.password} required/>
-                </div>
-                <div className="FormRow">
-                    <label>{showPasswordText}</label>
-                    <input name='showPassword' onClick={onClick} type="checkbox" checked={passwordType==="text"}/>
-                </div>
-                <div className='error'>{error}</div>
-                <button type="submit">{loginText}</button>
-            </form>
+        <div className="container col-md-4 col-md-offset-4 border border-danger rounded">
+            <Form className="mt-3 mb-3" onSubmit={onSubmit}>
+                <Form.Group className="col-xs-2">
+                    <Form.Label>Korisničko ime</Form.Label>
+                    <Form.Control 
+                        required
+                        type="text"
+                        name="username"
+                        value={loginForm.username}
+                        onChange={onChange}
+                        placeholder="Korisničko ime"  
+                    />
+                </Form.Group>
+                <br/>
+                <Form.Group>
+                    <Form.Label>Lozinka</Form.Label>
+                    <Form.Control 
+                        required
+                        type={passwordShown ? "text" : "password"}
+                        name="password"
+                        value={loginForm.password}
+                        onChange={onChange}
+                        placeholder="Lozinka"  
+                    />
+                </Form.Group>
+                <Form.Check type="checkbox" label="Prikaži lozinku" onClick={() => togglePassword()}></Form.Check>
+                <hr/>
+                <Button className="btn-danger" type="submit">
+                    Login
+                </Button>
+                <div>{error}</div>
+            </Form>
         </div>
     )
 }

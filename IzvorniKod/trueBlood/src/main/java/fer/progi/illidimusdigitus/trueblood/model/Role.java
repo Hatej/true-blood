@@ -31,10 +31,7 @@ public class Role {
 	@Enumerated(EnumType.STRING)
     @Column(name = "ulogaName", nullable = false)
     public RoleName name;
-    
-    //ne znam dal je ovo potrebno
-	@OneToMany(mappedBy = "role")
-	private Set<User> users = new HashSet<>();
+
 
 	public Role() {
 

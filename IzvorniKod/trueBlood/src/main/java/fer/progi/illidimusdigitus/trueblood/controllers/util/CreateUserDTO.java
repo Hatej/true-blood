@@ -1,4 +1,4 @@
-package fer.progi.illidimusdigitus.trueblood.controllers;
+package fer.progi.illidimusdigitus.trueblood.controllers.util;
 
 import fer.progi.illidimusdigitus.trueblood.model.util.BloodType;
 
@@ -29,6 +29,18 @@ public class CreateUserDTO {
     public Date birthdate;
 
     public String bloodTypeName;
+
+    public boolean rejected;
+
+    public boolean genderMale;
+
+    public boolean isGenderMale() {
+        return genderMale;
+    }
+
+    public void setGenderMale(boolean genderMale) {
+        this.genderMale = genderMale;
+    }
 
     public String getName() {
         return name;
@@ -118,4 +130,11 @@ public class CreateUserDTO {
         this.bloodTypeName = bloodTypeName;
     }
 
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
+    }
+
+    public boolean getRejected() {
+        return rejected;
+    }
 }

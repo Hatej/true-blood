@@ -100,13 +100,19 @@ public class User {
     /**
      * User activation
      */
-    @Column(name = "aktivacijskiKljuc", unique = true, nullable = false)
+    @Column(name = "aktivacijskiKljuc")
     public String activation;
+
+	/**
+	 * User gender
+	 */
+	@Column(name="spol")
+	public boolean gender;
 
     /**
      * Blood Type
      */
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "krvId")
     public Blood bloodType;
     
@@ -114,7 +120,7 @@ public class User {
     /**
      * Role 
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "ulogaId")
     public Role role;
     
@@ -122,10 +128,12 @@ public class User {
     }
     
     
-    public User(String username, String password, String name, String surname,
+    public User(String username, String password, String name, String surname, boolean male,
                     String birthplace, String oib, String address, String workplace,
                     String email, String mobilePrivate, String mobileBusiness, Date birthdate,
                     Role role, Blood bloodType) {
+
+		this.gender = male;
         this.username = username;
 		this.password = password;
         this.name = name;
@@ -144,26 +152,29 @@ public class User {
 		this.activation = oib.substring(1);
     }
     
-    /*public User(String username, String name, String surname,
-            String birthplace, String oib, String address, String workplace,
-            String email, String mobilePrivate, String mobileBusiness, Date birthdate,
-            boolean rejected, String rejection, Role role, Blood bloodType) {
+    
+    public User(String username,String password, String name, String surname,
+            String oib, Role role, Blood bloodType, String email,boolean male,
+			String workplace, String mobilePrivate, String mobileBusiness, Date birthdate,
+			String address, String birthplace) {
 		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
-		this.birthplace = birthplace;
-		this.email = email;
 		this.oib = oib;
-		this.address = address;
-		this.mobilePrivate = mobilePrivate;
-		this.mobileBusiness = mobileBusiness;
-		this.birthdate = birthdate;
-		this.rejected = rejected;
-		this.rejection = rejection;
 		this.role = role;
 		this.bloodType = bloodType;
-    }*/
-
+		this.email = email;
+		this.gender = male;
+		this.workplace = workplace;
+        this.mobilePrivate = mobilePrivate;
+        this.mobileBusiness = mobileBusiness;
+        this.birthdate = birthdate;
+		this.address = address;
+		this.birthplace = birthplace;
+        this.activation = oib.substring(1);
+    }
+    
 	public String getUsername() {
 		return username;
 	}
@@ -316,5 +327,9 @@ public class User {
 		return oib;
 	}
 
+	public boolean isMale() {return gender;}
 
+	public void setGender(boolean male){
+		this.gender = male;
+	}
 }
